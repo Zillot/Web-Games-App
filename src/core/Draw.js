@@ -68,16 +68,16 @@ class Draw {
 		if (typeof scale == "number") {
 			scale = new Vector2(scale, scale);
 		}
-		
+
 		if (type != "measure") {
 			//TODO!!
-			var sizeX = this.textMeasure(str, pos, color, fontName, fontSize, origin, angle, scale).width;
+			var sizeX = this.textMeasure(str, pos, color, fontName, fontSize, origin, angle, scale);
 			var sizeY = fontSize;
-			
-			var x = -(sizeX / 2) + (sizeX / 2) * origin.X;
+
+			var x = (sizeX / 2) * origin.X;
 			var y = -(sizeY / 2) + (sizeY / 2) * origin.Y;
 		}
-		
+
 		this.ctx.save();
 		this.ctx.translate(pos.X, pos.Y);
 		this.ctx.scale(scale.X, scale.Y);
@@ -97,8 +97,9 @@ class Draw {
 			this.ctx.strokeText(str, x, y);
 		}
 		else if (type == "measure") {
-			this.ctx.restore();
-			return this.ctx.measureText(str);
+			var res = this.ctx.measureText(str).width;
+            this.ctx.restore();
+            return res;
 		}
 		this.ctx.restore();
 	}
