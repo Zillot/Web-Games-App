@@ -26,5 +26,49 @@ class Color4 {
 			parseInt(result[2], 16), 
 			parseInt(result[3], 16), 
 			1);
-		}
+	}
+
+	static Black() {
+    	return new Color4(0, 0, 0, 1);
+    }
+
+    static Gray() {
+        return new Color4(100, 100, 100, 1);
+    }
+
+    static Red() {
+        return new Color4(255, 64, 0, 1);
+    }
+
+    static Orange() {
+        return new Color4(255, 128, 1);
+    }
+
+    static Yellow() {
+        return new Color4(255, 255, 0, 1);
+    }
+
+    static Green() {
+        return new Color4(64, 255, 0, 1);
+    }
+
+    static Cyan() {
+        return new Color4(0, 255, 255, 1);
+    }
+
+    static Blue() {
+        return new Color4(0, 0, 255, 1);
+    }
+
+    static Violet() {
+        return new Color4(191, 0, 255, 1);
+    }
+
+    static Purple() {
+        return new Color4(255, 0, 191, 1);
+    }
+
+    static Tomato() {
+        return new Color4(230, 46, 0, 1);
+    }
 }
