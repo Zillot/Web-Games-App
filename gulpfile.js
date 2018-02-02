@@ -70,6 +70,9 @@ gulp.task('css-webGames', function () {
 gulp.task('serve-webGames', ['js-webGames', 'html-webGames', 'css-webGames'], function () {
     browserSync.init({
         port: 4040,
+		ui: {
+            port: 3040
+		},
         server: {
             baseDir: ['./'],
             index: 'index.html'

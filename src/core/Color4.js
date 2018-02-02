@@ -18,13 +18,17 @@ class Color4 {
 	getRgba() {
 		return 'rgba(' + this.R + ', ' + this.G + ', ' + this.B + ', ' + this.A + ')';
 	}
+
+	getTransparent(opacity) {
+	    return new constructor(this.R, this.G, this.B, opacity);
+    }
 	
 	static colorFromHex(hex) {
 		var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
 		return new Color4(
-			parseInt(result[1], 16), 
-			parseInt(result[2], 16), 
-			parseInt(result[3], 16), 
+			parseInt(result[1], 16),
+			parseInt(result[2], 16),
+			parseInt(result[3], 16),
 			1);
 	}
 

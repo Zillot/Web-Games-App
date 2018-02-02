@@ -1,19 +1,19 @@
 class Core {	
-	//lastFrameTimeMs = 0;
-	//maxFPS = 60;
-	//delta = 0;
-	//timestep = 1000 / 60;
-	//fps = 0;
-	//frame = 0;
-	//timeTemp = 0;
-	//perFrameMsAwg = 0;
+	//lastFrameTimeMs
+	//maxFPS
+	//delta
+	//timestep
+	//fps
+	//frame
+	//timeTemp
+	//perFrameMsAwg
 
-	//mouseDown = 0;
+	//mouseDown
 	
-	//canvas = null;
-	//canvasCtx = null;
+	//canvas
+	//canvasCtx
 
-	//currentGame = null;
+	//app
 
 	constructor() {
 		var those = this;
@@ -56,7 +56,6 @@ class Core {
 			if (those.mouseDown > 1) {
 				those.mouseDown = 1;
 			}
-			
 		}
 		document.body.onmouseup = function () {
 			those.mouseDown--;
@@ -67,10 +66,6 @@ class Core {
 	}
 	
 	run() {
-		//TEMP
-		this.selectGame(Setups.allGames[0]);
-		//TEMP
-		
 		requestAnimationFrame(this.gameLoopRun.bind(this));
 	}
 
@@ -112,20 +107,16 @@ class Core {
 		return date.getMilliseconds() + (date.getSeconds() + date.getMinutes() * 60) * 1000;
 	}
 
-	selectGame(game) {
-		this.currentGame = game;
-		this.currentGame.game.init();
-	}
 	update(timeDelta) {
-		if (this.currentGame != null) {
-			this.currentGame.game.update(timeDelta);
+		if (this.app != null) {
+			this.app.update(timeDelta);
 		}
 	}
 	draw(ctx) {
 		ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-		
-		if (this.currentGame != null) {
-			this.currentGame.game.draw(ctx);
+
+		if (this.app != null) {
+			this.app.draw(ctx);
 		}
 	}
 }

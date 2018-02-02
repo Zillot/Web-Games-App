@@ -5,8 +5,7 @@ class Setups {
 	//utils
 	//draw
 	//core
-	
-	//allGames
+	//app
 	
 	constructor() {
 		Setups.windowWidth = window.innerWidth;
@@ -15,10 +14,6 @@ class Setups {
 		Setups.utils = new Utils();
 		Setups.draw = new Draw();
 		Setups.core = new Core();
-			
-		Setups.allGames = [{
-			name: "zombieShoter",
-			game: new ZombieShoter()
-		}];
+        Setups.app = new App();
 	}
 }
