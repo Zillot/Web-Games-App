@@ -7,8 +7,6 @@ class Core {
 	//frame
 	//timeTemp
 	//perFrameMsAwg
-
-	//mouseDown
 	
 	//canvas
 	//canvasCtx
@@ -16,8 +14,6 @@ class Core {
 	//app
 
 	constructor() {
-		var those = this;
-		
 		this.lastFrameTimeMs = 0;
 		this.maxFPS = 60;
 		this.delta = 0;
@@ -27,11 +23,8 @@ class Core {
 		this.timeTemp = 0;
 		this.perFrameMsAwg = 0;
 		this.speedLevel = 1000; //1000 - normal, more = slower
-		
-		this.mouseDown = 0;
-		this.mousePos = new Vector2();
 
-		this.canvas = document.getElementById('DrawField');
+        this.canvas = document.getElementById(Setups.CanvasName);
 	
 		this.canvas.width  = Setups.windowWidth;
 		this.canvas.height = Setups.windowHeight; 
@@ -46,32 +39,10 @@ class Core {
 		}
 		
 		Setups.draw.setCtx(this.canvasCtx);
-
-		this.canvas.addEventListener('mousemove', function (evt) {
-			those.mousePos = those.getMousePos(those.canvas, evt);
-		}, false);
-
-		document.body.onmousedown = function () {
-			those.mouseDown++;
-			if (those.mouseDown > 1) {
-				those.mouseDown = 1;
-			}
-		}
-		document.body.onmouseup = function () {
-			those.mouseDown--;
-			if (those.mouseDown < 0) {
-				those.mouseDown = 0;
-			}
-		}
 	}
 	
 	run() {
 		requestAnimationFrame(this.gameLoopRun.bind(this));
-	}
-
-	getMousePos(canvas, evt) {
-		var rect = canvas.getBoundingClientRect();
-		return new Vector2(evt.clientX - rect.left, evt.clientY - rect.top);
 	}
 
 	gameLoopRun(timestamp) {
@@ -108,15 +79,15 @@ class Core {
 	}
 
 	update(timeDelta) {
-		if (this.app != null) {
-			this.app.update(timeDelta);
+		if (Setups.app != null) {
+            Setups.app.update(timeDelta);
 		}
 	}
 	draw(ctx) {
 		ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-		if (this.app != null) {
-			this.app.draw(ctx);
+		if (Setups.app != null) {
+            Setups.app.draw(ctx);
 		}
 	}
 }

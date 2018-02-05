@@ -19,6 +19,8 @@ class Draw {
 		if (typeof scale == "number") {
 			scale = new Vector2(scale, scale);
 		}
+
+        origin = origin.MUL(new Vector2(-1, -1));
 		
 		this.ctx.save();
 		this.ctx.translate(pos.X, pos.Y);
@@ -61,6 +63,7 @@ class Draw {
 		if (angle == null) { angle = 0; }
 		if (scale == null) { scale = new Vector2(1, 1); }
 		if (fontName == null) { fontName = "serif" }
+        if (fontSize == null) { fontSize = 10 }
 		
 		if (typeof origin == "number") {
 			origin = new Vector2(origin, origin);
@@ -68,6 +71,8 @@ class Draw {
 		if (typeof scale == "number") {
 			scale = new Vector2(scale, scale);
 		}
+
+        origin = origin.MUL(new Vector2(-1, -1));
 
 		if (type != "measure") {
 			//TODO!!
