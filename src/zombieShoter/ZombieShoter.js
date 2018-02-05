@@ -33,9 +33,9 @@ class ZombieShoter {
 	}
 
     update(timeDelta) {
-        if (Setups.core.mouseDown) {
+        if (Setups.input.getMouseState() == MouseState.down) {
             for (var item in this.guns) {
-                this.guns[item].shoot(Setups.core.mousePos);
+                this.guns[item].shoot(Setups.input.mousePos);
             }
         }
 
@@ -108,11 +108,11 @@ class ZombieShoter {
 
         Setups.draw.rect(new Vector2(0, 0), new Vector2(Setups.windowWidth, 60), new Vector2(1, 1), new Color4(0, 0, 0, 0.1));
 
-        Setups.draw.textFill("Killed: " + this.killed, new Vector2(10, 29), Color4.Gray(), "serif", 18, new Vector2(1, 0), 0, new Vector2(1, 1));
-        Setups.draw.textFill("Level: " + this.level, new Vector2(Setups.windowWidth / 2, 5), Color4.Gray(), "serif", 30, new Vector2(0, 1), 0, new Vector2(1, 1));
-        Setups.draw.textFill("Score: " + this.score, new Vector2(Setups.windowWidth / 2, 35), Color4.Gray(), "serif", 18, new Vector2(0, 1), 0, new Vector2(1, 1));
-        Setups.draw.textFill(this.money + " :Money", new Vector2(Setups.windowWidth - 10, 7), Color4.Gray(), "serif", 18, new Vector2(-1, 1), 0, new Vector2(1, 1));
-        Setups.draw.textFill(this.health + " :Health", new Vector2(Setups.windowWidth - 10, 33), Color4.Gray(), "serif", 18, new Vector2(-1, 1), 0, new Vector2(1, 1));
+        Setups.draw.textFill("Killed: " + this.killed, new Vector2(10, 29), Color4.Gray(), "serif", 18, new Vector2(-1, 0), 0, new Vector2(1, 1));
+        Setups.draw.textFill("Level: " + this.level, new Vector2(Setups.windowWidth / 2, 5), Color4.Gray(), "serif", 30, new Vector2(0, -1), 0, new Vector2(1, 1));
+        Setups.draw.textFill("Score: " + this.score, new Vector2(Setups.windowWidth / 2, 35), Color4.Gray(), "serif", 18, new Vector2(0, -1), 0, new Vector2(1, 1));
+        Setups.draw.textFill(this.money + " :Money", new Vector2(Setups.windowWidth - 10, 7), Color4.Gray(), "serif", 18, new Vector2(1, -1), 0, new Vector2(1, 1));
+        Setups.draw.textFill(this.health + " :Health", new Vector2(Setups.windowWidth - 10, 33), Color4.Gray(), "serif", 18, new Vector2(1, -1), 0, new Vector2(1, 1));
     }
     //-------------
     spawnZombie() {

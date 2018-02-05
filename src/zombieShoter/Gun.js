@@ -22,7 +22,7 @@ class Gun {
     update(timeDelta) {
 		this.angleControll.update(timeDelta);
 		
-		var toMouseDir = Setups.core.mousePos.SUB(this.position).normalize();
+		var toMouseDir = Setups.input.mousePos.SUB(this.position).normalize();
 		
 		var value = Vector2.angleAbsBetween(toMouseDir, Vector2.left());		
 		this.angleControll.goTo(-value);
@@ -41,7 +41,7 @@ class Gun {
             this.bullets[item].draw(ctx);
         }
 		
-		Setups.draw.rect(this.position, new Vector2(50, 10), new Vector2(-1, 0), Color4.colorFromHex('#00FF00'), this.angleControll.getVal());
+		Setups.draw.rect(this.position, new Vector2(50, 10), new Vector2(1, 0), Color4.colorFromHex('#00FF00'), this.angleControll.getVal());
 		Setups.draw.rect(this.position, new Vector2(5, 5), new Vector2(0, 0), Color4.colorFromHex('#FFFF00'));
     }
     //-------------
