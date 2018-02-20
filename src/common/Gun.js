@@ -48,8 +48,8 @@ class Gun {
     }
 
     drawGun(ctx) {
-        Setups.draw.rect(this.position, new Vector2(50, 10), new Vector2(1, 0), Color4.colorFromHex('#00FF00'), this.angleControll.getVal());
-        Setups.draw.rect(this.position, new Vector2(5, 5), new Vector2(0, 0), Color4.colorFromHex('#FFFF00'));
+        Setups.draw.fillRect(this.position, new Vector2(50, 10), new Vector2(1, 0), Color4.colorFromHex('#00FF00'), this.angleControll.getVal());
+        Setups.draw.fillRect(this.position, new Vector2(5, 5), new Vector2(0, 0), Color4.colorFromHex('#FFFF00'));
     }
 
     shoot(point) {
