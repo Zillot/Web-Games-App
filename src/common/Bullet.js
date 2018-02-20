@@ -10,7 +10,7 @@ class Bullet {
         this.power = _power;
         this.speed = _speed;
 		
-		this.hitDistance = 30;
+		this.hitDistance = 3;
     }
 
     update(timeDelta) {

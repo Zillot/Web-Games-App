@@ -8,7 +8,7 @@ class Zombie extends Unit {
     //power;
 
     constructor(_position, _hp, _speed) {
-        super(_position, new Vector2(1, 0), _hp, _speed);
+        super(_position, new Vector2(1, 0), _hp, _speed, 30);
 
         this.color = Setups.utils.randColor();
 		this.power = 20;
