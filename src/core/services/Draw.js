@@ -47,11 +47,26 @@ class Draw {
 		}
 		
 		this.ctx.save();
-		//
+        this.ctx.fillStyle = color.getRgba();
+
+        this.ctx.lineWidth = thickness;
+
+        this.ctx.beginPath();
+        this.ctx.moveTo(pos1.X, pos1.Y);
+        this.ctx.lineTo(pos2.X, pos2.Y);
+
 		this.ctx.restore();
 	}
 
-	circle(pos, radius, origin, color, scale) {
+    strokeCircle(pos, radius, thickness, origin, color, scale) {
+        this.circle(pos, radius, thickness, origin, color, scale, 'stroke');
+    }
+
+	fillCircle(pos, radius, origin, color, scale) {
+    	this.circle(pos, radius, 0, origin, color, scale, 'fill');
+    }
+
+    circle(pos, radius, thickness, origin, color, scale, type) {
         if (pos == null) { pos = new Vector2(0, 0); }
         if (radius == null) { radius = 1; }
         if (origin == null) { origin = new Vector2(0, 0); }
@@ -68,15 +83,62 @@ class Draw {
         origin = origin.MUL(new Vector2(-1, -1));
 
         this.ctx.save();
+        this.ctx.beginPath();
         this.ctx.translate(pos.X, pos.Y);
         this.ctx.scale(scale.X, scale.Y);
 
         this.ctx.fillStyle = color.getRgba();
 
-        var x = -(radius / 2) + (radius / 2) * origin.X;
-        var y = -(radius / 2) + (radius / 2) * origin.Y;
+        var x = -radius * origin.X;
+        var y = -radius * origin.Y;
+
+        this.ctx.lineWidth = thickness;
 
         this.ctx.arc(x, y, radius, 0, Draw.PI2(), false);
+
+        if (type == 'stroke') {
+            this.ctx.stroke();
+        }
+        else if (type == 'fill') {
+            this.ctx.fill();
+        }
+        this.ctx.restore();
+	}
+
+    pie(pos, radius, startAngle, endAngle, origin, color, scale) {
+        if (pos == null) { pos = new Vector2(0, 0); }
+        if (radius == null) { radius = 1; }
+        if (origin == null) { origin = new Vector2(0, 0); }
+        if (color == null) { color = new Color4(0, 0, 0, 1); }
+        if (scale == null) { scale = new Vector2(1, 1); }
+
+        if (typeof origin == "number") {
+            origin = new Vector2(origin, origin);
+        }
+        if (typeof scale == "number") {
+            scale = new Vector2(scale, scale);
+        }
+
+        origin = origin.MUL(new Vector2(-1, -1));
+
+        this.ctx.save();
+        this.ctx.beginPath();
+        this.ctx.translate(pos.X, pos.Y);
+        this.ctx.scale(scale.X, scale.Y);
+
+        this.ctx.fillStyle = color.getRgba();
+
+        var x = -radius * origin.X;
+        var y = -radius * origin.Y;
+
+        if(endAngle < startAngle) {
+        	endAngle = endAngle + startAngle;
+            startAngle = endAngle - startAngle;
+            endAngle = endAngle - startAngle;
+		}
+        this.ctx.arc(x, y, radius, startAngle, endAngle, false);
+
+        this.ctx.stroke();
         this.ctx.restore();
     }
 
@@ -140,5 +202,12 @@ class Draw {
             return res;
 		}
 		this.ctx.restore();
+	}
+
+	drawZombie(position, angle, color1, color2, scale) {
+        Setups.draw.rect(position.ADD(new Vector2(0, 0)), new Vector2(30, 50), new Vector2(0, 0), color1, 0, scale);
+        Setups.draw.rect(position.ADD(new Vector2(12 * scale, 0)), new Vector2(20, 20), new Vector2(0, 0), color2, 0, scale);
+        Setups.draw.rect(position.ADD(new Vector2(16 * scale, -25 * scale)), new Vector2(15, 8), new Vector2(0, 0), color2, 0, scale);
+        Setups.draw.rect(position.ADD(new Vector2(16 * scale, 25 * scale)), new Vector2(15, 8), new Vector2(0, 0), color2, 0, scale);
 	}
 }
