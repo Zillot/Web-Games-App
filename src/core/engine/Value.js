@@ -33,6 +33,10 @@ class Value {
 	getVal() {
 		return this.value;
 	}
+
+	goToDelta(delta, speed, callback) {
+		this.goTo(this.value + delta, speed, callback);
+	}
 	
 	goTo(value, speed, callback) {
 		this.pause = 1;
