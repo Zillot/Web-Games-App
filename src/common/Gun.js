@@ -7,7 +7,7 @@ class Gun {
     //reload;
 	//angle;
 
-    constructor(_position) {
+    constructor(_position, _rotationSpeed) {
         this.power = 10;
         this.direction = new Vector2(-1, 0);
         this.position = _position;
@@ -16,7 +16,7 @@ class Gun {
 
         this.reload = 0;
 		
-		this.angleControll = new Value(0, 0.5);
+		this.angleControll = new Value(0, _rotationSpeed);
     }
 
     update(timeDelta) {
@@ -37,14 +37,21 @@ class Gun {
         }
     }
     draw(ctx) {
+        this.drawBullets(ctx);
+        this.drawGun(ctx);
+    }
+    //-------------
+    drawBullets(ctx) {
         for (var item in this.bullets) {
             this.bullets[item].draw(ctx);
         }
-		
-		Setups.draw.rect(this.position, new Vector2(50, 10), new Vector2(1, 0), Color4.colorFromHex('#00FF00'), this.angleControll.getVal());
-		Setups.draw.rect(this.position, new Vector2(5, 5), new Vector2(0, 0), Color4.colorFromHex('#FFFF00'));
     }
-    //-------------
+
+    drawGun(ctx) {
+        Setups.draw.rect(this.position, new Vector2(50, 10), new Vector2(1, 0), Color4.colorFromHex('#00FF00'), this.angleControll.getVal());
+        Setups.draw.rect(this.position, new Vector2(5, 5), new Vector2(0, 0), Color4.colorFromHex('#FFFF00'));
+    }
+
     shoot(point) {
         if (this.reload <= 0) {
             this.reload = 0.3;

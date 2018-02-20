@@ -29,7 +29,7 @@ class ZombieShoter {
         this.scoreCurrent = 0;
         this.zombieSpawnPause = 0;
 		
-        this.guns.push(new Gun(new Vector2(Setups.windowWidth - 50, Setups.windowHeight / 2)));
+        this.guns.push(new Gun(new Vector2(Setups.windowWidth - 50, Setups.windowHeight / 2), 0.5));
 	}
 
     update(timeDelta) {
