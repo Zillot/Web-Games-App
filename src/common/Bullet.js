@@ -17,6 +17,6 @@ class Bullet {
         this.position = this.position.ADD(this.direction.MUL(this.speed * timeDelta));
     }
     draw(ctx) {
-		Setups.draw.rect(this.position, new Vector2(5, 5), new Vector2(0, 0), Color4.Black());
+		Setups.draw.fillRect(this.position, new Vector2(5, 5), new Vector2(0, 0), Color4.Black());
     }
 }

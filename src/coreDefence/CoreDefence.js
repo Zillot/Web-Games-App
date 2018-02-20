@@ -29,6 +29,8 @@ class CoreDefence {
         this.scoreCurrent = 0;
         this.enemieSpawnPause = 0;
 
+        this.coreSafeRadius = 30;
+
         this.guns.push(new CoreGun(5));
 	}
 
@@ -73,7 +75,7 @@ class CoreDefence {
 						gun.bullets.splice(bulletKey--, 1);
 					}
 
-					if (enemy.hp <= 0 || enemy.position.X > Setups.windowWidth + 100) {
+					if (enemy.hp <= 0 || Vector2.distance(enemy.position, Setups.center) < this.coreSafeRadius) {
                         this.score += 10;
 
 					    if (enemy.hp <= 0) {
@@ -99,6 +101,8 @@ class CoreDefence {
         }
     }
     draw(ctx) {
+        Setups.draw.strokeCircle(Setups.center, this.coreSafeRadius, 1, new Vector2(0, 0), Color4.Gray().getTransparent(0.1));
+
         for (var item in this.enemies) {
             this.enemies[item].draw(ctx);
         }
@@ -106,7 +110,7 @@ class CoreDefence {
             this.guns[item].draw(ctx);
         }
 
-        Setups.draw.rect(new Vector2(0, 0), new Vector2(Setups.windowWidth, 60), new Vector2(1, 1), new Color4(0, 0, 0, 0.1));
+        Setups.draw.fillRect(new Vector2(0, 0), new Vector2(Setups.windowWidth, 60), new Vector2(1, 1), new Color4(0, 0, 0, 0.1));
 
         Setups.draw.textFill("Killed: " + this.killed, new Vector2(10, 29), Color4.Gray(), "serif", 18, new Vector2(-1, 0), 0, new Vector2(1, 1));
         Setups.draw.textFill("Level: " + this.level, new Vector2(Setups.windowWidth / 2, 5), Color4.Gray(), "serif", 30, new Vector2(0, -1), 0, new Vector2(1, 1));
@@ -133,7 +137,7 @@ class CoreDefence {
 
 		var pos = new Vector2(x, y);
 		var hp = 50 * this.level;
-		var speed = 50 * (this.level / 2);
+		var speed = 200 * (this.level / 2);
 		
         this.enemies.push(new Enemy(pos, hp, speed));
     }

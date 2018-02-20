@@ -7,8 +7,16 @@ class Draw {
 	setCtx(ctx) {
 		this.ctx = ctx;
 	}
+
+    fillRect(pos, size, origin, color, angle, scale) {
+        this.rect(pos, size, origin, color, angle, scale, 'fill');
+    }
+
+    strokeRect(pos, size, origin, color, angle, scale) {
+        this.rect(pos, size, origin, color, angle, scale, 'stroke');
+    }
 	
-	rect(pos, size, origin, color, angle, scale) {
+	rect(pos, size, origin, color, angle, scale, type) {
 		if (pos == null) { pos = new Vector2(0, 0); }
 		if (size == null) { size = new Vector2(0, 0); }
 		if (origin == null) { origin = new Vector2(0, 0); }
@@ -29,12 +37,19 @@ class Draw {
 		this.ctx.translate(pos.X, pos.Y);
 		this.ctx.scale(scale.X, scale.Y);
 		this.ctx.rotate(angle);
-		
-        this.ctx.fillStyle = color.getRgba();
-		
+
 		var x = -(size.X / 2) + (size.X / 2) * origin.X;
 		var y = -(size.Y / 2) + (size.Y / 2) * origin.Y;
-        this.ctx.fillRect(x, y, size.X, size.Y);
+
+        if (type == 'stroke') {
+            this.ctx.strokeStyle = color.getRgba();
+            this.ctx.strokeRect(x, y, size.X, size.Y);
+        }
+        else if (type == 'fill') {
+            this.ctx.fillStyle = color.getRgba();
+            this.ctx.fillRect(x, y, size.X, size.Y);
+        }
+
 		this.ctx.restore();
 	}
 	
@@ -47,7 +62,7 @@ class Draw {
 		}
 		
 		this.ctx.save();
-        this.ctx.fillStyle = color.getRgba();
+        this.ctx.strokeStyle = color.getRgba();
 
         this.ctx.lineWidth = thickness;
 
@@ -87,7 +102,6 @@ class Draw {
         this.ctx.translate(pos.X, pos.Y);
         this.ctx.scale(scale.X, scale.Y);
 
-        this.ctx.fillStyle = color.getRgba();
 
         var x = -radius * origin.X;
         var y = -radius * origin.Y;
@@ -97,15 +111,17 @@ class Draw {
         this.ctx.arc(x, y, radius, 0, Draw.PI2(), false);
 
         if (type == 'stroke') {
+            this.ctx.strokeStyle = color.getRgba();
             this.ctx.stroke();
         }
         else if (type == 'fill') {
+            this.ctx.fillStyle = color.getRgba();
             this.ctx.fill();
         }
         this.ctx.restore();
 	}
 
-    pie(pos, radius, startAngle, endAngle, origin, color, scale) {
+    arc(pos, radius, startAngle, endAngle, origin, color, scale) {
         if (pos == null) { pos = new Vector2(0, 0); }
         if (radius == null) { radius = 1; }
         if (origin == null) { origin = new Vector2(0, 0); }
@@ -126,7 +142,6 @@ class Draw {
         this.ctx.translate(pos.X, pos.Y);
         this.ctx.scale(scale.X, scale.Y);
 
-        this.ctx.fillStyle = color.getRgba();
 
         var x = -radius * origin.X;
         var y = -radius * origin.Y;
@@ -138,6 +153,7 @@ class Draw {
 		}
         this.ctx.arc(x, y, radius, startAngle, endAngle, false);
 
+        this.ctx.strokeStyle = color.getRgba();
         this.ctx.stroke();
         this.ctx.restore();
     }
@@ -185,15 +201,16 @@ class Draw {
 
         this.ctx.textAlign = 'center';
         this.ctx.textBaseline = 'top';
-		
-        this.ctx.fillStyle = color.getRgba();
+
 		
 		this.ctx.font = fontSize + "px " + fontName;
 		
 		if (type == "fill") {
+            this.ctx.fillStyle = color.getRgba();
 			this.ctx.fillText(str, x, y);
 		}
 		else if (type == "stroke") {
+            this.ctx.strokeStyle = color.getRgba();
 			this.ctx.strokeText(str, x, y);
 		}
 		else if (type == "measure") {
@@ -205,9 +222,9 @@ class Draw {
 	}
 
 	drawZombie(position, angle, color1, color2, scale) {
-        Setups.draw.rect(position, new Vector2(30, 50), new Vector2(0, 0), color1, angle, scale);
-        Setups.draw.rect(position.ADD((new Vector2(12 * scale, 0)).rotateTo(angle)), new Vector2(20, 20), new Vector2(0, 0), color2, angle, scale);
-        Setups.draw.rect(position.ADD((new Vector2(16 * scale, -25 * scale)).rotateTo(angle)), new Vector2(15, 8), new Vector2(0, 0), color2, angle, scale);
-        Setups.draw.rect(position.ADD((new Vector2(16 * scale, 25 * scale)).rotateTo(angle)), new Vector2(15, 8), new Vector2(0, 0), color2, angle, scale);
+        Setups.draw.fillRect(position, new Vector2(30, 50), new Vector2(0, 0), color1, angle, scale);
+        Setups.draw.fillRect(position.ADD((new Vector2(12 * scale, 0)).rotateTo(angle)), new Vector2(20, 20), new Vector2(0, 0), color2, angle, scale);
+        Setups.draw.fillRect(position.ADD((new Vector2(16 * scale, -25 * scale)).rotateTo(angle)), new Vector2(15, 8), new Vector2(0, 0), color2, angle, scale);
+        Setups.draw.fillRect(position.ADD((new Vector2(16 * scale, 25 * scale)).rotateTo(angle)), new Vector2(15, 8), new Vector2(0, 0), color2, angle, scale);
 	}
 }

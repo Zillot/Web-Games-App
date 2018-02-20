@@ -25,7 +25,7 @@ class Button {
     }
 
     draw(ctx) {
-        Setups.draw.rect(this.position, this.size, new Vector2(0, 0), this.color);
+        Setups.draw.fillRect(this.position, this.size, new Vector2(0, 0), this.color);
         Setups.draw.textFill(this.text, this.position, Color4.Black(), null, 14, new Vector2(0, 0));
     }
     //-------------

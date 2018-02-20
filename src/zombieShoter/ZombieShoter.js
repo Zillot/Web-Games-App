@@ -106,7 +106,7 @@ class ZombieShoter {
             this.guns[item].draw(ctx);
         }
 
-        Setups.draw.rect(new Vector2(0, 0), new Vector2(Setups.windowWidth, 60), new Vector2(1, 1), new Color4(0, 0, 0, 0.1));
+        Setups.draw.fillRect(new Vector2(0, 0), new Vector2(Setups.windowWidth, 60), new Vector2(1, 1), new Color4(0, 0, 0, 0.1));
 
         Setups.draw.textFill("Killed: " + this.killed, new Vector2(10, 29), Color4.Gray(), "serif", 18, new Vector2(-1, 0), 0, new Vector2(1, 1));
         Setups.draw.textFill("Level: " + this.level, new Vector2(Setups.windowWidth / 2, 5), Color4.Gray(), "serif", 30, new Vector2(0, -1), 0, new Vector2(1, 1));
