@@ -30,7 +30,7 @@ class Button {
     }
     //-------------
     click() {
-        if (Geometry.IsPointInRect(Setups.input.getMousePosition(), Rect.fromVectors(this.position, this.size))) {
+        if (Geometry.IsPointInRect(Setups.input.getMousePosition(), Rect.fromVectors(this.position.SUB(this.size.DIV(2)), this.size))) {
             if (this.onClick != null) {
                 this.onClick();
             }
