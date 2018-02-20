@@ -12,10 +12,11 @@ class Zombie extends Unit {
 
         this.color = Setups.utils.randColor();
 		this.power = 20;
+		this.angle = Vector2.angleAbsBetween(Vector2.right(), this.direction);
     }
 
     draw(ctx) {
 		var scale = 0.8 + (this.hp / this.maxHp) * 0.2;
-		this.drawZombie(this.position, 0, this.color, this.color.getInvertColor(), scale);
+        Setups.draw.drawZombie(this.position, this.angle, this.color, this.color.getInvertColor(), scale);
     }
 }

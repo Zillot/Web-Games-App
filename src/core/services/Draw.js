@@ -205,9 +205,9 @@ class Draw {
 	}
 
 	drawZombie(position, angle, color1, color2, scale) {
-        Setups.draw.rect(position.ADD(new Vector2(0, 0)), new Vector2(30, 50), new Vector2(0, 0), color1, 0, scale);
-        Setups.draw.rect(position.ADD(new Vector2(12 * scale, 0)), new Vector2(20, 20), new Vector2(0, 0), color2, 0, scale);
-        Setups.draw.rect(position.ADD(new Vector2(16 * scale, -25 * scale)), new Vector2(15, 8), new Vector2(0, 0), color2, 0, scale);
-        Setups.draw.rect(position.ADD(new Vector2(16 * scale, 25 * scale)), new Vector2(15, 8), new Vector2(0, 0), color2, 0, scale);
+        Setups.draw.rect(position, new Vector2(30, 50), new Vector2(0, 0), color1, angle, scale);
+        Setups.draw.rect(position.ADD((new Vector2(12 * scale, 0)).rotateTo(angle)), new Vector2(20, 20), new Vector2(0, 0), color2, angle, scale);
+        Setups.draw.rect(position.ADD((new Vector2(16 * scale, -25 * scale)).rotateTo(angle)), new Vector2(15, 8), new Vector2(0, 0), color2, angle, scale);
+        Setups.draw.rect(position.ADD((new Vector2(16 * scale, 25 * scale)).rotateTo(angle)), new Vector2(15, 8), new Vector2(0, 0), color2, angle, scale);
 	}
 }
