@@ -1,6 +1,9 @@
 class Draw {
 	//ctx;
-	
+
+    static PI2() { return 6.283185307179586476925286766559 }
+    static PI() { return 3.1415926535897932384626433832795 }
+
 	setCtx(ctx) {
 		this.ctx = ctx;
 	}
@@ -47,6 +50,36 @@ class Draw {
 		//
 		this.ctx.restore();
 	}
+
+	circle(pos, radius, origin, color, scale) {
+        if (pos == null) { pos = new Vector2(0, 0); }
+        if (radius == null) { radius = 1; }
+        if (origin == null) { origin = new Vector2(0, 0); }
+        if (color == null) { color = new Color4(0, 0, 0, 1); }
+        if (scale == null) { scale = new Vector2(1, 1); }
+
+        if (typeof origin == "number") {
+            origin = new Vector2(origin, origin);
+        }
+        if (typeof scale == "number") {
+            scale = new Vector2(scale, scale);
+        }
+
+        origin = origin.MUL(new Vector2(-1, -1));
+
+        this.ctx.save();
+        this.ctx.translate(pos.X, pos.Y);
+        this.ctx.scale(scale.X, scale.Y);
+
+        this.ctx.fillStyle = color.getRgba();
+
+        var x = -(radius / 2) + (radius / 2) * origin.X;
+        var y = -(radius / 2) + (radius / 2) * origin.Y;
+
+        this.ctx.arc(x, y, radius, 0, Draw.PI2(), false);
+        this.ctx.restore();
+    }
+
 	textFill(str, pos, color, fontName, fontSize, origin, angle, scale) {
 		this.drawText(str, pos, color, fontName, fontSize, origin, angle, scale, "fill");
 	}
