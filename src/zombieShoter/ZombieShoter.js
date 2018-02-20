@@ -67,9 +67,8 @@ class ZombieShoter {
 
 				for (var zombieKey = 0; zombieKey < this.zombies.length; zombieKey++) {
 					var zombie = this.zombies[zombieKey];
-					var hit = zombie.tryHit(bullet);
-					
-					if (hit) {
+
+					if (zombie.tryHit(bullet)) {
 						gun.bullets.splice(bulletKey--, 1);
 					}
 
@@ -81,15 +80,23 @@ class ZombieShoter {
                         }
 
 						this.zombies.splice(zombieKey--, 1);
-						this.hitPlayer(zombie.power);
-						continue;
-					}
-					
-					if (hit) {
-						break;
+					    if (zombie.hp > 0 ) {
+                            this.hitPlayer(zombie.power);
+                        }
 					}
 				}
 			}
+        }
+
+        for (var zombieKey = 0; zombieKey < this.zombies.length; zombieKey++) {
+            var zombie = this.zombies[zombieKey];
+
+            if (Vector2.distance(zombie.position, Setups.center) < this.coreSafeRadius) {
+                this.score -= 5;
+
+                this.zombies.splice(zombieKey--, 1);
+                this.hitPlayer(zombie.power);
+            }
         }
 
         if (this.scoreCurrent >= this.scoreGoal) {

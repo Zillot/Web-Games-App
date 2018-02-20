@@ -24,12 +24,12 @@ class CoreDefence {
         this.guns = [];
 		
         this.level = 1;
-        this.maxEnemies = 6;
+        this.maxEnemies = 10;
         this.scoreGoal = 20;
         this.scoreCurrent = 0;
-        this.enemieSpawnPause = 0;
+        this.enemieSpawnPause = 1;
 
-        this.coreSafeRadius = 30;
+        this.coreSafeRadius = 50;
 
         this.guns.push(new CoreGun(5));
 	}
@@ -43,7 +43,7 @@ class CoreDefence {
 
         if (this.enemies.length < this.maxEnemies && this.enemieSpawnPause <= 0) {
             this.spawnEnemy();
-            this.enemieSpawnPause = 4 / this.level;
+            this.enemieSpawnPause = 1 / this.level;
         }
 
         if (this.enemieSpawnPause > 0) {
@@ -75,23 +75,25 @@ class CoreDefence {
 						gun.bullets.splice(bulletKey--, 1);
 					}
 
-					if (enemy.hp <= 0 || Vector2.distance(enemy.position, Setups.center) < this.coreSafeRadius) {
+					if (enemy.hp <= 0) {
                         this.score += 10;
-
-					    if (enemy.hp <= 0) {
-                            this.killed++;
-                        }
+                        this.killed++;
 
 						this.enemies.splice(enemyKey--, 1);
-						this.hitPlayer(enemy.power);
-						continue;
-					}
-					
-					if (hit) {
-						break;
 					}
 				}
 			}
+        }
+
+        for (var enemyKey = 0; enemyKey < this.enemies.length; enemyKey++) {
+            var enemy = this.enemies[enemyKey];
+
+            if (Vector2.distance(enemy.position, Setups.center) < this.coreSafeRadius) {
+                this.score -= 5;
+
+                this.enemies.splice(enemyKey--, 1);
+                this.hitPlayer(enemy.power);
+            }
         }
 
         if (this.scoreCurrent >= this.scoreGoal) {
