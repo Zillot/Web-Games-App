@@ -20,13 +20,13 @@ class Gun {
     }
 
     update(timeDelta) {
+        var toMouseDir = Setups.input.mousePos.SUB(this.position).normalize();
+        var delta = Vector2.angleAbsBetween(this.direction, toMouseDir);
+
+        this.angleControll.goToDelta(delta);
 		this.angleControll.update(timeDelta);
-		
-		var toMouseDir = Setups.input.mousePos.SUB(this.position).normalize();
-		
-		var value = Vector2.angleAbsBetween(toMouseDir, Vector2.left());		
-		this.angleControll.goTo(-value);
-		this.direction = Vector2.left().rotateTo(this.angleControll.getVal());
+
+        this.direction = Vector2.left().rotateTo(this.angleControll.getVal());
 		
         if (this.reload > 0) {
             this.reload -= timeDelta;
