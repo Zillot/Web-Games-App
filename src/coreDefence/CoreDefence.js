@@ -57,34 +57,6 @@ class CoreDefence {
             this.guns[item].update(timeDelta);
         }
 
-        for (var gunKey in this.guns) {
-			var gun = this.guns[gunKey];
-			for (var bulletKey = 0; bulletKey < gun.bullets.length; bulletKey++) {
-				var bullet = gun.bullets[bulletKey];
-				
-				if (bullet.position.X < -100) {
-					gun.bullets.splice(bulletKey--, 1);
-					continue;
-				}
-
-				for (var enemyKey = 0; enemyKey < this.enemies.length; enemyKey++) {
-					var enemy = this.enemies[enemyKey];
-					var hit = enemy.tryHit(bullet);
-					
-					if (hit) {
-						gun.bullets.splice(bulletKey--, 1);
-					}
-
-					if (enemy.hp <= 0) {
-                        this.score += 10;
-                        this.killed++;
-
-						this.enemies.splice(enemyKey--, 1);
-					}
-				}
-			}
-        }
-
         for (var enemyKey = 0; enemyKey < this.enemies.length; enemyKey++) {
             var enemy = this.enemies[enemyKey];
 
