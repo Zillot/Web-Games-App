@@ -55,8 +55,7 @@ class Draw {
 	
 	line(pos1, pos2, thickness, color) {
 		if (color == null) { color = "#000000FF"; }
-		if (thickness == null) { opacity = 1; }
-		
+		if (thickness == null) { thickness = 1; }
 		if (typeof color == "Color4") {
 			color = color.getHex();
 		}
@@ -69,6 +68,7 @@ class Draw {
         this.ctx.beginPath();
         this.ctx.moveTo(pos1.X, pos1.Y);
         this.ctx.lineTo(pos2.X, pos2.Y);
+        this.ctx.stroke();
 
 		this.ctx.restore();
 	}
@@ -84,6 +84,7 @@ class Draw {
     circle(pos, radius, thickness, origin, color, scale, type) {
         if (pos == null) { pos = new Vector2(0, 0); }
         if (radius == null) { radius = 1; }
+        if (thickness == null) { thickness = 1; }
         if (origin == null) { origin = new Vector2(0, 0); }
         if (color == null) { color = new Color4(0, 0, 0, 1); }
         if (scale == null) { scale = new Vector2(1, 1); }
@@ -121,13 +122,13 @@ class Draw {
         this.ctx.restore();
 	}
 
-    arc(pos, radius, startAngle, endAngle, origin, color, scale) {
+    arc(pos, radius, startAngle, endAngle, thickness, origin, color, scale) {
         if (pos == null) { pos = new Vector2(0, 0); }
         if (radius == null) { radius = 1; }
+        if (thickness == null) { thickness = 1; }
         if (origin == null) { origin = new Vector2(0, 0); }
         if (color == null) { color = new Color4(0, 0, 0, 1); }
         if (scale == null) { scale = new Vector2(1, 1); }
-
         if (typeof origin == "number") {
             origin = new Vector2(origin, origin);
         }
@@ -145,6 +146,8 @@ class Draw {
 
         var x = -radius * origin.X;
         var y = -radius * origin.Y;
+
+        this.ctx.lineWidth = thickness;
 
         if(endAngle < startAngle) {
         	endAngle = endAngle + startAngle;
@@ -202,7 +205,6 @@ class Draw {
         this.ctx.textAlign = 'center';
         this.ctx.textBaseline = 'top';
 
-		
 		this.ctx.font = fontSize + "px " + fontName;
 		
 		if (type == "fill") {
