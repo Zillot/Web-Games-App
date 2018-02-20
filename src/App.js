@@ -12,13 +12,16 @@ class App {
         this.allGames = [{
             name: "zombieShoter",
             game: new ZombieShoter()
+        }, {
+            name: "coreDefence",
+            game: new CoreDefence()
         }];
 
         this.menu = new MainMenu();
     }
 
     selectGameByName(name) {
-        var games = this.allGames.filter(x => x.name = name);
+        var games = this.allGames.filter(x => x.name == name);
 
         if (games.length > 0) {
             this.currentGame = games[0];

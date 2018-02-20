@@ -5,11 +5,22 @@ class MainPage {
         this.buttons = [];
 
         this.buttons.push(Button.getButton({
-            name: "SelectGameBtn",
+            name: "SelectGame1Btn",
             text: "Play Zombie Shoter",
             onClick: function()
             {
                 Setups.app.selectGameByName('zombieShoter')
+            },
+            position: new Vector2(Setups.center.X, 350),
+            size: new Vector2(200, 40),
+            color: Color4.White()
+        }));
+        this.buttons.push(Button.getButton({
+            name: "SelectGame2Btn",
+            text: "Play Core Defence",
+            onClick: function()
+            {
+                Setups.app.selectGameByName('coreDefence')
             },
             position: new Vector2(Setups.center.X, 400),
             size: new Vector2(200, 40),
