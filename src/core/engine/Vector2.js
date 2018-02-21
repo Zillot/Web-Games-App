@@ -93,6 +93,9 @@ class Vector2 {
 	angleAbsTo(v2) {
 		return Vector2.angleAbsBetween(this, v2);
 	}
+    angle(v2) {
+        return Vector2.angle(this);
+    }
 	angleAbs() {
 		return Vector2.angleAbs(this);
 	}
@@ -146,12 +149,21 @@ class Vector2 {
 		
 		return v;
 	}
+	//from -PI to PI
 	static angleBetween(v1, v2) {
-		return v1.DOT(v2) / (v1.length() * v2.length());
-	}
-	static angleAbsBetween(v1, v2) {
 		return Math.atan2(v1.DET(v2), v1.DOT(v2));
 	}
+	//from 0 to 2PI
+	static angleAbsBetween(v1, v2) {
+        var ang = Vector2.angleBetween(v1, v2);
+        if (ang < 0) {
+            return Math.PI + Math.PI - Math.abs(ang);
+        }
+        return ang
+	}
+    static angle(v1) {
+        return Vector2.angleBetween(v1, Vector2.up());
+    }
 	static angleAbs(v1) {
 		return Vector2.angleAbsBetween(v1, Vector2.up());
 	}

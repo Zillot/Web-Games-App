@@ -21,7 +21,7 @@ class Gun {
 
     update(timeDelta) {
         var toMouseDir = Setups.input.mousePos.SUB(this.position).normalize();
-        var delta = Vector2.angleAbsBetween(this.direction, toMouseDir);
+        var delta = Vector2.angleBetween(this.direction, toMouseDir);
 
         this.angleControll.goToDelta(delta);
 		this.angleControll.update(timeDelta);
