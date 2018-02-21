@@ -15,7 +15,6 @@ class CoreDefence {
     constructor() { }
 	
 	init() {
-        this.killed = 0;
 		this.score = 0;
         this.money = 0;
         this.health = 100;
@@ -43,7 +42,7 @@ class CoreDefence {
 
         if (this.enemies.length < this.maxEnemies && this.enemieSpawnPause <= 0) {
             this.spawnEnemy();
-            this.enemieSpawnPause = 1 / this.level;
+            this.enemieSpawnPause = 2 / this.level;
         }
 
         if (this.enemieSpawnPause > 0) {
@@ -60,7 +59,23 @@ class CoreDefence {
         for (var enemyKey = 0; enemyKey < this.enemies.length; enemyKey++) {
             var enemy = this.enemies[enemyKey];
 
-            if (Vector2.distance(enemy.position, Setups.center) < this.coreSafeRadius) {
+            var closeEnought = Vector2.distance(enemy.position, Setups.center) < this.coreSafeRadius + enemy.radius;
+            var notToClose = Vector2.distance(enemy.position, Setups.center) > this.coreSafeRadius - enemy.radius * 2;
+
+            if (closeEnought && !notToClose) {
+                var enemyAngle = Vector2.left().angleTo(enemy.position.SUB(Setups.center));
+                var rightGunAngle = this.guns.find(x => x.coveredByShield(enemyAngle));
+
+                if (rightGunAngle) {
+                    this.score += 10;
+                    this.enemies.splice(enemyKey--, 1);
+                    continue
+                }
+            }
+
+            var demageClose = Vector2.distance(enemy.position, Setups.center) < this.coreSafeRadius * 0.75;
+
+            if (demageClose) {
                 this.score -= 5;
 
                 this.enemies.splice(enemyKey--, 1);
@@ -86,7 +101,6 @@ class CoreDefence {
 
         Setups.draw.fillRect(new Vector2(0, 0), new Vector2(Setups.windowWidth, 60), new Vector2(1, 1), new Color4(0, 0, 0, 0.1));
 
-        Setups.draw.textFill("Killed: " + this.killed, new Vector2(10, 29), Color4.Gray(), "serif", 18, new Vector2(-1, 0), 0, new Vector2(1, 1));
         Setups.draw.textFill("Level: " + this.level, new Vector2(Setups.windowWidth / 2, 5), Color4.Gray(), "serif", 30, new Vector2(0, -1), 0, new Vector2(1, 1));
         Setups.draw.textFill("Score: " + this.score, new Vector2(Setups.windowWidth / 2, 35), Color4.Gray(), "serif", 18, new Vector2(0, -1), 0, new Vector2(1, 1));
         Setups.draw.textFill(this.money + " :Money", new Vector2(Setups.windowWidth - 10, 7), Color4.Gray(), "serif", 18, new Vector2(1, -1), 0, new Vector2(1, 1));
