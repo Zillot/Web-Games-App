@@ -16,19 +16,21 @@ class Enemy extends Unit {
 
         this.minDistance = 100;
         this.maxDistance = 600;
-        this.distanceToDash = 40;
+        this.distanceToDash = 110;
+        this.radius = 3;
     }
 
     update(timeDelta) {
         super.update(timeDelta);
 
-        var toCenter = Vector2.distance(this.position, Setups.center) - this.minDistance;
+        var toCenter = Vector2.distance(this.position, Setups.center);
+        var toProcess = toCenter - this.minDistance;
 
-        if (toCenter > this.maxDistance) {
-            toCenter = this.maxDistance;
+        if (toProcess > this.maxDistance) {
+            toProcess = this.maxDistance;
         }
 
-        this.speed = ((toCenter / this.maxDistance) * this.maxDistance);
+        this.speed = ((toProcess / this.maxDistance) * this.maxDistance);
 
         if (this.speed < 10) {
         	this.speed = 10;
@@ -40,6 +42,6 @@ class Enemy extends Unit {
     }
 
     draw(ctx) {
-    	Setups.draw.fillCircle(this.position, 6, new Vector2(0, 0), this.color);
+    	Setups.draw.fillCircle(this.position, this.radius * 2, new Vector2(0, 0), this.color);
     }
 }
