@@ -1,5 +1,5 @@
 {
-  "name": "WebGamesApp",
+  "name": "web-games-app",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -7,7 +7,7 @@
   "devDependencies": {
     "browser-sync": "^2.12.5",
     "gulp": "^3.9.1",
-    "gulp-concat": "^2.6.1"
+    "gulp-concat": "^2.6.1",
     "gulp-htmlbuild": "^0.4.2",
     "gulp-run-sequence": "^0.3.2"
   },

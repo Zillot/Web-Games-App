@@ -3,48 +3,62 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2000
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "WGA-html", "WGA-html\", "{DD71AF39-3F8E-42FA-BF79-A5F1AB872C0E}"
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "WGA-webGames", "WGA-webGames\", "{DD71AF39-3F8E-42FA-BF79-A5F1AB872C0E}"
 	ProjectSection(WebsiteProperties) = preProject
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.6.2"
 		Debug.AspNetCompiler.VirtualPath = "/localhost_57448"
-		Debug.AspNetCompiler.PhysicalPath = "WGA-html\"
+		Debug.AspNetCompiler.PhysicalPath = "WGA-webGames\"
 		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_57448\"
 		Debug.AspNetCompiler.Updateable = "true"
 		Debug.AspNetCompiler.ForceOverwrite = "true"
 		Debug.AspNetCompiler.FixedNames = "false"
 		Debug.AspNetCompiler.Debug = "True"
 		Release.AspNetCompiler.VirtualPath = "/localhost_57448"
-		Release.AspNetCompiler.PhysicalPath = "WGA-html\"
+		Release.AspNetCompiler.PhysicalPath = "WGA-webGames\"
 		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_57448\"
 		Release.AspNetCompiler.Updateable = "true"
 		Release.AspNetCompiler.ForceOverwrite = "true"
 		Release.AspNetCompiler.FixedNames = "false"
 		Release.AspNetCompiler.Debug = "False"
 		VWDPort = "57448"
-		SlnRelativePath = "WGA-html\"
+		SlnRelativePath = "WGA-webGames\"
 		DefaultWebSiteLanguage = "Visual C#"
 	EndProjectSection
 EndProject
-Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "WGA-site", "WGA-site\", "{6EAF603B-90BA-4F82-B23C-80D93DFB785F}"
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "WGA-projectSite", "WGA-projectSite\", "{6EAF603B-90BA-4F82-B23C-80D93DFB785F}"
 	ProjectSection(WebsiteProperties) = preProject
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.6.2"
 		Debug.AspNetCompiler.VirtualPath = "/localhost_57452"
-		Debug.AspNetCompiler.PhysicalPath = "WGA-site\"
+		Debug.AspNetCompiler.PhysicalPath = "WGA-projectSite\"
 		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_57452\"
 		Debug.AspNetCompiler.Updateable = "true"
 		Debug.AspNetCompiler.ForceOverwrite = "true"
 		Debug.AspNetCompiler.FixedNames = "false"
 		Debug.AspNetCompiler.Debug = "True"
 		Release.AspNetCompiler.VirtualPath = "/localhost_57452"
-		Release.AspNetCompiler.PhysicalPath = "WGA-site\"
+		Release.AspNetCompiler.PhysicalPath = "WGA-projectSite\"
 		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_57452\"
 		Release.AspNetCompiler.Updateable = "true"
 		Release.AspNetCompiler.ForceOverwrite = "true"
 		Release.AspNetCompiler.FixedNames = "false"
 		Release.AspNetCompiler.Debug = "False"
 		VWDPort = "57452"
-		SlnRelativePath = "WGA-site\"
+		SlnRelativePath = "WGA-projectSite\"
 		DefaultWebSiteLanguage = "Visual C#"
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Externals", "Externals", "{96ADB1C5-30AD-4689-8F08-36FB5298C668}"
+	ProjectSection(SolutionItems) = preProject
+		gulpfile.js = gulpfile.js
+		LICENSE = LICENSE
+		package.json = package.json
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Bats", "Bats", "{9457B49F-CE9D-48EB-AE95-1CE4AD3E09D0}"
+	ProjectSection(SolutionItems) = preProject
+		bats\star-ProjectSite.bat = bats\star-ProjectSite.bat
+		bats\star-WebGames.bat = bats\star-WebGames.bat
 	EndProjectSection
 EndProject
 Global
