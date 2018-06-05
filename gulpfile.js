@@ -4,7 +4,11 @@ var gulp = require('gulp'),
 		   browserSync = require('browser-sync'),
            runSequence = require('gulp-run-sequence'),
 		   htmlbuild = require('gulp-htmlbuild'),
-		   concat = require('gulp-concat');
+           concat = require('gulp-concat'),
+
+           sourcemaps = require('gulp-sourcemaps'),
+           tsc = require('gulp-typescript'),
+           tsConfig = require("tsconfig-glob");
 
 /* ==================== DIST SECTION START ==================== */
 /* ------ PROJECT SITE ------ */
@@ -15,27 +19,15 @@ gulp.task('assets-dist-projectSite', function () {
 gulp.task('css-dist-projectSite', function () {
     return gulp
         .src(['./WGA-projectSite/css/*.css'])
-        .pipe(concat('customCss.css'))
         .pipe(gulp.dest('./dist/WGA-projectSite/'));
 });
 gulp.task('js-dist-projectSite', function () {
     return gulp
-        .src('./WGA-projectSite/**/*.js')
-        .pipe(concat('customJs.js'))
+        .src('./WGA-projectSite/app.js')
         .pipe(gulp.dest('./dist/WGA-projectSite/'));
 });
 gulp.task('html-dist-projectSite', function () {
     gulp.src(['./WGA-projectSite/index.html'])
-        .pipe(htmlbuild({
-            js: htmlbuild.preprocess.js(function (block) {
-                block.write('customJs.js');
-                block.end();
-            }),
-            css: htmlbuild.preprocess.css(function (block) {
-                block.write('customCss.css');
-                block.end();
-            })
-        }))
         .pipe(gulp.dest('./dist/WGA-projectSite/'));
 });
 gulp.task('dist-projectSite', function () {
@@ -49,27 +41,15 @@ gulp.task('assets-dist-webGames', function () {
 gulp.task('css-dist-webGames', function () {
     return gulp
         .src(['./WGA-webGames/css/*.css'])
-		.pipe(concat('customCss.css'))
         .pipe(gulp.dest('./dist/WGA-webGames/'));
 });
 gulp.task('js-dist-webGames', function () {
     return gulp
-        .src('./WGA-webGames/**/*.js')
-		.pipe(concat('customJs.js'))
+        .src('./WGA-webGames/app.js')
         .pipe(gulp.dest('./dist/WGA-webGames/'));
 });
 gulp.task('html-dist-webGames', function () {
     gulp.src(['./WGA-webGames/index.html'])
-		.pipe(htmlbuild({
-			js: htmlbuild.preprocess.js(function (block) {
-				block.write('customJs.js');
-				block.end();
-			}),
-			css: htmlbuild.preprocess.css(function (block) {
-				block.write('customCss.css');
-				block.end();
-			})
-		}))
         .pipe(gulp.dest('./dist/WGA-webGames/'));
 });
 gulp.task('dist-webGames', function () {
@@ -85,16 +65,6 @@ gulp.task('reload', function () {
 /* ------ PROJECT SITE ------ */
 gulp.task('js-projectSite', function () {
     gulp.src(['./WGA-projectSite/index.html'])
-		.pipe(htmlbuild({
-			js: htmlbuild.preprocess.js(function (block) {
-				block.write('customJs.js');
-				block.end();
-			}),
-			css: htmlbuild.preprocess.css(function (block) {
-				block.write('customCss.css');
-				block.end();
-			})
-		}))
         .pipe(browserSync.reload({ stream: true }));
 });
 gulp.task('html-projectSite', function () {
@@ -118,7 +88,7 @@ gulp.task('serve-projectSite', ['js-projectSite', 'html-projectSite', 'css-proje
     });
 });
 gulp.task('watch-projectSite', ['serve-projectSite'], function () {
-    gulp.watch(['./WGA-projectSite/**/*.js'], function () {
+    gulp.watch(['./WGA-projectSite/js/**/*.js'], function () {
         runSequence(['js-projectSite'], 'reload');
     });
 
@@ -131,18 +101,18 @@ gulp.task('watch-projectSite', ['serve-projectSite'], function () {
     });
 });
 /* ------ WEB GAMES ------ */
-gulp.task('js-webGames', function () {
-    gulp.src(['./WGA-webGames/index.html'])
-        .pipe(htmlbuild({
-            js: htmlbuild.preprocess.js(function (block) {
-                block.write('customJs.js');
-                block.end();
-            }),
-            css: htmlbuild.preprocess.css(function (block) {
-                block.write('customCss.css');
-                block.end();
-            })
-        }))
+gulp.task('ts-webGames', function () {
+    var tsProject = tsc.createProject('./WGA-webGames/tsconfig.json');
+
+    var tsResult = tsProject.src()
+        .pipe(sourcemaps.init())
+        .pipe(tsProject());
+
+    tsResult.dts.pipe(gulp.dest('./WGA-webGames'));
+
+    tsResult.js
+        .pipe(sourcemaps.write('.'))
+        .pipe(gulp.dest('./WGA-webGames'))
         .pipe(browserSync.reload({ stream: true }));
 });
 gulp.task('html-webGames', function () {
@@ -153,7 +123,7 @@ gulp.task('css-webGames', function () {
     gulp.src(['./WGA-webGames/css/*.css'])
         .pipe(browserSync.reload({ stream: true }));
 });
-gulp.task('serve-webGames', ['js-webGames', 'html-webGames', 'css-webGames'], function () {
+gulp.task('serve-webGames', ['ts-webGames', 'html-webGames', 'css-webGames'], function () {
     browserSync.init({
         port: 4000,
         ui: {
@@ -166,15 +136,15 @@ gulp.task('serve-webGames', ['js-webGames', 'html-webGames', 'css-webGames'], fu
     });
 });
 gulp.task('watch-webGames', ['serve-webGames'], function () {
-    gulp.watch(['./WGA-webGames/**/*.js'], function () {
-        runSequence(['js-webGames'], 'reload');
+    gulp.watch(['./WGA-webGames/js/**/*.ts'], function () {
+        runSequence(['ts-webGames'], 'reload');
     });
 
-    gulp.watch(['.WGA-webGames/*.html'], function () {
+    gulp.watch(['.WGA-webGames/**/*.html'], function () {
         runSequence(['html-webGames'], 'reload');
     });
 
-    gulp.watch(['.WGA-webGames/css/*.css'], function () {
+    gulp.watch(['.WGA-webGames/css/**/*.css'], function () {
         runSequence(['css-webGames'], 'reload');
     });
 });

@@ -1,3 +1,7 @@
-﻿interface IPage extends IUpdateable, IDrawable {
+﻿module WGAAppModelue {
+    'use strict';
 
+    export interface IPage extends IUpdateable, IDrawable {
+
+    }
 }

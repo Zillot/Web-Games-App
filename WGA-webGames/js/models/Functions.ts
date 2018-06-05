@@ -1,7 +1,11 @@
-﻿type CallbackFunction = () => void;
+﻿module WGAAppModelue {
+    'use strict';
 
-class WGAEventContainer {
-    public Handler: CallbackFunction;
-    public Name: string;
-    public Type: number;
+    export type CallbackFunction = () => void;
+
+    export class WGAEventContainer {
+        public Handler: CallbackFunction;
+        public Name: string;
+        public Type: number;
+    }
 }

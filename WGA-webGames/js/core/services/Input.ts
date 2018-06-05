@@ -1,108 +1,133 @@
-class Input {
-    public MousePos: Vector2;
-    private mouseDown: number;
+module WGAAppModelue {
+    'use strict';
 
-    private eventsHandlers: WGAEventContainer[];
-    private enableEvent: boolean;
+    export class Input {
+        public MousePos: Vector2;
+        private mouseDown: number;
 
-    constructor() {
-        this.MousePos = new Vector2();
-        this.eventsHandlers = [];
+        private eventsHandlers: WGAEventContainer[];
+        private enableEvent: boolean;
 
-        this.mouseDown = 0;
+        constructor() {
+            this.MousePos = new Vector2();
+            this.eventsHandlers = [];
 
-        var canvas = document.getElementById(Setups.I.CanvasName);
-        document.body.onmousedown = () => this.MouseDownFun(this);
-        document.body.onmouseup = () => this.MouseUpFun(this);
-        canvas.addEventListener('mousemove', evt => this.MouseMoveFun(this, canvas, evt), false);
-    }
+            this.mouseDown = 0;
 
-    public MouseDownFun(those: Input): void {
-        those.mouseDown++;
-        if (those.mouseDown > 1) {
-            those.mouseDown = 1;
+            var canvas = document.getElementById(Setups.I.CanvasName);
+            document.body.onmousedown = () => this.MouseDownFun(this);
+            document.body.onmouseup = () => this.MouseUpFun(this);
+            canvas.addEventListener('mousemove', evt => this.MouseMoveFun(this, canvas, evt), false);
         }
 
-        those.EventThrow(EventsTypes.leftMouseDown);
-    }
-    public MouseUpFun(those: Input): void {
-        those.mouseDown--;
-        if (those.mouseDown < 0) {
-            those.mouseDown = 0;
-        }
-        this.EventThrow(EventsTypes.leftMouseUp);
-        this.EventThrow(EventsTypes.leftMouseClick);
-    }
-    public MouseMoveFun(those: Input, canvas: any, evt: any): void {
-        var rect = canvas.getBoundingClientRect();
-        those.MousePos = new Vector2(evt.clientX - rect.left, evt.clientY - rect.top);
-    }
+        public MouseDownFun(those: Input): void {
+            those.mouseDown++;
+            if (those.mouseDown > 1) {
+                those.mouseDown = 1;
+            }
 
-    public GetMouseState(): number {
-        if (this.mouseDown == 0) {
-           return MouseState.up;
+            those.EventThrow(EventsTypes.leftMouseDown);
         }
-        else if (this.mouseDown == 1) {
-            return MouseState.down;
+        public MouseUpFun(those: Input): void {
+            those.mouseDown--;
+            if (those.mouseDown < 0) {
+                those.mouseDown = 0;
+            }
+            this.EventThrow(EventsTypes.leftMouseUp);
+            this.EventThrow(EventsTypes.leftMouseClick);
         }
-        else {
-            return MouseState.undefined;
+        public MouseMoveFun(those: Input, canvas: any, evt: any): void {
+            var rect = canvas.getBoundingClientRect();
+            those.MousePos = new Vector2(evt.clientX - rect.left, evt.clientY - rect.top);
         }
-    }
-    public PreventHandlers(): void {
-        this.enableEvent = false;
-    }
-    public EventThrow(typeId: number): void {
-        this.enableEvent = true;
 
-        for (var eventKey in this.eventsHandlers) {
-            var event = this.eventsHandlers[eventKey];
+        public GetMouseState(): number {
+            if (this.mouseDown == 0) {
+                return MouseState.up;
+            }
+            else if (this.mouseDown == 1) {
+                return MouseState.down;
+            }
+            else {
+                return MouseState.undefined;
+            }
+        }
+        public PreventHandlers(): void {
+            this.enableEvent = false;
+        }
+        public EventThrow(typeId: number): void {
+            this.enableEvent = true;
 
-            try {
-                if (this.enableEvent && event.Type == typeId) {
-                    event.Handler();
+            for (var eventKey in this.eventsHandlers) {
+                var event = this.eventsHandlers[eventKey];
+
+                try {
+                    if (this.enableEvent && event.Type == typeId) {
+                        event.Handler();
+                    }
+                    else {
+                        break;
+                    }
                 }
-                else {
-                    break;
+                catch (ex) {
+
                 }
             }
-            catch(ex) {
+        }
+        public GetMousePosition(): Vector2 {
+            return this.MousePos;
+        }
+        public OnInputEvent(handler: any, name: string, typeId: number): WGAEventContainer {
+            this.RemoveHandler(name, typeId);
 
+            this.eventsHandlers.push(<WGAEventContainer>{
+                Handler: handler,
+                Name: name,
+                Type: typeId
+            });
+
+            return this.eventsHandlers[this.eventsHandlers.length - 1];
+        }
+        public RemoveHandlerByObj(handler: any): boolean {
+            return this.RemoveHandler(handler.name, handler.type);
+        }
+        public RemoveHandler(name: string, typeId: number): boolean {
+            var status = false;
+
+            for (var i = 0; i < this.eventsHandlers.length; i++) {
+                var event = this.eventsHandlers[i];
+
+                if (event.Name == name && event.Type == typeId) {
+                    this.eventsHandlers.splice(1, i);
+                    status = true;
+                }
             }
+
+            return status;
         }
     }
-    public GetMousePosition(): Vector2 {
-        return this.MousePos;
-    }
-    public OnInputEvent(handler: any, name: string, typeId: number): WGAEventContainer {
-        this.RemoveHandler(name, typeId);
 
-        this.eventsHandlers.push(<WGAEventContainer>{
-            Handler: handler,
-            Name: name,
-            Type: typeId
-        });
-
-        return this.eventsHandlers[this.eventsHandlers.length - 1];
-    }
-    public RemoveHandlerByObj(handler: any): boolean {
-        return this.RemoveHandler(handler.name, handler.type);
-    }
-    public RemoveHandler(name: string, typeId: number): boolean {
-        var status = false;
-
-        for (var i = 0; i < this.eventsHandlers.length; i++) {
-            var event = this.eventsHandlers[i];
-
-            if (event.Name == name && event.Type == typeId) {
-                this.eventsHandlers.splice(1, i);
-                status = true;
-            }
+    export class MouseState {
+        static get down(): number {
+            return 1;
         }
+        static get up(): number {
+            return 2;
+        }
+        static get undefined(): number {
+            return 3;
+        }
+    }
 
-        return status;
+    export class EventsTypes {
+        static get leftMouseClick(): number {
+            return 1;
+        }
+        static get leftMouseUp(): number {
+            return 2;
+        }
+        static get leftMouseDown(): number {
+            return 3;
+        }
     }
 }
-
-var MouseState = Object.freeze({ "down": 1, "up": 2, "undefined": 3 })
-var EventsTypes = Object.freeze({ "leftMouseClick": 1, "leftMouseUp": 2, "leftMouseDown": 3 })

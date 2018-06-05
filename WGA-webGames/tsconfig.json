@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+        "target": "es5",
+        "declaration": false,
+        "noImplicitAny": false,
+        "removeComments": false,
+        "noLib": false,
+        "outFile": "app.js"
+    },
+    "compileOnSave": true,
+    "include": [
+        "js/**/*.ts"
+    ]
+}

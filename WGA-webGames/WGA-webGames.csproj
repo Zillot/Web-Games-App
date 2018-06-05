@@ -13,81 +13,17 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="js\App.ts" />
-    <None Remove="js\common\Bullet.ts" />
-    <None Remove="js\common\Gun.ts" />
-    <None Remove="js\common\Unit.ts" />
-    <None Remove="js\coreDefence\CoreDefence.ts" />
-    <None Remove="js\coreDefence\CoreGun.ts" />
-    <None Remove="js\coreDefence\Enemy.ts" />
-    <None Remove="js\core\engine\Color4.ts" />
-    <None Remove="js\core\engine\Rect.ts" />
-    <None Remove="js\core\engine\Value.ts" />
-    <None Remove="js\core\engine\Vector2.ts" />
-    <None Remove="js\core\services\Core.ts" />
-    <None Remove="js\core\services\Draw.ts" />
-    <None Remove="js\core\services\Geometry.ts" />
-    <None Remove="js\core\services\Input.ts" />
-    <None Remove="js\core\services\Utils.ts" />
-    <None Remove="js\core\ui\Button.ts" />
-    <None Remove="js\mainMenu\MainMain.ts" />
-    <None Remove="js\mainMenu\pages\MainPage.ts" />
-    <None Remove="js\models\functions.ts" />
-    <None Remove="js\models\interfaces\IDrawable.ts" />
-    <None Remove="js\models\interfaces\IPage.ts" />
-    <None Remove="js\models\interfaces\IUpdateable.ts" />
-    <None Remove="js\models\IWGAGame.ts" />
-    <None Remove="js\models\WGAGameContainer.ts" />
-    <None Remove="js\Setups.ts" />
-    <None Remove="js\WGAMain.ts" />
-    <None Remove="js\zombieShoter\Zombie.ts" />
-    <None Remove="js\zombieShoter\ZombieShoter.ts" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.8" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <TypeScriptCompile Include="js\App.ts" />
-    <TypeScriptCompile Include="js\common\Bullet.ts" />
-    <TypeScriptCompile Include="js\common\Gun.ts" />
-    <TypeScriptCompile Include="js\common\Unit.ts" />
-    <TypeScriptCompile Include="js\coreDefence\CoreDefence.ts" />
-    <TypeScriptCompile Include="js\coreDefence\CoreGun.ts" />
-    <TypeScriptCompile Include="js\coreDefence\Enemy.ts" />
-    <TypeScriptCompile Include="js\core\engine\Color4.ts" />
-    <TypeScriptCompile Include="js\core\engine\Rect.ts" />
-    <TypeScriptCompile Include="js\core\engine\Value.ts" />
-    <TypeScriptCompile Include="js\core\engine\Vector2.ts" />
-    <TypeScriptCompile Include="js\core\services\Core.ts" />
-    <TypeScriptCompile Include="js\core\services\Draw.ts" />
-    <TypeScriptCompile Include="js\core\services\Geometry.ts" />
-    <TypeScriptCompile Include="js\core\services\Input.ts" />
-    <TypeScriptCompile Include="js\core\services\Utils.ts" />
-    <TypeScriptCompile Include="js\core\ui\Button.ts" />
-    <TypeScriptCompile Include="js\mainMenu\MainMain.ts" />
-    <TypeScriptCompile Include="js\mainMenu\pages\MainPage.ts" />
-    <TypeScriptCompile Include="js\models\Functions.ts" />
-    <TypeScriptCompile Include="js\models\interfaces\IDrawable.ts" />
-    <TypeScriptCompile Include="js\models\interfaces\IPage.ts" />
-    <TypeScriptCompile Include="js\models\interfaces\IUpdateable.ts" />
-    <TypeScriptCompile Include="js\models\interfaces\IWGAGame.ts" />
-    <TypeScriptCompile Include="js\models\WGAGameContainer.ts" />
-    <TypeScriptCompile Include="js\Setups.ts" />
-    <TypeScriptCompile Include="js\WGAMain.ts" />
-    <TypeScriptCompile Include="js\zombieShoter\Zombie.ts" />
-    <TypeScriptCompile Include="js\zombieShoter\ZombieShoter.ts" />
   </ItemGroup>
 
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
     <TypeScriptTarget>ES5</TypeScriptTarget>
     <TypeScriptJSXEmit>None</TypeScriptJSXEmit>
-    <TypeScriptModuleKind>AMD</TypeScriptModuleKind>
+    <TypeScriptModuleKind>CommonJS</TypeScriptModuleKind>
     <TypeScriptCompileOnSaveEnabled>True</TypeScriptCompileOnSaveEnabled>
     <TypeScriptNoImplicitAny>False</TypeScriptNoImplicitAny>
     <TypeScriptRemoveComments>False</TypeScriptRemoveComments>
-    <TypeScriptOutFile />
+    <TypeScriptOutFile>WGAAppModelue</TypeScriptOutFile>
     <TypeScriptOutDir />
     <TypeScriptGeneratesDeclarations>False</TypeScriptGeneratesDeclarations>
     <TypeScriptNoEmitOnError>True</TypeScriptNoEmitOnError>

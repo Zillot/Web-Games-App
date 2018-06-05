@@ -1,34 +1,40 @@
-﻿class Setups {
-    public static I: Setups;
+﻿module WGAAppModelue {
+    'use strict';
 
-    public WindowWidth: number;
-    public WindowHeight: number;
-    public CanvasName: string;
+    export class Setups {
+        public static I: Setups;
 
-    public Center: Vector2;
+        public WindowWidth: number;
+        public WindowHeight: number;
+        public CanvasName: string;
 
-    public Utils: Utils;
-    public Draw: Draw;
-    public Core: Core;
-    public Input: Input;
-    public Geometry: Geometry;
+        public Center: Vector2;
 
-    public App: WGAApp;
+        public Utils: Utils;
+        public Draw: Draw;
+        public Core: Core;
+        public Input: Input;
+        public Geometry: Geometry;
 
-    constructor() {
-        Setups.I.WindowWidth = window.innerWidth;
-        Setups.I.WindowHeight = window.innerHeight;
-        Setups.I.CanvasName = "DrawField";
-        //-----------
+        public App: WGAApp;
 
-        Setups.I.Center = new Vector2(Setups.I.WindowWidth, Setups.I.WindowHeight).DIV(2);
+        constructor() {
+            Setups.I = this;
 
-        Setups.I.Utils = new Utils();
-        Setups.I.Draw = new Draw();
-        Setups.I.Core = new Core();
-        Setups.I.Input = new Input();
-        Setups.I.Geometry = new Geometry();
+            Setups.I.WindowWidth = window.innerWidth;
+            Setups.I.WindowHeight = window.innerHeight;
+            Setups.I.CanvasName = "DrawField";
+            //-----------
 
-        Setups.I.App = new WGAApp();
+            Setups.I.Center = new Vector2(Setups.I.WindowWidth, Setups.I.WindowHeight).DIV(2);
+
+            Setups.I.Utils = new Utils();
+            Setups.I.Draw = new Draw();
+            Setups.I.Core = new Core();
+            Setups.I.Input = new Input();
+            Setups.I.Geometry = new Geometry();
+
+            Setups.I.App = new WGAApp();
+        }
     }
 }

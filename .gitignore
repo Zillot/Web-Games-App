@@ -1,4 +1,9 @@
+.vs/
 **/node_modules/
 **/bin/
 **/obj/
 **/dist/
+WGA-webGames/js/**
+WGA-webGames/js/**/**.map
+app.js
+package-lock.json

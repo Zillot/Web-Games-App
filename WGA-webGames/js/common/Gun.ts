@@ -1,67 +1,71 @@
-class Gun {
-    public Position: Vector2;
-    public Direction: Vector2;
-    public Power: number; 
-    public AngleControll: Value;
+module WGAAppModelue {
+    'use strict';
 
-    public Reload: number;
-    public Angle: number;
+    export class Gun {
+        public Position: Vector2;
+        public Direction: Vector2;
+        public Power: number;
+        public AngleControll: Value;
 
-    public Bullets: Bullet[];
+        public Reload: number;
+        public Angle: number;
 
-    constructor(position: Vector2, rotationSpeed: number) {
-        this.Power = 10;
-        this.Direction = new Vector2(-1, 0);
-        this.Position = position;
+        public Bullets: Bullet[];
 
-        this.Bullets = [];
+        constructor(position: Vector2, rotationSpeed: number) {
+            this.Power = 10;
+            this.Direction = new Vector2(-1, 0);
+            this.Position = position;
 
-        this.Reload = 0;
-		
-		this.AngleControll = new Value(0, rotationSpeed);
-    }
+            this.Bullets = [];
 
-    public Update(timeDelta: number): void {
-        var toMouseDir = Setups.I.Input.MousePos.SUB(this.Position).Normalize();
-        var delta = Vector2.AngleBetween(this.Direction, toMouseDir);
+            this.Reload = 0;
 
-        this.AngleControll.GoToDelta(delta);
-		this.AngleControll.Update(timeDelta);
-
-        this.Direction = Vector2.Left().RotateTo(this.AngleControll.GetVal());
-		
-        if (this.Reload > 0) {
-            this.Reload -= timeDelta;
+            this.AngleControll = new Value(0, rotationSpeed);
         }
 
-        for (var item in this.Bullets) {
-            this.Bullets[item].Update(timeDelta);
+        public Update(timeDelta: number): void {
+            var toMouseDir = Setups.I.Input.MousePos.SUB(this.Position).Normalize();
+            var delta = Vector2.AngleBetween(this.Direction, toMouseDir);
+
+            this.AngleControll.GoToDelta(delta);
+            this.AngleControll.Update(timeDelta);
+
+            this.Direction = Vector2.Left().RotateTo(this.AngleControll.GetVal());
+
+            if (this.Reload > 0) {
+                this.Reload -= timeDelta;
+            }
+
+            for (var item in this.Bullets) {
+                this.Bullets[item].Update(timeDelta);
+            }
         }
-    }
-    public Draw(ctx: any): void {
-        this.drawBullets(ctx);
-        this.drawGun(ctx);
-    }
-    //-------------
-    protected drawBullets(ctx: any): void {
-        for (var item in this.Bullets) {
-            this.Bullets[item].Draw(ctx);
+        public Draw(ctx: any): void {
+            this.drawBullets(ctx);
+            this.drawGun(ctx);
         }
-    }
+        //-------------
+        protected drawBullets(ctx: any): void {
+            for (var item in this.Bullets) {
+                this.Bullets[item].Draw(ctx);
+            }
+        }
 
-    protected drawGun(ctx: any): void {
-        Setups.I.Draw.RectFill(<FillRectParams>{ position: this.Position, size: new Vector2(50, 10), origin: new Vector2(1, 0), color: Color4.ColorFromHex('#00FF00'), angle: this.AngleControll.GetVal() });
-        Setups.I.Draw.RectFill(<FillRectParams>{ position: this.Position, size: new Vector2(5, 5), origin: new Vector2(0, 0), color: Color4.ColorFromHex('#FFFF00') });
-    }
+        protected drawGun(ctx: any): void {
+            Setups.I.Draw.RectFill(<FillRectParams>{ position: this.Position, size: new Vector2(50, 10), origin: new Vector2(1, 0), color: Color4.ColorFromHex('#00FF00'), angle: this.AngleControll.GetVal() });
+            Setups.I.Draw.RectFill(<FillRectParams>{ position: this.Position, size: new Vector2(5, 5), origin: new Vector2(0, 0), color: Color4.ColorFromHex('#FFFF00') });
+        }
 
-    public Shoot(point: Vector2): void {
-        if (this.Reload <= 0) {
-            this.Reload = 0.3;
-            var pos = this.Position;
-			var power = 10;
-            var speed = 1000 + Setups.I.Utils.RandF(-1, 1);
+        public Shoot(point: Vector2): void {
+            if (this.Reload <= 0) {
+                this.Reload = 0.3;
+                var pos = this.Position;
+                var power = 10;
+                var speed = 1000 + Setups.I.Utils.RandF(-1, 1);
 
-            this.Bullets.push(new Bullet(pos.ADD(this.Direction.MUL(40)), this.Direction, power, speed));
+                this.Bullets.push(new Bullet(pos.ADD(this.Direction.MUL(40)), this.Direction, power, speed));
+            }
         }
     }
 }

@@ -1,41 +1,45 @@
-class Unit implements IUpdateable, IDrawable {
-    public Position: Vector2;
-    public Direction: Vector2;
-    public MaxHp: number;
-    public Hp: number;
-    public Speed: number;
-    public HitDistance: number;
+module WGAAppModelue {
+    'use strict';
 
-    constructor(position: Vector2, direction: Vector2, hp: number, speed: number, hitDistnace: number) {
-        this.Position = position;
-        this.Direction = direction;
-        this.MaxHp = hp;
-        this.Hp = hp;
-        this.Speed = speed;
+    export class Unit implements IUpdateable, IDrawable {
+        public Position: Vector2;
+        public Direction: Vector2;
+        public MaxHp: number;
+        public Hp: number;
+        public Speed: number;
+        public HitDistance: number;
 
-        this.HitDistance = hitDistnace;
-    }
+        constructor(position: Vector2, direction: Vector2, hp: number, speed: number, hitDistnace: number) {
+            this.Position = position;
+            this.Direction = direction;
+            this.MaxHp = hp;
+            this.Hp = hp;
+            this.Speed = speed;
 
-    public Update(timeDelta: number): void {
-        this.Position = this.Position.ADD(this.Direction.MUL(this.Speed * timeDelta));
-    }
-    public Draw(ctx: any): void {
-        Setups.I.Draw.CircleFill(<FillCircleParams>{ position: this.Position, radius: 2 });
-    }
-    //-------------
-    public TryHit(bullet: Bullet): boolean {
-        if (Vector2.Distance(this.Position, bullet.Position) < this.HitDistance + bullet.HitDistance) {
-            this.Hit(bullet.Power);
-
-            return true;
+            this.HitDistance = hitDistnace;
         }
 
-        return false;
-    }
-    private Hit(power: number): void {
-        this.Hp -= power;
-        if (this.Hp < 0) {
-            this.Hp = 0;
+        public Update(timeDelta: number): void {
+            this.Position = this.Position.ADD(this.Direction.MUL(this.Speed * timeDelta));
+        }
+        public Draw(ctx: any): void {
+            Setups.I.Draw.CircleFill(<FillCircleParams>{ position: this.Position, radius: 2 });
+        }
+        //-------------
+        public TryHit(bullet: Bullet): boolean {
+            if (Vector2.Distance(this.Position, bullet.Position) < this.HitDistance + bullet.HitDistance) {
+                this.Hit(bullet.Power);
+
+                return true;
+            }
+
+            return false;
+        }
+        private Hit(power: number): void {
+            this.Hp -= power;
+            if (this.Hp < 0) {
+                this.Hp = 0;
+            }
         }
     }
 }
