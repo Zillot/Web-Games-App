@@ -41,18 +41,18 @@ module WGAAppModelue {
                 this.Bullets[item].Update(timeDelta);
             }
         }
-        public Draw(ctx: any): void {
-            this.drawBullets(ctx);
-            this.drawGun(ctx);
+        public Draw(): void {
+            this.drawBullets();
+            this.drawGun();
         }
         //-------------
-        protected drawBullets(ctx: any): void {
+        protected drawBullets(): void {
             for (var item in this.Bullets) {
-                this.Bullets[item].Draw(ctx);
+                this.Bullets[item].Draw();
             }
         }
 
-        protected drawGun(ctx: any): void {
+        protected drawGun(): void {
             Setups.I.Draw.RectFill(<FillRectParams>{ position: this.Position, size: new Vector2(50, 10), origin: new Vector2(1, 0), color: Color4.ColorFromHex('#00FF00'), angle: this.AngleControll.GetVal() });
             Setups.I.Draw.RectFill(<FillRectParams>{ position: this.Position, size: new Vector2(5, 5), origin: new Vector2(0, 0), color: Color4.ColorFromHex('#FFFF00') });
         }

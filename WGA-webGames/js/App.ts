@@ -13,7 +13,7 @@
             this.allGames = [
                 <WGAGameContainer>{
                     Name: "zombieShoter",
-                    Game: new ZombieShoter()
+                    Game: new ZombieShooter()
                 }, <WGAGameContainer>{
                     Name: "coreDefence",
                     Game: new CoreDefence()
@@ -50,13 +50,13 @@
                 this.currentGame.Game.Update(timeDelta);
             }
         }
-        public Draw(ctx: any): void {
+        public Draw(): void {
             if (this.pause == true) {
-                this.menu.Draw(ctx);
+                this.menu.Draw();
             }
 
             if (this.currentGame != null && this.pause == false) {
-                this.currentGame.Game.Draw(ctx);
+                this.currentGame.Game.Draw();
             }
         }
     }

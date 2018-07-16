@@ -12,6 +12,7 @@
 
         public Utils: Utils;
         public Draw: Draw;
+        public ExDraw: ExDraw;
         public Core: Core;
         public Input: Input;
         public Geometry: Geometry;
@@ -30,6 +31,7 @@
 
             Setups.I.Utils = new Utils();
             Setups.I.Draw = new Draw();
+            Setups.I.ExDraw = new ExDraw();
             Setups.I.Core = new Core();
             Setups.I.Input = new Input();
             Setups.I.Geometry = new Geometry();

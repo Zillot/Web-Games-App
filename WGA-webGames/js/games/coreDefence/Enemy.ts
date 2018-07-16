@@ -2,11 +2,6 @@ module WGAAppModelue {
     'use strict';
 
     export class Enemy extends Unit {
-        public Position: Vector2;
-        public Direction: Vector2;
-        public MaxHp: number;
-        public Hp: number;
-        public Speed: number;
         public Color: Color4;
         public Power: number;
         public Angle: number;
@@ -50,7 +45,7 @@ module WGAAppModelue {
             }
         }
 
-        public Draw(ctx: any): void {
+        public Draw(): void {
             Setups.I.Draw.CircleFill(<FillCircleParams>{ position: this.Position, radius: this.Radius * 2, color: this.Color });
         }
     }

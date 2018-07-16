@@ -39,40 +39,7 @@ module WGAAppModelue {
         public ArcFill(params: FillArcParams): void {
             this.arc(new StrokeArcParams(params, 0), 'fill');
         }
-        //extended figures
-        public DrawZombie(position: Vector2, angle: number, color1: Color4, color2: Color4, scale: Vector2 | number): void {
-            if (angle == null) { angle = 0; }
-            if (scale == null) { scale = new Vector2(1, 1); }
 
-            if (typeof scale == "number") {
-                scale = new Vector2(scale, scale);
-            }
-            var params = <FillRectParams>{
-                position: position,
-                size: new Vector2(30, 50),
-                origin: new Vector2(0, 0),
-                color: color1,
-                angle: angle,
-                scale: scale
-            };
-
-            Setups.I.Draw.RectFill(params);
-
-            params.position = position.ADD((new Vector2(12 * scale.X, 0)).RotateTo(angle));
-            params.size = new Vector2(20, 20);
-            params.color = color2;
-            Setups.I.Draw.RectFill(params);
-
-            params.size = new Vector2(15, 8);
-
-            params.position = position.ADD((new Vector2(16 * scale.X, -25 * scale.Y)).RotateTo(angle));
-            Setups.I.Draw.RectFill(params);
-
-            params.position = position.ADD((new Vector2(16 * scale.X, 25 * scale.Y)).RotateTo(angle));
-            Setups.I.Draw.RectFill(params);
-        }
-
-        //base figures privates
         private line(params: LineParams): void {
             LineParams.Normilize(params);
 
@@ -190,7 +157,7 @@ module WGAAppModelue {
         }
     }
 
-    // ===== Parameters containers stuff =====
+    // ===== Parameter`s containers stuff =====
     export class StandartParams {
         public position: Vector2;
         public origin: Vector2;

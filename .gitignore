@@ -3,9 +3,8 @@
 **/bin/
 **/obj/
 **/dist/
-WGA-webGames/js/**
-WGA-webGames/js/**/**.map
-app.js
+**.js
+**.map
 package-lock.json
 .vs/WGA-solution/DesignTimeBuild/.dtbcache
 .vs/WGA-solution/v15/.suo

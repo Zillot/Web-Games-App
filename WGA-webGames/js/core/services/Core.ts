@@ -89,7 +89,7 @@ module WGAAppModelue {
             ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
             if (Setups.I.App != null) {
-                Setups.I.App.Draw(ctx);
+                Setups.I.App.Draw();
             }
         }
     }

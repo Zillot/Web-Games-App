@@ -22,7 +22,7 @@ module WGAAppModelue {
         public Update(timeDelta: number): void {
             this.Position = this.Position.ADD(this.Direction.MUL(this.Speed * timeDelta));
         }
-        public Draw(ctx: any): void {
+        public Draw(): void {
             Setups.I.Draw.CircleFill(<FillCircleParams>{ position: this.Position, radius: 2 });
         }
         //-------------

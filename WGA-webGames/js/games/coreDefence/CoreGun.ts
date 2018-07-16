@@ -17,7 +17,7 @@ module WGAAppModelue {
             this.Width = 1;
         }
 
-        protected drawGun(ctx: any): void {
+        protected drawGun(): void {
             var value = this.AngleControll.GetVal() + Math.PI;
             var color1 = Color4.ColorFromHex('#7777FF');
             var color2 = Color4.ColorFromHex('#7777FF');

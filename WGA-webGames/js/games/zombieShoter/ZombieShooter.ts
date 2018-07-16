@@ -1,7 +1,7 @@
 module WGAAppModelue {
     'use strict';
 
-    export class ZombieShoter implements IWGAGame {
+    export class ZombieShooter implements IWGAGame {
         private zombies: Zombie[];
         private guns: Gun[];
 
@@ -9,29 +9,24 @@ module WGAAppModelue {
         private zombieSpawnPause: number;
         private coreSafeRadius: number;
 
-        private scoreGoal: number;
-        private scoreCurrent: number;
-        private level: number;
+        private game: Game;
 
         private killed: number;
-        private money: number;
-        private score: number;
-        private health: number;
 
         public Init(): void {
             this.killed = 0;
-            this.score = 0;
-            this.money = 0;
-            this.health = 100;
 
             this.zombies = [];
             this.guns = [];
 
-            this.level = 1;
             this.maxZombies = 4;
-            this.scoreGoal = 20;
-            this.scoreCurrent = 0;
             this.zombieSpawnPause = 0;
+
+            this.game = new Game(20, 100);
+
+            this.game.NextLevelEvent = () => {
+                this.maxZombies += (2 * this.game.Level);
+            };
 
             this.guns.push(new Gun(new Vector2(Setups.I.WindowWidth - 50, Setups.I.WindowHeight / 2), 0.5));
         }
@@ -45,7 +40,7 @@ module WGAAppModelue {
 
             if (this.zombies.length < this.maxZombies && this.zombieSpawnPause <= 0) {
                 this.SpawnZombie();
-                this.zombieSpawnPause = 4 / this.level;
+                this.zombieSpawnPause = 4 / this.game.Level;
             }
 
             if (this.zombieSpawnPause > 0) {
@@ -77,7 +72,7 @@ module WGAAppModelue {
                         }
 
                         if (zombie.Hp <= 0 || zombie.Position.X > Setups.I.WindowWidth + 100) {
-                            this.score += 10;
+                            this.game.AddScore(10);
 
                             if (zombie.Hp <= 0) {
                                 this.killed++;
@@ -96,45 +91,40 @@ module WGAAppModelue {
                 var zombie = this.zombies[zombieKey];
 
                 if (Vector2.Distance(zombie.Position, Setups.I.Center) < this.coreSafeRadius) {
-                    this.score -= 5;
+                    this.game.SubScore(5);
 
                     this.zombies.splice(zombieKey--, 1);
                     this.HitPlayer(zombie.Power);
                 }
             }
 
-            if (this.scoreCurrent >= this.scoreGoal) {
-                this.scoreGoal = this.scoreGoal * 3;
-                this.maxZombies += (2 * this.level);
-                this.level++;
-            }
+            this.game.Update(timeDelta);
         }
-        public Draw(ctx: any): void {
+
+        public Draw(): void {
             for (var item in this.zombies) {
-                this.zombies[item].Draw(ctx);
+                this.zombies[item].Draw();
             }
             for (var item in this.guns) {
-                this.guns[item].Draw(ctx);
+                this.guns[item].Draw();
             }
 
-            Setups.I.Draw.RectFill(<FillRectParams>{ position: new Vector2(0, 0), size: new Vector2(Setups.I.WindowWidth, 60), origin: new Vector2(1, 1), color: new Color4(0, 0, 0, 0.1) });
-
-            Setups.I.Draw.TextFill(<TextParams>{ str: "Killed: " + this.killed, position: new Vector2(10, 29), color: Color4.Gray(), fontName: "serif", fontSize: 18, origin: new Vector2(-1, 0) });
-            Setups.I.Draw.TextFill(<TextParams>{ str: "Level: " + this.level, position: new Vector2(Setups.I.WindowWidth / 2, 5), color: Color4.Gray(), fontName: "serif", fontSize: 30, origin: new Vector2(0, -1) });
-            Setups.I.Draw.TextFill(<TextParams>{ str: "Score: " + this.score, position: new Vector2(Setups.I.WindowWidth / 2, 35), color: Color4.Gray(), fontName: "serif", fontSize: 18, origin: new Vector2(0, -1) });
-            Setups.I.Draw.TextFill(<TextParams>{ str: this.money + " :Money", position: new Vector2(Setups.I.WindowWidth - 10, 7), color: Color4.Gray(), fontName: "serif", fontSize: 18, origin: new Vector2(1, -1) });
-            Setups.I.Draw.TextFill(<TextParams>{ str: this.health + " :Health", position: new Vector2(Setups.I.WindowWidth - 10, 33), color: Color4.Gray(), fontName: "serif", fontSize: 18, origin: new Vector2(1, -1) });
+            this.game.Draw(() => {
+                Setups.I.Draw.TextFill(<TextParams>{ str: "Killed: " + this.killed, position: new Vector2(10, 29), color: Color4.Gray(), fontName: "serif", fontSize: 18, origin: new Vector2(-1, 0) });
+            });
         }
+
         //-------------
         public SpawnZombie(): void {
             var pos = new Vector2(-40, Setups.I.Utils.RandI(100, Setups.I.WindowHeight - 50));
-            var hp = 50 * this.level;
-            var speed = 50 * (this.level / 2);
+            var hp = 50 * this.game.Level;
+            var speed = 50 * (this.game.Level / 2);
 
             this.zombies.push(new Zombie(pos, hp, speed));
         }
+
         public HitPlayer(power: number): void {
-            this.health -= power;
+            this.game.Hit(power);
         }
     }
 }

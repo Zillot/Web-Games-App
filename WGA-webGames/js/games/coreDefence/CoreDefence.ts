@@ -9,29 +9,20 @@ module WGAAppModelue {
         private enemieSpawnPause: number;
         private coreSafeRadius: number;
 
-        private scoreGoal: number;
-        private scoreCurrent: number;
-        private level: number;
-
-        private score: number;
-        private money: number;
-        private health: number;
+        private game: Game;
 
         constructor() { }
 
         public Init(): void {
-            this.score = 0;
-            this.money = 0;
-            this.health = 100;
-
             this.enemies = [];
             this.guns = [];
 
-            this.level = 1;
             this.maxEnemies = 10;
-            this.scoreGoal = 20;
-            this.scoreCurrent = 0;
             this.enemieSpawnPause = 1;
+
+            this.game.NextLevelEvent = () => {
+                this.maxEnemies += (2 * this.game.Level);
+            };
 
             this.coreSafeRadius = 50;
 
@@ -47,7 +38,7 @@ module WGAAppModelue {
 
             if (this.enemies.length < this.maxEnemies && this.enemieSpawnPause <= 0) {
                 this.SpawnEnemy();
-                this.enemieSpawnPause = 2 / this.level;
+                this.enemieSpawnPause = 2 / this.game.Level;
             }
 
             if (this.enemieSpawnPause > 0) {
@@ -72,7 +63,7 @@ module WGAAppModelue {
                     var rightGunAngle = this.guns.filter(x => x.CoveredByShield(enemyAngle))[0];
 
                     if (rightGunAngle) {
-                        this.score += 10;
+                        this.game.AddScore(10);
                         this.enemies.splice(enemyKey--, 1);
                         continue
                     }
@@ -81,35 +72,26 @@ module WGAAppModelue {
                 var demageClose = Vector2.Distance(enemy.Position, Setups.I.Center) < this.coreSafeRadius * 0.75;
 
                 if (demageClose) {
-                    this.score -= 5;
+                    this.game.SubScore(5);
 
                     this.enemies.splice(enemyKey--, 1);
                     this.HitPlayer(enemy.Power);
                 }
             }
 
-            if (this.scoreCurrent >= this.scoreGoal) {
-                this.scoreGoal = this.scoreGoal * 3;
-                this.maxEnemies += (2 * this.level);
-                this.level++;
-            }
+            this.game.Update(timeDelta);
         }
-        public Draw(ctx: any): void {
+        public Draw(): void {
             Setups.I.Draw.CircleStroke(<StrokeCircleParams>{ position: Setups.I.Center, radius: this.coreSafeRadius, color: Color4.Gray().GetTransparent(0.1) });
 
             for (var item in this.enemies) {
-                this.enemies[item].Draw(ctx);
+                this.enemies[item].Draw();
             }
             for (var item in this.guns) {
-                this.guns[item].Draw(ctx);
+                this.guns[item].Draw();
             }
 
-            Setups.I.Draw.RectFill(<FillRectParams>{ position: new Vector2(0, 0), size: new Vector2(Setups.I.WindowWidth, 60), origin: new Vector2(1, 1), color: new Color4(0, 0, 0, 0.1) });
-
-            Setups.I.Draw.TextFill(<TextParams>{ str: "Level: " + this.level, position: new Vector2(Setups.I.WindowWidth / 2, 5), color: Color4.Gray(), fontName: "serif", fontSize: 30, origin: new Vector2(0, -1) });
-            Setups.I.Draw.TextFill(<TextParams>{ str: "Score: " + this.score, position: new Vector2(Setups.I.WindowWidth / 2, 35), color: Color4.Gray(), fontName: "serif", fontSize: 18, origin: new Vector2(0, -1) });
-            Setups.I.Draw.TextFill(<TextParams>{ str: this.money + " :Money", position: new Vector2(Setups.I.WindowWidth - 10, 7), color: Color4.Gray(), fontName: "serif", fontSize: 18, origin: new Vector2(1, -1) });
-            Setups.I.Draw.TextFill(<TextParams>{ str: this.health + " :Health", position: new Vector2(Setups.I.WindowWidth - 10, 33), color: Color4.Gray(), fontName: "serif", fontSize: 18, origin: new Vector2(1, -1) });
+            this.game.Draw();
         }
         //-------------
         public SpawnEnemy(): void {
@@ -129,13 +111,13 @@ module WGAAppModelue {
             }
 
             var pos = new Vector2(x, y);
-            var hp = 50 * this.level;
-            var speed = 200 * (this.level / 2);
+            var hp = 50 * this.game.Level;
+            var speed = 200 * (this.game.Level / 2);
 
             this.enemies.push(new Enemy(pos, hp, speed));
         }
         public HitPlayer(power: number): void {
-            this.health -= power;
+            this.game.Hit(power);
         }
     }
 }
