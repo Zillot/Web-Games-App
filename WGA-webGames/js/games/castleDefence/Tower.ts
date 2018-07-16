@@ -21,6 +21,7 @@ module WGAAppModelue {
         }
 
         public Draw(): void {
+
         }
     }
 }
