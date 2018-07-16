@@ -21,7 +21,7 @@ module WGAAppModelue {
         }
 
         public Draw(): void {
-
+            Setups.I.ExDraw.DrawTower(this.Position, this.Size, this.Level, this.Color1, this.Color2, 1);
         }
     }
 }

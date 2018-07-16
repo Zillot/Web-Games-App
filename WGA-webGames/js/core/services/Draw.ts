@@ -15,6 +15,12 @@ module WGAAppModelue {
         public Line(params: LineParams): void {
             this.line(params);
         }
+        public TriangleStroke(params: StrokeTriangleParams): void {
+            this.triangle(params, 'stroke');
+        }
+        public TriangleFill(params: FillTriangleParams): void {
+            this.triangle(new StrokeTriangleParams(params, 0), 'fill');
+        }
         public RectStroke(params: StrokeRectParams): void {
             this.rect(params, 'stroke');
         }
@@ -55,6 +61,41 @@ module WGAAppModelue {
 
             this.ctx.restore();
         }
+
+        private triangle(params: StrokeTriangleParams, type: string): void {
+            StrokeRectParams.Normilize(params);
+            params.origin = params.origin.MUL(new Vector2(-1, -1));
+
+            var startPoint = params.position.X + params.size.X * 0.5 * params.origin.X;
+
+            this.ctx.save();
+
+            this.ctx.translate(params.position.X, params.position.Y);
+            this.ctx.scale((<Vector2>params.scale).X, (<Vector2>params.scale).Y);
+            this.ctx.rotate(params.angle);
+
+            var x = -(params.size.X / 2) + (params.size.X / 2) * params.origin.X;
+            var y = (params.size.Y / 2) + (params.size.Y / 2) * params.origin.Y;
+
+            this.ctx.beginPath();
+            this.ctx.moveTo(x, y);
+            this.ctx.lineTo(x + params.size.X, y);
+            this.ctx.lineTo(x + params.size.X / 2, y - params.size.Y);
+            this.ctx.lineTo(x, y);
+
+            if (type == 'stroke') {
+                this.ctx.lineWidth = params.thickness;
+                this.ctx.strokeStyle = params.color.GetRgba();
+                this.ctx.stroke();
+            }
+            else if (type == 'fill') {
+                this.ctx.fillStyle = params.color.GetRgba();
+                this.ctx.fill();
+            }
+
+            this.ctx.restore();
+        }
+
         private rect(params: StrokeRectParams, type: string): void {
             StrokeRectParams.Normilize(params);
             params.origin = params.origin.MUL(new Vector2(-1, -1));
@@ -153,6 +194,7 @@ module WGAAppModelue {
                 this.ctx.restore();
                 return res;
             }
+
             this.ctx.restore();
         }
     }
@@ -209,6 +251,34 @@ module WGAAppModelue {
         }
 
         public static Normilize(item: StrokeRectParams): void {
+            FillRectParams.Normilize(item);
+            if (item.thickness == null) { item.thickness = 1; }
+        }
+    }
+
+    export class FillTriangleParams extends StandartParams {
+        public size: Vector2;
+
+        constructor(params: StandartParams, size: Vector2) {
+            super(params);
+            this.size = size;
+        }
+
+        public static Normilize(item: FillRectParams): void {
+            StandartParams.Normilize(item);
+            if (item.size == null) { item.size = new Vector2(0, 0); }
+        }
+    }
+
+    export class StrokeTriangleParams extends FillTriangleParams {
+        public thickness: number;
+
+        constructor(params: FillTriangleParams, thickness: number) {
+            super(params, params.size);
+            this.thickness = thickness;
+        }
+
+        public static Normilize(item: StrokeTriangleParams): void {
             FillRectParams.Normilize(item);
             if (item.thickness == null) { item.thickness = 1; }
         }

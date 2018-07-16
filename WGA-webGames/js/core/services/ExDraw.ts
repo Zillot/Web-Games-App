@@ -34,7 +34,6 @@ module WGAAppModelue {
             Setups.I.Draw.RectFill(params);
         }
 
-
         public DrawTower(position: Vector2, size: Vector2, level: number, color1: Color4, color2: Color4, scale: Vector2 | number): void {
             if (position == null) { throw "position can not be null"; }
             if (size == null) { throw "size can not be null"; }
@@ -54,6 +53,7 @@ module WGAAppModelue {
             var capHi = 0.25 * size.Y;
             var pikeHi = 0.1 * size.Y;
 
+            //base tower
             Setups.I.Draw.RectFill(<FillRectParams>{
                 position: position,
                 size: new Vector2(0.6 * size.X, baseHi + levelHi),
@@ -61,6 +61,7 @@ module WGAAppModelue {
                 color: color1
             });
 
+            //tower cap
             Setups.I.Draw.RectFill(<FillRectParams>{
                 position: position.SUB(new Vector2(0, baseHi + levelHi)),
                 size: new Vector2(size.X, capHi),
@@ -68,27 +69,16 @@ module WGAAppModelue {
                 color: color2
             });
 
-            Setups.I.Draw.RectFill(<FillRectParams>{
-                position: position.SUB(new Vector2(0, baseHi + levelHi + capHi)),
-                size: new Vector2(size.X * 0.2, pikeHi),
-                origin: new Vector2(0, 1),
-                color: color2
-            });
-
-            Setups.I.Draw.RectFill(<FillRectParams>{
-                position: position.SUB(new Vector2(size.X * 0.5, baseHi + levelHi + capHi)),
-                size: new Vector2(size.X * 0.2, pikeHi),
-                origin: new Vector2(-1, 1),
-                color: color2
-            });
-
-
-            Setups.I.Draw.RectFill(<FillRectParams>{
-                position: position.SUB(new Vector2(-size.X * 0.5, baseHi + levelHi + capHi)),
-                size: new Vector2(size.X * 0.2, pikeHi),
-                origin: new Vector2(1, 1),
-                color: color2
-            });
+            //tower spikes
+            var start = position.SUB(new Vector2(size.X * 0.5, baseHi + levelHi + capHi));
+            for (var i = 0; i < 3; i++) {
+                Setups.I.Draw.RectFill(<FillRectParams>{
+                    position: start.ADD(new Vector2(size.X * 0.4 * i, 0)),
+                    size: new Vector2(size.X * 0.2, pikeHi),
+                    origin: new Vector2(-1, 1),
+                    color: color2
+                });
+            }
         }
     }
 }
