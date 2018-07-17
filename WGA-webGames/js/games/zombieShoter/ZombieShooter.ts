@@ -1,7 +1,7 @@
-module WGAAppModelue {
+module WGAAppModule {
     'use strict';
 
-    export class ZombieShooter implements IWGAGame {
+    export class ZombieShooter extends WGAGame {
         private zombies: Zombie[];
         private guns: Gun[];
 
@@ -12,6 +12,10 @@ module WGAAppModelue {
         private game: Game;
 
         private killed: number;
+
+        constructor() {
+            super();
+        }
 
         public Init(): void {
             this.killed = 0;

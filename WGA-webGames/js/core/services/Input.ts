@@ -1,4 +1,4 @@
-module WGAAppModelue {
+module WGAAppModule {
     'use strict';
 
     export class Input {
@@ -104,30 +104,6 @@ module WGAAppModelue {
             }
 
             return status;
-        }
-    }
-
-    export class MouseState {
-        static get down(): number {
-            return 1;
-        }
-        static get up(): number {
-            return 2;
-        }
-        static get undefined(): number {
-            return 3;
-        }
-    }
-
-    export class EventsTypes {
-        static get leftMouseClick(): number {
-            return 1;
-        }
-        static get leftMouseUp(): number {
-            return 2;
-        }
-        static get leftMouseDown(): number {
-            return 3;
         }
     }
 }

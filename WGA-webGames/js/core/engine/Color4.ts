@@ -1,4 +1,4 @@
-module WGAAppModelue {
+module WGAAppModule {
     'use strict';
 
     export class Color4 {
@@ -67,6 +67,14 @@ module WGAAppModelue {
             return Color4.red;
         }
 
+        private static darkRed: Color4;
+        public static DarkRed(): Color4 {
+            if (!Color4.darkRed) {
+                Color4.darkRed = new Color4(255, 128, 64, 1);
+            }
+            return Color4.darkRed;
+        }
+
         private static orange: Color4;
         public static Orange(): Color4 {
             if (Color4.orange == null) {
@@ -89,6 +97,14 @@ module WGAAppModelue {
                 Color4.green = new Color4(64, 255, 0, 1);
             }
             return Color4.green;
+        }
+
+        private static darkGreen: Color4;
+        public static DarkGreen(): Color4 {
+            if (Color4.darkGreen == null) {
+                Color4.darkGreen = new Color4(128, 255, 64, 1);
+            }
+            return Color4.darkGreen;
         }
 
         private static cyan: Color4;

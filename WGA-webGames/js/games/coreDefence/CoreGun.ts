@@ -1,4 +1,4 @@
-module WGAAppModelue {
+module WGAAppModule {
     'use strict';
 
     export class CoreGun extends Gun {

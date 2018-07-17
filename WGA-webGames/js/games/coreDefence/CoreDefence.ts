@@ -1,7 +1,7 @@
-module WGAAppModelue {
+module WGAAppModule {
     'use strict';
 
-    export class CoreDefence implements IWGAGame {
+    export class CoreDefence extends WGAGame {
         private enemies: Enemy[];
         private guns: CoreGun[];
 
@@ -11,7 +11,9 @@ module WGAAppModelue {
 
         private game: Game;
 
-        constructor() { }
+        constructor() {
+            super();
+        }
 
         public Init(): void {
             this.enemies = [];
@@ -80,6 +82,7 @@ module WGAAppModelue {
             }
 
             this.game.Update(timeDelta);
+            super.Update(timeDelta);
         }
         public Draw(): void {
             Setups.I.Draw.CircleStroke(<StrokeCircleParams>{ position: Setups.I.Center, radius: this.coreSafeRadius, color: Color4.Gray().GetTransparent(0.1) });
@@ -92,6 +95,7 @@ module WGAAppModelue {
             }
 
             this.game.Draw();
+            super.Draw();
         }
         //-------------
         public SpawnEnemy(): void {

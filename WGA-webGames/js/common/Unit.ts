@@ -1,4 +1,4 @@
-module WGAAppModelue {
+module WGAAppModule {
     'use strict';
 
     export class Unit implements IUpdateable, IDrawable {

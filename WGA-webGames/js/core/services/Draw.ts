@@ -1,14 +1,49 @@
-module WGAAppModelue {
+module WGAAppModule {
     'use strict';
 
     export class Draw {
         private ctx: any;
+        private cameraMathPosition: Vector2;
+        private cameraPosition: Vector2;
+        private cameraZoom: number;
+        private cameraAngle: number;
 
         public static PI2() { return 6.283185307179586476925286766559; }
         public static PI() { return 3.1415926535897932384626433832795; }
 
+        constructor() {
+           this.SetCameraPosition(new Vector2(0, 0));
+           this.SetCameraZoom(1);
+           this.SetCameraAngle(0);
+        }
+
         public SetCtx(ctx: any): void {
             this.ctx = ctx;
+        }
+
+        //camera controll
+        public SetCameraPosition(position: Vector2) {
+            this.cameraMathPosition = position;
+            this.UpdateCamera();
+        }
+
+        public SetCameraZoom(zoom: number) {
+            this.cameraZoom = zoom;
+            this.UpdateCamera();
+        }
+
+        public SetCameraAngle(angle: number) {
+            this.cameraAngle = angle;
+        }
+
+        private UpdateCamera() {
+            this.cameraPosition = this.cameraMathPosition.SUB(Setups.I.Center.MUL(this.cameraZoom));
+        }
+
+        private adjustViewToCamera() {
+            this.ctx.translate(this.cameraPosition.X, this.cameraPosition.Y);
+            this.ctx.scale(this.cameraZoom, this.cameraZoom);
+            this.ctx.rotate(this.cameraAngle);
         }
 
         //base figures
@@ -60,6 +95,8 @@ module WGAAppModelue {
             this.ctx.stroke();
 
             this.ctx.restore();
+
+            this.adjustViewToCamera();
         }
 
         private triangle(params: StrokeTriangleParams, type: string): void {
@@ -94,6 +131,8 @@ module WGAAppModelue {
             }
 
             this.ctx.restore();
+
+            this.adjustViewToCamera();
         }
 
         private rect(params: StrokeRectParams, type: string): void {
@@ -119,6 +158,8 @@ module WGAAppModelue {
             }
 
             this.ctx.restore();
+
+            this.adjustViewToCamera();
         }
         private arc(params: StrokeArcParams, type: string): void {
             StrokeArcParams.Normilize(params);
@@ -153,6 +194,8 @@ module WGAAppModelue {
             }
 
             this.ctx.restore();
+
+            this.adjustViewToCamera();
         }
         private textMeasure(params: TextParams): number {
             return this.drawText(params, "measure");
@@ -196,182 +239,10 @@ module WGAAppModelue {
             }
 
             this.ctx.restore();
-        }
-    }
 
-    // ===== Parameter`s containers stuff =====
-    export class StandartParams {
-        public position: Vector2;
-        public origin: Vector2;
-        public color: Color4;
-        public angle: number;
-        public scale: number | Vector2;
-
-        constructor(params: StandartParams) {
-            this.position = params.position;
-            this.origin = params.origin;
-            this.color = params.color;
-            this.angle = params.angle;
-            this.scale = params.scale;
-        }
-
-        public static Normilize(item: StandartParams): void {
-            if (item.position == null) { throw "position can not be null"; }
-            if (item.origin == null) { item.origin = new Vector2(0, 0); }
-            if (item.color == null) { item.color = new Color4(0, 0, 0, 1); }
-            if (item.angle == null) { item.angle = 0; }
-            if (item.scale == null) { item.scale = new Vector2(1, 1); }
-
-            if (typeof item.scale == "number") {
-                item.scale = new Vector2(item.scale, item.scale);
+            if (type == "fill" || type == "stroke") {
+                this.adjustViewToCamera();
             }
-        }
-    }
-
-    export class FillRectParams extends StandartParams {
-        public size: Vector2;
-
-        constructor(params: StandartParams, size: Vector2) {
-            super(params);
-            this.size = size;
-        }
-
-        public static Normilize(item: FillRectParams): void {
-            StandartParams.Normilize(item);
-            if (item.size == null) { item.size = new Vector2(0, 0); }
-        }
-    }
-
-    export class StrokeRectParams extends FillRectParams {
-        public thickness: number;
-
-        constructor(params: FillRectParams, thickness: number) {
-            super(params, params.size);
-            this.thickness = thickness;
-        }
-
-        public static Normilize(item: StrokeRectParams): void {
-            FillRectParams.Normilize(item);
-            if (item.thickness == null) { item.thickness = 1; }
-        }
-    }
-
-    export class FillTriangleParams extends StandartParams {
-        public size: Vector2;
-
-        constructor(params: StandartParams, size: Vector2) {
-            super(params);
-            this.size = size;
-        }
-
-        public static Normilize(item: FillRectParams): void {
-            StandartParams.Normilize(item);
-            if (item.size == null) { item.size = new Vector2(0, 0); }
-        }
-    }
-
-    export class StrokeTriangleParams extends FillTriangleParams {
-        public thickness: number;
-
-        constructor(params: FillTriangleParams, thickness: number) {
-            super(params, params.size);
-            this.thickness = thickness;
-        }
-
-        public static Normilize(item: StrokeTriangleParams): void {
-            FillRectParams.Normilize(item);
-            if (item.thickness == null) { item.thickness = 1; }
-        }
-    }
-
-    export class FillCircleParams extends StandartParams {
-        public radius: number;
-
-        constructor(params: StandartParams, radius: number) {
-            super(params);
-            this.radius = radius;
-        }
-
-        public static Normilize(item: FillCircleParams): void {
-            StandartParams.Normilize(item);
-            if (item.radius == null) { throw "radius can not be null"; }
-        }
-    }
-
-    export class StrokeCircleParams extends FillCircleParams {
-        public thickness: number;
-
-        constructor(params: FillCircleParams, thickness: number) {
-            super(params, params.radius);
-            this.thickness = thickness;
-        }
-
-        public static Normilize(item: StrokeCircleParams): void {
-            FillCircleParams.Normilize(item);
-            if (item.thickness == null) { item.thickness = 1; }
-        }
-    }
-
-    export class FillArcParams extends FillCircleParams {
-        public radius: number;
-        public startAngle: number;
-        public endAngle: number;
-
-        constructor(params: FillCircleParams, startAngle: number, endAngle: number) {
-            super(params, params.radius);
-            this.startAngle = startAngle;
-            this.endAngle = endAngle;
-        }
-
-        public Normilize(item: FillArcParams): void {
-            FillCircleParams.Normilize(item);
-            if (this.startAngle == null) { this.startAngle = 0; }
-            if (this.endAngle == null) { this.endAngle = Draw.PI(); }
-        }
-    }
-
-    export class StrokeArcParams extends FillArcParams {
-        public thickness: number;
-
-        constructor(params: FillArcParams, thickness: number) {
-            super(params, params.startAngle, params.endAngle);
-            this.thickness = thickness;
-        }
-
-        public Normilize(item: StrokeArcParams): void {
-            FillArcParams.Normilize(item);
-            if (this.thickness == null) { this.thickness = 1; }
-        }
-    }
-
-    export class TextParams extends StandartParams {
-        public str: string;
-        public fontName: string;
-        public fontSize: number;
-
-        constructor(params: StandartParams, fontName: string, fontSize: number) {
-            super(params);
-        }
-
-        public Normilize(item: TextParams): void {
-            StandartParams.Normilize(item);
-            if (this.str == null) { throw "str can not be null"; }
-            if (this.fontName == null) { this.fontName = "serif" }
-            if (this.fontSize == null) { this.fontSize = 10 }
-        }
-    }
-
-    export class LineParams {
-        public pointFrom: Vector2;
-        public pointTo: Vector2;
-        public thickness: number;
-        public color: Color4;
-
-        public static Normilize(item: LineParams): void {
-            if (item.pointFrom == null) { throw "pointFrom can not be null"; }
-            if (item.pointTo == null) { throw "pointTo can not be null"; }
-            if (item.thickness == null) { item.thickness = 1; }
-            if (item.color == null) { item.color = new Color4(0, 0, 0, 1); }
         }
     }
 }
