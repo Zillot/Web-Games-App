@@ -1,3 +1,5 @@
+/// <reference path="StandartParams.ts"/>
+
 module WGAAppModule {
     'use strict';
 

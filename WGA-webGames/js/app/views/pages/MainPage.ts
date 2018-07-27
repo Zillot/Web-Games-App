@@ -1,11 +1,11 @@
+/// <reference path="../../models/abstracts/Page.ts"/>
+
 module WGAAppModule {
     'use strict';
 
-    export class MainPage implements IPage {
-        public Buttons: Button[];
-
+    export class MainPage extends Page {
         constructor() {
-            this.Buttons = [];
+            super();
 
             this.Buttons.push(Button.GetButton({
                 name: "SelectGame1Btn",
@@ -48,32 +48,26 @@ module WGAAppModule {
                 size: new Vector2(200, 40),
                 color: Color4.White()
             }));
+
+            this.Buttons.push(Button.GetButton({
+                name: "CamTestBtn",
+                text: "Cam Test",
+                onClick: function () {
+                    Setups.I.App.SelectGameByName('cameraTest')
+                },
+                position: new Vector2(Setups.I.WindowWidth - 60, 30),
+                size: new Vector2(100, 40),
+                color: Color4.Blue()
+            }));
         }
 
-        public Dispose(): void {
-            for (var buttonKey in this.Buttons) {
-                var button = this.Buttons[buttonKey];
-                button.Dispose();
-            }
-        }
-
-        public Update(timeDelta: number): void {
-            for (var buttonKey in this.Buttons) {
-                var button = this.Buttons[buttonKey];
-                button.Update(timeDelta);
-            }
-        }
-
-        public Draw(): void {
+        public Draw() {
             Setups.I.Draw.RectFill(<FillRectParams>{ position: new Vector2(0, 0), size: new Vector2(Setups.I.WindowWidth, Setups.I.WindowHeight), origin: new Vector2(-1, -1), color: Color4.Black().GetTransparent(0.5) });
+
+            super.Draw();
 
             Setups.I.Draw.TextFill(<TextParams>{ str: 'Web games app', position: new Vector2(Setups.I.Center.X, 100), color: Color4.White(), fontSize: 50, origin: new Vector2(0) });
             Setups.I.Draw.TextFill(<TextParams>{ str: 'Main menu', position: new Vector2(Setups.I.Center.X, 150), color: Color4.White(), fontSize: 30, origin: new Vector2(0) });
-
-            for (var buttonKey in this.Buttons) {
-                var button = this.Buttons[buttonKey];
-                button.Draw();
-            }
         }
     }
 }

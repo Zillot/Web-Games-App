@@ -12,9 +12,7 @@ module WGAAppModule {
         public static PI() { return 3.1415926535897932384626433832795; }
 
         constructor() {
-           this.SetCameraPosition(new Vector2(0, 0));
-           this.SetCameraZoom(1);
-           this.SetCameraAngle(0);
+            this.ResetCamera();
         }
 
         public SetCtx(ctx: any): void {
@@ -22,28 +20,52 @@ module WGAAppModule {
         }
 
         //camera controll
+        public ResetCamera(): void {
+            this.SetCameraPosition(Setups.I.Center);
+            this.SetCameraZoom(1);
+            this.SetCameraAngle(0);
+        }
+
+        public GetCameraPosition(): Vector2 {
+            return this.cameraMathPosition;
+        }
         public SetCameraPosition(position: Vector2) {
             this.cameraMathPosition = position;
             this.UpdateCamera();
         }
 
+        public GetCameraZoom(): number {
+            return this.cameraZoom;
+        }
         public SetCameraZoom(zoom: number) {
             this.cameraZoom = zoom;
             this.UpdateCamera();
         }
 
+        public GetCameraAngle(): number {
+            return this.cameraAngle;
+        }
         public SetCameraAngle(angle: number) {
             this.cameraAngle = angle;
         }
 
         private UpdateCamera() {
+            if (!this.cameraZoom || !this.cameraMathPosition) {
+                return;
+            }
+
             this.cameraPosition = this.cameraMathPosition.SUB(Setups.I.Center.MUL(this.cameraZoom));
         }
 
-        private adjustViewToCamera() {
+        public adjustViewToCamera() {
+            this.ctx.save();
             this.ctx.translate(this.cameraPosition.X, this.cameraPosition.Y);
-            this.ctx.scale(this.cameraZoom, this.cameraZoom);
             this.ctx.rotate(this.cameraAngle);
+            this.ctx.scale(this.cameraZoom, this.cameraZoom);
+        }
+
+        public removeCameraInfuence() {
+            this.ctx.restore();
         }
 
         //base figures
@@ -95,8 +117,6 @@ module WGAAppModule {
             this.ctx.stroke();
 
             this.ctx.restore();
-
-            this.adjustViewToCamera();
         }
 
         private triangle(params: StrokeTriangleParams, type: string): void {
@@ -131,8 +151,6 @@ module WGAAppModule {
             }
 
             this.ctx.restore();
-
-            this.adjustViewToCamera();
         }
 
         private rect(params: StrokeRectParams, type: string): void {
@@ -158,8 +176,6 @@ module WGAAppModule {
             }
 
             this.ctx.restore();
-
-            this.adjustViewToCamera();
         }
         private arc(params: StrokeArcParams, type: string): void {
             StrokeArcParams.Normilize(params);
@@ -194,8 +210,6 @@ module WGAAppModule {
             }
 
             this.ctx.restore();
-
-            this.adjustViewToCamera();
         }
         private textMeasure(params: TextParams): number {
             return this.drawText(params, "measure");
@@ -239,10 +253,6 @@ module WGAAppModule {
             }
 
             this.ctx.restore();
-
-            if (type == "fill" || type == "stroke") {
-                this.adjustViewToCamera();
-            }
         }
     }
 }

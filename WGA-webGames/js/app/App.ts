@@ -12,7 +12,7 @@
 
             this.allGames = [
                 <WGAGameContainer>{
-                    Name: "zombieShoter",
+                    Name: "zombieShooter",
                     Game: new ZombieShooter()
                 }, <WGAGameContainer>{
                     Name: "coreDefence",
@@ -20,6 +20,9 @@
                 }, <WGAGameContainer>{
                     Name: "castleDeffence",
                     Game: new CastleDefence()
+                }, <WGAGameContainer>{
+                    Name: "cameraTest",
+                    Game: new CameraTest()
                 }];
 
             this.menu = new MainMenu();
@@ -59,7 +62,7 @@
             }
 
             if (this.currentGame != null && this.pause == false) {
-                this.currentGame.Game.Draw();
+                this.currentGame.Game.DrawGame();
             }
         }
     }

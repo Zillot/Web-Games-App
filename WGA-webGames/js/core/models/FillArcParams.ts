@@ -1,3 +1,5 @@
+/// <reference path="FillCircleParams.ts"/>
+
 module WGAAppModule {
     'use strict';
 

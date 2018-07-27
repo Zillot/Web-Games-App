@@ -2,7 +2,7 @@ module WGAAppModule {
     'use strict';
 
     export class MainMenu implements IUpdateable, IDrawable {
-        public page: IPage;
+        public page: Page;
 
         constructor() {
             this.page = new MainPage();

@@ -1,34 +1,32 @@
-﻿module WGAAppModule {
+﻿/// <reference path="../../models/abstracts/Page.ts"/>
+
+module WGAAppModule {
     'use strict';
 
-    export abstract class WGAGame implements IUpdateable, IDrawable {
-        public Buttons: Button[];
-
+    export abstract class WGAGame extends Page {
         constructor() {
-            this.Buttons = [];
+            super();
         }
 
         public abstract Init(): void;
 
         public Dispose(): void {
-            for (var buttonKey in this.Buttons) {
-                var button = this.Buttons[buttonKey];
-                button.Dispose();
-            }
+            super.Dispose();
         }
 
         public Update(timeDelta: number): void {
-            for (var buttonKey in this.Buttons) {
-                var button = this.Buttons[buttonKey];
-                button.Update(timeDelta);
-            }
+            super.Update(timeDelta);
         }
 
-        public Draw(): void {
-            for (var buttonKey in this.Buttons) {
-                var button = this.Buttons[buttonKey];
-                button.Draw();
-            }
+        public DrawGame() {
+            Setups.I.Draw.adjustViewToCamera();
+
+            this.Draw();
+
+            Setups.I.Draw.removeCameraInfuence();
+
+            //draw buttons upper all game interface
+            super.Draw();
         }
     }
 }
