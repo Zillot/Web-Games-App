@@ -1,3 +1,5 @@
+/// <reference path="../../app/models/abstracts/WGAGame.ts"/>
+
 module WGAAppModule {
     'use strict';
 
