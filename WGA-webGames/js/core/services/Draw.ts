@@ -59,9 +59,15 @@ module WGAAppModule {
 
         public adjustViewToCamera() {
             this.ctx.save();
-            this.ctx.translate(this.cameraPosition.X, this.cameraPosition.Y);
+
+            this.ctx.translate(-Setups.I.Center.X, -Setups.I.Center.Y);
+
             this.ctx.rotate(this.cameraAngle);
             this.ctx.scale(this.cameraZoom, this.cameraZoom);
+
+            var tempCamVector = Vector2.GetRotated(this.cameraPosition, -this.cameraAngle);
+            var tempCenterVector = Vector2.GetRotated(Setups.I.Center, -this.cameraAngle);
+            this.ctx.translate(tempCamVector.X + tempCenterVector.X, tempCamVector.Y + tempCenterVector.Y);
         }
 
         public removeCameraInfuence() {
