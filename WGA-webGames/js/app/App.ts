@@ -20,9 +20,6 @@
                 }, <WGAGameContainer>{
                     Name: "castleDeffence",
                     Game: new CastleDefence()
-                }, <WGAGameContainer>{
-                    Name: "cameraTest",
-                    Game: new CameraTest()
                 }];
 
             this.menu = new MainMenu();
@@ -58,7 +55,9 @@
         }
         public Draw(): void {
             if (this.pause == true) {
+                Setups.I.Draw.adjustMenuViewToCamera();
                 this.menu.Draw();
+                Setups.I.Draw.removeCameraInfuence();
             }
 
             if (this.currentGame != null && this.pause == false) {

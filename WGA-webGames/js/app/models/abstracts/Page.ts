@@ -15,6 +15,10 @@
             }
         }
 
+        public Init(): void {
+
+        }
+
         public Update(timeDelta: number): void {
             for (var buttonKey in this.Buttons) {
                 var button = this.Buttons[buttonKey];
