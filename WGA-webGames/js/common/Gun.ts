@@ -25,7 +25,8 @@ module WGAAppModule {
         }
 
         public Update(timeDelta: number): void {
-            var toMouseDir = Setups.I.Input.MousePos.SUB(this.Position).Normalize();
+
+            var toMouseDir = Setups.I.Input.GetMousePosition().SUB(this.Position).Normalize();
             var delta = Vector2.AngleBetween(this.Direction, toMouseDir);
 
             this.AngleControll.GoToDelta(delta);

@@ -27,10 +27,10 @@ module WGAAppModule {
         }
 
         public GetCameraPosition(): Vector2 {
-            return this.cameraMathPosition;
+            return this.cameraPosition;
         }
         public SetCameraPosition(position: Vector2) {
-            this.cameraMathPosition = position;
+            this.cameraPosition = position;
             this.UpdateCamera();
         }
 
@@ -50,24 +50,33 @@ module WGAAppModule {
         }
 
         private UpdateCamera() {
-            if (!this.cameraZoom || !this.cameraMathPosition) {
+            if (!this.cameraZoom || !this.cameraPosition) {
                 return;
             }
 
-            this.cameraPosition = this.cameraMathPosition.SUB(Setups.I.Center.MUL(this.cameraZoom));
+            this.cameraMathPosition = this.cameraPosition.MUL(Setups.I.FrameScale).SUB(Setups.I.Center.MUL(this.cameraZoom * Setups.I.FrameScale));
+        }
+
+        public adjustMenuViewToCamera() {
+            this.ctx.save();
+
+            this.ctx.translate(Setups.I.FrameRealOffset.X, Setups.I.FrameRealOffset.Y);
+            this.ctx.scale(Setups.I.FrameScale, Setups.I.FrameScale);
         }
 
         public adjustViewToCamera() {
             this.ctx.save();
 
-            this.ctx.translate(-Setups.I.Center.X, -Setups.I.Center.Y);
+            //TODO Fix camera rotation
+            //this.ctx.translate(-Setups.I.Center.X, -Setups.I.Center.Y);
+            this.ctx.translate(this.cameraMathPosition.X + Setups.I.FrameRealOffset.X, this.cameraMathPosition.Y + Setups.I.FrameRealOffset.Y);
 
             this.ctx.rotate(this.cameraAngle);
-            this.ctx.scale(this.cameraZoom, this.cameraZoom);
+            this.ctx.scale(this.cameraZoom * Setups.I.FrameScale, this.cameraZoom * Setups.I.FrameScale);
 
-            var tempCamVector = Vector2.GetRotated(this.cameraPosition, -this.cameraAngle);
-            var tempCenterVector = Vector2.GetRotated(Setups.I.Center, -this.cameraAngle);
-            this.ctx.translate(tempCamVector.X + tempCenterVector.X, tempCamVector.Y + tempCenterVector.Y);
+            //var tempCamVector = Vector2.GetRotated(this.cameraPosition, -this.cameraAngle);
+            //var tempCenterVector = Vector2.GetRotated(Setups.I.Center, -this.cameraAngle);
+           // this.ctx.translate(tempCamVector.X + tempCenterVector.X, tempCamVector.Y + tempCenterVector.Y);
         }
 
         public removeCameraInfuence() {

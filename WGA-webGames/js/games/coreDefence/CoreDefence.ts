@@ -24,6 +24,8 @@ module WGAAppModule {
             this.maxEnemies = 10;
             this.enemieSpawnPause = 1;
 
+            this.game = new Game(20, 100);
+
             this.game.NextLevelEvent = () => {
                 this.maxEnemies += (2 * this.game.Level);
             };
@@ -36,7 +38,7 @@ module WGAAppModule {
         public Update(timeDelta: number): void {
             if (Setups.I.Input.GetMouseState() == MouseState.down) {
                 for (var item in this.guns) {
-                    this.guns[item].Shoot(Setups.I.Input.MousePos);
+                    this.guns[item].Shoot(Setups.I.Input.GetMousePosition());
                 }
             }
 

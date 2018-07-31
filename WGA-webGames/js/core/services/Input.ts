@@ -2,14 +2,14 @@ module WGAAppModule {
     'use strict';
 
     export class Input {
-        public MousePos: Vector2;
+        private mousePos: Vector2;
         private mouseDown: number;
 
         private eventsHandlers: WGAEventContainer[];
         private enableEvent: boolean;
 
         constructor() {
-            this.MousePos = new Vector2();
+            this.mousePos = new Vector2();
             this.eventsHandlers = [];
 
             this.mouseDown = 0;
@@ -38,7 +38,7 @@ module WGAAppModule {
         }
         public MouseMoveFun(those: Input, canvas: any, evt: any): void {
             var rect = canvas.getBoundingClientRect();
-            those.MousePos = new Vector2(evt.clientX - rect.left, evt.clientY - rect.top);
+            those.mousePos = new Vector2(evt.clientX - rect.left, evt.clientY - rect.top);
         }
 
         public GetMouseState(): number {
@@ -75,7 +75,7 @@ module WGAAppModule {
             }
         }
         public GetMousePosition(): Vector2 {
-            return this.MousePos;
+            return this.mousePos.SUB(Setups.I.FrameRealOffset).MUL(Setups.I.BackFrameScale);
         }
         public OnInputEvent(handler: any, name: string, typeId: number): WGAEventContainer {
             this.RemoveHandler(name, typeId);
