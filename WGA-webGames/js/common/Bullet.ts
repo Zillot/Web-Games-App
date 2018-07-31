@@ -9,8 +9,8 @@ module WGAAppModule {
         public HitDistance: number;
 
         constructor(position: Vector2, direction: Vector2, power: number, speed: number) {
-            this.Position = position;
-            this.Direction = direction;
+            this.Position = position.GetCopy();
+            this.Direction = direction.GetCopy();
             this.Power = power;
             this.Speed = speed;
 

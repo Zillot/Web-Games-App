@@ -6,19 +6,23 @@ module WGAAppModule {
         public Y: number;
 
         constructor(x?: Vector2 | number, y?: number) {
-            var xVal: any = x;
+            var xOrVec: any = x;
 
             if (y == null && x == null) {
                 //empty constructor
             }
-            if (y == null) {
-                this.X = xVal;
-                this.Y = xVal;
+            else if (y == null) {
+                this.X = xOrVec.X;
+                this.Y = xOrVec.Y;
             }
             else {
-                this.X = xVal;
+                this.X = xOrVec;
                 this.Y = y;
             }
+        }
+
+        public GetCopy(): Vector2 {
+            return new Vector2(this.X, this.Y);
         }
 
         public Set(x: Vector2 | number, y?: number): Vector2 {
@@ -169,61 +173,61 @@ module WGAAppModule {
             return Vector2.AngleAbsBetween(v1, Vector2.Up());
         }
 
-        public static up: Vector2;
+        private static up: Vector2;
         public static Up(): Vector2 {
             if (!Vector2.up) {
                 Vector2.up = new Vector2(0, -1);
             }
-            return Vector2.up;
+            return Vector2.up.GetCopy();
         }
-        public static upright: Vector2;
+        private static upright: Vector2;
         public static Upright(): Vector2 {
             if (!Vector2.upright) {
                 Vector2.upright = new Vector2(1, -1).Normalize();
             }
-            return Vector2.upright;
+            return Vector2.upright.GetCopy();
         }
-        public static right: Vector2;
+        private static right: Vector2;
         public static Right(): Vector2 {
             if (!Vector2.right) {
                 Vector2.right = new Vector2(1, 0);
             }
-            return Vector2.right;
+            return Vector2.right.GetCopy();
         }
-        public static rightdown: Vector2;
+        private static rightdown: Vector2;
         public static Rightdown(): Vector2 {
             if (!Vector2.rightdown) {
                 Vector2.rightdown = new Vector2(1, 1).Normalize();
             }
-            return Vector2.rightdown;
+            return Vector2.rightdown.GetCopy();
         }
-        public static down: Vector2;
+        private static down: Vector2;
         public static Down(): Vector2 {
             if (!Vector2.down) {
                 Vector2.down = new Vector2(0, 1);
             }
-            return Vector2.down;
+            return Vector2.down.GetCopy();
         }
-        public static downleft: Vector2;
+        private static downleft: Vector2;
         public static Downleft(): Vector2 {
             if (!Vector2.downleft) {
                 Vector2.downleft = new Vector2(-1, 1).Normalize();
             }
-            return Vector2.downleft;
+            return Vector2.downleft.GetCopy();
         }
-        public static left: Vector2;
+        private static left: Vector2;
         public static Left(): Vector2 {
             if (!Vector2.left) {
                 Vector2.left = new Vector2(-1, 0);
             }
-            return Vector2.left;
+            return Vector2.left.GetCopy();
         }
-        public static leftup: Vector2;
+        private static leftup: Vector2;
         public static Leftup(): Vector2 {
             if (!Vector2.leftup) {
                 Vector2.leftup = new Vector2(-1, -1).Normalize();
             }
-            return Vector2.leftup;
+            return Vector2.leftup.GetCopy();
         }
     }
 }
