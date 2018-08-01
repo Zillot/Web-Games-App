@@ -26,7 +26,7 @@ module WGAAppModule {
             this.perFrameMsAwg = 0;
             this.speedLevel = 1000; //1000 - normal, more = slower
 
-            this.canvas = document.getElementById(Setups.I.CanvasName);
+            this.canvas = document.getElementById(Setups.I.FramesCanvasName);
 
             this.canvas.width = Setups.I.WindowWidth;
             this.canvas.height = Setups.I.WindowHeight;
@@ -40,7 +40,7 @@ module WGAAppModule {
                 return;
             }
 
-            Setups.I.Draw.SetCtx(this.canvasCtx);
+            Setups.I.Draw.SetCtx(this.canvasCtx, Setups.I.FramesCanvasName);
         }
 
         public Run(): void {

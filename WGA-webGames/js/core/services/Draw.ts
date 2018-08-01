@@ -1,3 +1,5 @@
+declare var $: any;
+
 module WGAAppModule {
     'use strict';
 
@@ -15,8 +17,9 @@ module WGAAppModule {
             this.ResetCamera();
         }
 
-        public SetCtx(ctx: any): void {
+        public SetCtx(ctx: any, canvasName: string): void {
             this.ctx = ctx;
+            this.currentCanvasName = canvasName;
         }
 
         //camera controll
@@ -268,6 +271,53 @@ module WGAAppModule {
             }
 
             this.ctx.restore();
+        }
+
+        public DrawImage(img: any, params: ImageParams) {
+            StandartParams.Normilize(params);
+
+            this.ctx.save();
+            this.ctx.translate(params.position.X, params.position.Y);
+
+            this.ctx.scale((<Vector2>params.scale).X, (<Vector2>params.scale).Y);
+            this.ctx.rotate(params.angle);
+
+            var x = -(params.size.X / 2) + (params.size.X) * params.origin.X;
+            var y = -(params.size.Y / 2) + (params.size.Y / 2) * params.origin.Y;
+
+            this.ctx.drawImage(img, x, y, params.size.X, params.size.Y);
+
+            this.ctx.restore();
+        }
+
+        public currentCanvasName: string;
+        public savedCtx: any;
+        public StartToDrawImageResource(width: number, height: number) {
+            this.savedCtx = this.ctx;
+
+            this.currentCanvasName = Setups.I.WorkingDrawCanvasName;
+            var canvas: any = document.getElementById(Setups.I.WorkingDrawCanvasName);
+            
+            canvas.width = width;
+            canvas.height = height;
+            canvas.style.width = width + 'px';
+            canvas.style.height = height + 'px';
+
+            if (canvas.getContext) {
+                this.ctx = canvas.getContext('2d');
+            }
+            else {
+                this.EndToDrawImageResource();
+                return;
+            }
+        }
+        public EndToDrawImageResource() {
+            this.currentCanvasName = Setups.I.FramesCanvasName;
+            this.ctx = this.savedCtx;
+        }
+
+        public MakeScreenShot() {
+            return (<any>document.getElementById(Setups.I.WorkingDrawCanvasName)).toDataURL();
         }
     }
 }

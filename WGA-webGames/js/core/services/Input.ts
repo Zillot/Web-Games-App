@@ -14,7 +14,7 @@ module WGAAppModule {
 
             this.mouseDown = 0;
 
-            var canvas = document.getElementById(Setups.I.CanvasName);
+            var canvas = document.getElementById(Setups.I.FramesCanvasName);
             document.body.onmousedown = () => this.MouseDownFun(this);
             document.body.onmouseup = () => this.MouseUpFun(this);
             canvas.addEventListener('mousemove', evt => this.MouseMoveFun(this, canvas, evt), false);

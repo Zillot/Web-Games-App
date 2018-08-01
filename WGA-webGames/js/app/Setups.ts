@@ -12,7 +12,8 @@
         public FrameScale: number;
         public BackFrameScale: number;
 
-        public CanvasName: string;
+        public FramesCanvasName: string;
+        public WorkingDrawCanvasName: string;
 
         public Center: Vector2;
         public RealCenter: Vector2;
@@ -41,7 +42,9 @@
                 this.RecalculateWindowsSize();
             };
 
-            Setups.I.CanvasName = "DrawField";
+            Setups.I.FramesCanvasName = "DrawField";
+            Setups.I.WorkingDrawCanvasName = "WorkingDraw";
+            
             //-----------
 
             Setups.I.Center = new Vector2(Setups.I.WindowWidth, Setups.I.WindowHeight).DIV(2);
