@@ -237,7 +237,6 @@ module WGAAppModule {
             params.origin = params.origin.MUL(new Vector2(-1, -1));
 
             if (type != "measure") {
-                //TODO!!
                 var sizeX = this.textMeasure(params);
                 var sizeY = params.fontSize;
 
