@@ -18,6 +18,28 @@ module WGAAppModule {
             document.body.onmousedown = () => this.MouseDownFun(this);
             document.body.onmouseup = () => this.MouseUpFun(this);
             canvas.addEventListener('mousemove', evt => this.MouseMoveFun(this, canvas, evt), false);
+
+            $(document).keydown(e => {
+                this.EventThrow(EventsTypes.keyboardKeyPressed, e.key, e.char);
+            });
+        }
+
+        public GetKeyCodeOfChar(char: string) {
+            if (char.length != 1) {
+                throw "input service error, length of char should only be 1 char";
+            }
+
+            var code = char.charCodeAt(0);
+
+            if (code >= 48 && code <= 57) {
+                return code;
+            }
+
+            if (code >= 97 && code <= 122) {
+                return code - 32;
+            }
+
+            return -1;
         }
 
         public MouseDownFun(those: Input): void {
@@ -26,15 +48,16 @@ module WGAAppModule {
                 those.mouseDown = 1;
             }
 
-            those.EventThrow(EventsTypes.leftMouseDown);
+            those.EventThrow(EventsTypes.mouseButtonPressed, KeyCodes.leftMouseDown, null);
         }
         public MouseUpFun(those: Input): void {
             those.mouseDown--;
             if (those.mouseDown < 0) {
                 those.mouseDown = 0;
             }
-            this.EventThrow(EventsTypes.leftMouseUp);
-            this.EventThrow(EventsTypes.leftMouseClick);
+
+            this.EventThrow(EventsTypes.mouseButtonPressed, KeyCodes.leftMouseUp, null);
+            this.EventThrow(EventsTypes.mouseButtonPressed, KeyCodes.leftMouseClick, null);
         }
         public MouseMoveFun(those: Input, canvas: any, evt: any): void {
             var rect = canvas.getBoundingClientRect();
@@ -55,15 +78,15 @@ module WGAAppModule {
         public PreventHandlers(): void {
             this.enableEvent = false;
         }
-        public EventThrow(typeId: number): void {
+        public EventThrow(typeId: number, keyCode: number, keyChar: string): void {
             this.enableEvent = true;
 
             for (var eventKey in this.eventsHandlers) {
                 var event = this.eventsHandlers[eventKey];
 
                 try {
-                    if (this.enableEvent && event.Type == typeId) {
-                        event.Handler();
+                    if (this.enableEvent && event.Type == typeId && (event.KeyCode == null || event.KeyCode == keyCode)) {
+                        event.Handler(keyCode, keyChar);
                     }
                     else {
                         break;
@@ -77,13 +100,14 @@ module WGAAppModule {
         public GetMousePosition(): Vector2 {
             return this.mousePos.SUB(Setups.I.FrameRealOffset).MUL(Setups.I.BackFrameScale);
         }
-        public OnInputEvent(handler: any, name: string, typeId: number): WGAEventContainer {
+        public OnInputEvent(handler: any, name: string, typeId: number, keyCode: number): WGAEventContainer {
             this.RemoveHandler(name, typeId);
 
             this.eventsHandlers.push(<WGAEventContainer>{
                 Handler: handler,
                 Name: name,
-                Type: typeId
+                Type: typeId,
+                KeyCode: keyCode
             });
 
             return this.eventsHandlers[this.eventsHandlers.length - 1];

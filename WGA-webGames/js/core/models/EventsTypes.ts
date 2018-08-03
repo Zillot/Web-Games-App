@@ -2,14 +2,8 @@ module WGAAppModule {
     'use strict';
 
     export class EventsTypes {
-        static get leftMouseClick(): number {
-            return 1;
-        }
-        static get leftMouseUp(): number {
-            return 2;
-        }
-        static get leftMouseDown(): number {
-            return 3;
-        }
+        public static mouseButtonPressed: number = 1;
+        public static keyboardKeyPressed: number = 2;
+        //to do: joustick? virtual device? network??
     }
 }
