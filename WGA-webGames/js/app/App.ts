@@ -5,7 +5,7 @@
         private pause: boolean;
         private allGames: WGAGameContainer[];
         private currentGame: WGAGameContainer;
-        private menu: MainMenu;
+        private pages: Pages;
 
         constructor() {
             this.pause = true;
@@ -22,7 +22,12 @@
                     Game: new CastleDefence()
                 }];
 
-            this.menu = new MainMenu();
+            this.pages = new Pages();
+
+            this.pages.CreatePage("Main", new MainPage());
+            this.pages.CreatePage("CameraTest", new CameraTestMenu());
+
+            this.pages.NavigateTo("Main");
         }
 
         public SelectGameByName(name: string): void {
@@ -46,7 +51,7 @@
 
         public Update(timeDelta: number): void {
             if (this.pause == true) {
-                this.menu.Update(timeDelta);
+                this.pages.Update(timeDelta);
             }
 
             if (this.currentGame != null && this.pause == false) {
@@ -56,7 +61,7 @@
         public Draw(): void {
             if (this.pause == true) {
                 Setups.I.Draw.adjustMenuViewToCamera();
-                this.menu.Draw();
+                this.pages.Draw();
                 Setups.I.Draw.removeCameraInfuence();
             }
 
