@@ -53,7 +53,7 @@ module WGAAppModule {
                     this.towerToBuild.Color2 = Color4.DarkRed().GetTransparent(0.3);
                 }
 
-                if (Setups.I.Input.GetMouseState() == MouseState.down && allowToBuild) {
+                if (Setups.I.Input.GetMouseState() == MouseState.Down && allowToBuild) {
                     this.BuildTower(this.towerToBuild);
                     this.towerToBuild = null;
                 }

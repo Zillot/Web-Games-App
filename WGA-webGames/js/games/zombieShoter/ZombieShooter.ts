@@ -38,7 +38,7 @@ module WGAAppModule {
         }
 
         public Update(timeDelta: number): void {
-            if (Setups.I.Input.GetMouseState() == MouseState.down) {
+            if (Setups.I.Input.GetMouseState() == MouseState.Down) {
                 for (var item in this.guns) {
                     this.guns[item].Shoot(Setups.I.Input.GetMousePosition());
                 }

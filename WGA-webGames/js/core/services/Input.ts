@@ -20,7 +20,7 @@ module WGAAppModule {
             canvas.addEventListener('mousemove', evt => this.MouseMoveFun(this, canvas, evt), false);
 
             $(document).keydown(e => {
-                this.EventThrow(EventsTypes.keyboardKeyPressed, e.key, e.char);
+                this.EventThrow(EventsTypes.KeyboardKeyPressed, e.key, e.char);
             });
         }
 
@@ -48,7 +48,7 @@ module WGAAppModule {
                 those.mouseDown = 1;
             }
 
-            those.EventThrow(EventsTypes.mouseButtonPressed, KeyCodes.leftMouseDown, null);
+            those.EventThrow(EventsTypes.MouseButtonPressed, KeyCodes.LeftMouseDown, null);
         }
         public MouseUpFun(those: Input): void {
             those.mouseDown--;
@@ -56,8 +56,8 @@ module WGAAppModule {
                 those.mouseDown = 0;
             }
 
-            this.EventThrow(EventsTypes.mouseButtonPressed, KeyCodes.leftMouseUp, null);
-            this.EventThrow(EventsTypes.mouseButtonPressed, KeyCodes.leftMouseClick, null);
+            this.EventThrow(EventsTypes.MouseButtonPressed, KeyCodes.LeftMouseUp, null);
+            this.EventThrow(EventsTypes.MouseButtonPressed, KeyCodes.LeftMouseClick, null);
         }
         public MouseMoveFun(those: Input, canvas: any, evt: any): void {
             var rect = canvas.getBoundingClientRect();
@@ -66,13 +66,13 @@ module WGAAppModule {
 
         public GetMouseState(): number {
             if (this.mouseDown == 0) {
-                return MouseState.up;
+                return MouseState.Up;
             }
             else if (this.mouseDown == 1) {
-                return MouseState.down;
+                return MouseState.Down;
             }
             else {
-                return MouseState.undefined;
+                return MouseState.Undefined;
             }
         }
         public PreventHandlers(): void {

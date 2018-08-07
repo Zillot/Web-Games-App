@@ -60,7 +60,7 @@ module WGAAppModule {
                 color: Color4.Blue()
             }));
         }
-        public res: any;
+
         public Draw() {
             Setups.I.Draw.RectFill(<FillRectParams>{ position: new Vector2(0, 0), size: new Vector2(Setups.I.WindowWidth, Setups.I.WindowHeight), origin: new Vector2(-1, -1), color: Color4.Black().GetTransparent(0.5) });
 
