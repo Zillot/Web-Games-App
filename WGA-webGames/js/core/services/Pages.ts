@@ -7,11 +7,23 @@ module WGAAppModule {
 
         private currentPage: Page;
 
-        //todo: on navigation transition
+        private pageTransition: PageTransitionController;
 
         constructor() {
             this.pages = [];
             this.history = [];
+
+            this.pageTransition = new PageTransitionController();
+        }
+
+        public Update(timeDelta) {
+            this.currentPage.Update(timeDelta);
+            this.pageTransition.Update(timeDelta);
+        }
+
+        public Draw() {
+            this.currentPage.Draw();
+            this.pageTransition.Draw();
         }
 
         public CreatePage(pageName: string, page: Page) {
@@ -28,34 +40,31 @@ module WGAAppModule {
             }
         }
 
-        public Update(timeDelta) {
-            this.currentPage.Update(timeDelta);
-        }
-
-        public Draw() {
-            this.currentPage.Draw();
-        }
-
-        private navigateToPage(page: Page, history: boolean) {
-            if (page == null) {
-                console.error("page with that name not found");
-            }
-            else {
-                this.currentPage = page;
-                if (history) {
-                    this.history.push(page);
-                }
-            }
-        }
-
         public GoBack() {
             if (this.history.length == 0) {
                 console.error("history empty");
                 return;
             }
-
+            
             var lastPage = this.history.pop();
             this.navigateToPage(lastPage, false);
+        }
+
+        ////
+        private navigateToPage(page: Page, history: boolean) {
+            if (page == null) {
+                console.error("page with that name not found");
+            }
+            else {
+                this.pageTransition.NavigateToStart(() => {
+                    this.currentPage = page;
+                    this.pageTransition.NavigateFromStart(() => { });
+                });
+
+                if (history) {
+                    this.history.push(page);
+                }
+            }
         }
     }
 }
