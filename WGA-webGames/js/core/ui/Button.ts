@@ -16,7 +16,7 @@ module WGAAppModule {
         public Init(): void {
             Setups.I.Input.OnInputEvent(() => {
                 this.Click();
-            }, this.name + '-OnClick', EventsTypes.mouseButtonPressed, KeyCodes.leftMouseClick);
+            }, this.name + '-OnClick', EventsTypes.MouseButtonPressed, KeyCodes.LeftMouseClick);
         }
 
         public Dispose(): void {
