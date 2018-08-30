@@ -13,6 +13,7 @@
         public NavigateToStart(finishEvent: CallbackFunction) {
             this.navigateMode = NavigateMode.Entering;
 
+            this.navigateProcess.SetValue(0);
             this.navigateProcess.GoTo(1, 5, () => {
                 this.navigateMode = NavigateMode.Still;
                 finishEvent();

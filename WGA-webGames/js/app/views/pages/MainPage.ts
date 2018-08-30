@@ -53,7 +53,7 @@ module WGAAppModule {
                 name: "CamTestBtn",
                 text: "Cam Test",
                 onClick: function () {
-                    Setups.I.App.SelectGameByName('cameraTest')
+                    Setups.I.Pages.NavigateTo("CameraTest");
                 },
                 position: new Vector2(Setups.I.WindowWidth - 60, 30),
                 size: new Vector2(100, 40),

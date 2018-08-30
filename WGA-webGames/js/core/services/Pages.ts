@@ -17,12 +17,16 @@ module WGAAppModule {
         }
 
         public Update(timeDelta) {
-            this.currentPage.Update(timeDelta);
+            if (this.currentPage) {
+                this.currentPage.Update(timeDelta);
+            }
             this.pageTransition.Update(timeDelta);
         }
 
         public Draw() {
-            this.currentPage.Draw();
+            if (this.currentPage) {
+                this.currentPage.Draw();
+            }
             this.pageTransition.Draw();
         }
 
@@ -31,13 +35,7 @@ module WGAAppModule {
         }
 
         public NavigateTo(pageName: string) {
-            var selectedPage = this.pages[pageName];
-            if (selectedPage == null) {
-                console.error("page with that name not found");
-            }
-            else {
-                this.navigateToPage(selectedPage, true);
-            }
+            this.navigateToPage(this.pages[pageName], true);
         }
 
         public GoBack() {
@@ -58,6 +56,7 @@ module WGAAppModule {
             else {
                 this.pageTransition.NavigateToStart(() => {
                     this.currentPage = page;
+                    this.currentPage.Init();
                     this.pageTransition.NavigateFromStart(() => { });
                 });
 

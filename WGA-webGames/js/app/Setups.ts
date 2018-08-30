@@ -21,12 +21,14 @@
         public FrameOffset: Vector2;
         public FrameRealOffset: Vector2;
 
+        //services
         public Utils: Utils;
         public Draw: Draw;
         public ExDraw: ExDraw;
         public Core: Core;
         public Input: Input;
         public Geometry: Geometry;
+        public Pages: Pages;
 
         public App: WGAApp;
 
@@ -50,12 +52,13 @@
             Setups.I.Center = new Vector2(Setups.I.WindowWidth, Setups.I.WindowHeight).DIV(2);
             Setups.I.RealCenter = new Vector2(Setups.I.RealWindowWidth, Setups.I.RealWindowHeight).DIV(2);
 
+            Setups.I.Utils = new Utils();
             Setups.I.Draw = new Draw();
             Setups.I.ExDraw = new ExDraw();
             Setups.I.Core = new Core();
             Setups.I.Input = new Input();
             Setups.I.Geometry = new Geometry();
-            Setups.I.Utils = new Utils();
+            Setups.I.Pages = new Pages();
 
             Setups.I.App = new WGAApp();
         }

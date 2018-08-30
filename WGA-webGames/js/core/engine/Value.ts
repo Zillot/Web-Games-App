@@ -38,6 +38,12 @@ module WGAAppModule {
             return this.value;
         }
 
+        public SetValue(value: number): void {
+            this.valueGoal = value;
+            this.value = value;
+            this.pause = 0;
+        }
+
         public GoToDelta(delta: number, speed?: number, callback?: CallbackFunction): void {
             this.GoTo(this.value + delta, speed, callback);
         }
