@@ -12,8 +12,8 @@ module WGAAppModule {
                 //empty constructor
             }
             else if (y == null) {
-                this.X = xOrVec.X;
-                this.Y = xOrVec.Y;
+                this.X = xOrVec;
+                this.Y = xOrVec;
             }
             else {
                 this.X = xOrVec;
