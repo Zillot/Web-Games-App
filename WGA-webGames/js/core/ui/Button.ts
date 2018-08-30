@@ -28,6 +28,7 @@ module WGAAppModule {
         }
 
         public Draw(): void {
+            Setups.I.Draw.RectFill(<FillRectParams>{ position: this.position, size: this.size.ADD(new Vector2(3)), color: Color4.Black() });
             Setups.I.Draw.RectFill(<FillRectParams>{ position: this.position, size: this.size, color: this.color });
             Setups.I.Draw.TextFill(<TextParams>{ str: this.text, position: this.position, color: Color4.Black(), fontSize: 14 });
         }
