@@ -33,6 +33,10 @@ module WGAAppModule {
             this.canvas.style.width = Setups.I.WindowWidth + 'px';
             this.canvas.style.height = Setups.I.WindowHeight + 'px';
 
+            //this.canvas.style.position = "absolute";
+            //this.canvas.style.left = "calc(50 % - 400px)";
+            //this.canvas.style.top = "calc(50 % - 300px)";
+
             if (this.canvas.getContext) {
                 this.canvasCtx = this.canvas.getContext('2d');
             }
