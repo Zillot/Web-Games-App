@@ -1,7 +1,9 @@
+/// <reference path="../abstract/DeleteAble.ts"/>
+
 module WGAAppModule {
     'use strict';
 
-    export class Unit implements IUpdateable, IDrawable {
+    export class Unit extends DeleteAble implements IUpdateable, IDrawable {
         public Position: Vector2;
         public Direction: Vector2;
         public MaxHp: number;
@@ -10,6 +12,8 @@ module WGAAppModule {
         public HitDistance: number;
 
         constructor(position: Vector2, direction: Vector2, hp: number, speed: number, hitDistnace: number) {
+            super();
+
             this.Position = position;
             this.Direction = direction;
             this.MaxHp = hp;

@@ -14,10 +14,10 @@ module WGAAppModule {
             this.endAngle = endAngle;
         }
 
-        public Normilize(item: FillArcParams): void {
+        public static Normilize(item: FillArcParams): void {
             FillCircleParams.Normilize(item);
-            if (this.startAngle == null) { this.startAngle = 0; }
-            if (this.endAngle == null) { this.endAngle = Draw.PI(); }
+            if (item.startAngle == null) { item.startAngle = 0; }
+            if (item.endAngle == null) { item.endAngle = Draw.PI() * 2; }
         }
     }
 }

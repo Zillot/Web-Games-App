@@ -103,10 +103,10 @@ module WGAAppModule {
             this.rect(new StrokeRectParams(params, 0), 'fill');
         }
         public CircleStroke(params: StrokeCircleParams): void {
-            this.arc(new StrokeArcParams(new FillArcParams(params, 0, 0), params.thickness), 'stroke');
+            this.arc(new StrokeArcParams(new FillArcParams(params, 0, null), params.thickness), 'stroke');
         }
         public CircleFill(params: FillCircleParams): void {
-            this.arc(new StrokeArcParams(new FillArcParams(params, 0, 0), 0), 'fill');
+            this.arc(new StrokeArcParams(new FillArcParams(params, 0, null), 0), 'fill');
         }
         public TextStroke(params: TextParams): void {
             this.drawText(params, "stroke");
@@ -207,15 +207,13 @@ module WGAAppModule {
             var x = -params.radius * params.origin.X;
             var y = -params.radius * params.origin.Y;
 
-            this.ctx.lineWidth = params.thickness;
-
-            if (params.endAngle < params.startAngle) {
+            /*if (params.endAngle < params.startAngle) {
                 params.endAngle = params.endAngle + params.startAngle;
                 params.startAngle = params.endAngle - params.startAngle;
                 params.endAngle = params.endAngle - params.startAngle;
-            }
+            }*/
 
-            this.ctx.arc(x, y, params.radius, params.startAngle, params.endAngle, false);
+            this.ctx.arc(x, y, params.radius, params.startAngle, params.endAngle, params.startAngle > params.endAngle);
 
             if (type == 'stroke') {
                 this.ctx.lineWidth = params.thickness;

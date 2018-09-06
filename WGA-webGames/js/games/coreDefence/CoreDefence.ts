@@ -23,25 +23,27 @@ module WGAAppModule {
 
             this.maxEnemies = 10;
             this.enemieSpawnPause = 1;
+            this.coreSafeRadius = 50;
 
             this.game = new Game(20, 100);
-
             this.game.NextLevelEvent = () => {
                 this.maxEnemies += (2 * this.game.Level);
             };
-
-            this.coreSafeRadius = 50;
 
             this.guns.push(new CoreGun(5));
         }
 
         public Update(timeDelta: number): void {
-            if (Setups.I.Input.GetMouseState() == MouseState.Down) {
-                for (var item in this.guns) {
-                    this.guns[item].Shoot(Setups.I.Input.GetMousePosition());
-                }
-            }
+            this.UpdateSpawnLogic(timeDelta);
 
+            this.UpdateGuns(timeDelta);
+            this.UpdateEnemies(timeDelta);
+
+            this.game.Update(timeDelta);
+            super.Update(timeDelta);
+        }
+
+        public UpdateSpawnLogic(timeDelta: number): void {
             if (this.enemies.length < this.maxEnemies && this.enemieSpawnPause <= 0) {
                 this.SpawnEnemy();
                 this.enemieSpawnPause = 2 / this.game.Level;
@@ -50,58 +52,8 @@ module WGAAppModule {
             if (this.enemieSpawnPause > 0) {
                 this.enemieSpawnPause -= timeDelta;
             }
-
-            for (var item in this.enemies) {
-                this.enemies[item].Update(timeDelta);
-            }
-            for (var item in this.guns) {
-                this.guns[item].Update(timeDelta);
-            }
-
-            for (var enemyKey = 0; enemyKey < this.enemies.length; enemyKey++) {
-                var enemy = this.enemies[enemyKey];
-
-                var closeEnought = Vector2.Distance(enemy.Position, Setups.I.Center) < this.coreSafeRadius + enemy.Radius;
-                var notToClose = Vector2.Distance(enemy.Position, Setups.I.Center) > this.coreSafeRadius - enemy.Radius * 2;
-
-                if (closeEnought && !notToClose) {
-                    var enemyAngle = Vector2.Left().AngleTo(enemy.Position.SUB(Setups.I.Center));
-                    var rightGunAngle = this.guns.filter(x => x.CoveredByShield(enemyAngle))[0];
-
-                    if (rightGunAngle) {
-                        this.game.AddScore(10);
-                        this.enemies.splice(enemyKey--, 1);
-                        continue
-                    }
-                }
-
-                var demageClose = Vector2.Distance(enemy.Position, Setups.I.Center) < this.coreSafeRadius * 0.75;
-
-                if (demageClose) {
-                    this.game.SubScore(5);
-
-                    this.enemies.splice(enemyKey--, 1);
-                    this.HitPlayer(enemy.Power);
-                }
-            }
-
-            this.game.Update(timeDelta);
-            super.Update(timeDelta);
         }
-        public Draw(): void {
-            Setups.I.Draw.CircleStroke(<StrokeCircleParams>{ position: Setups.I.Center, radius: this.coreSafeRadius, color: Color4.Gray().GetTransparent(0.1) });
 
-            for (var item in this.enemies) {
-                this.enemies[item].Draw();
-            }
-            for (var item in this.guns) {
-                this.guns[item].Draw();
-            }
-
-            this.game.Draw();
-            super.Draw();
-        }
-        //-------------
         public SpawnEnemy(): void {
             var x = Setups.I.Utils.RandI(-100, Setups.I.WindowWidth + 100);
             var y = 0;
@@ -124,8 +76,89 @@ module WGAAppModule {
 
             this.enemies.push(new Enemy(pos, hp, speed));
         }
+
+        public UpdateGuns(timeDelta: number) {
+            for (var gunsKey in this.guns) {
+                var gun = this.guns[gunsKey];
+
+                gun.Update(timeDelta);
+            }
+        }
+
+        public UpdateEnemies(timeDelta: number) {
+            for (var enemyKey in this.enemies) {
+                var enemy = this.enemies[enemyKey];
+
+                enemy.Update(timeDelta);
+
+                this.CheckEnemyDistance(enemy);
+
+                if (enemy.ShouldBeRemoved()) {
+                    var index = this.enemies.indexOf(enemy);
+                    this.enemies.splice(index, 1);
+                }
+            }
+        }
+
+        public CheckEnemyDistance(enemy: Enemy) {
+            var isCloseEnought = Vector2.Distance(enemy.Position, Setups.I.Center) < this.coreSafeRadius + enemy.Radius;
+            var isNotTooClose = Vector2.Distance(enemy.Position, Setups.I.Center) > this.coreSafeRadius - enemy.Radius * 2;
+            if (isCloseEnought && !isNotTooClose) {
+                var enemyAngle = Vector2.Left().AngleTo(enemy.Position.SUB(Setups.I.Center));
+                var rightGunAngle = this.guns.filter(x => x.CoveredByShield(enemyAngle))[0];
+
+                if (rightGunAngle) {
+                    this.game.AddScore(10);
+                    enemy.MarkToBeRemoved();
+                    return;
+                }
+            }
+
+            var isOnProperDemageClose = Vector2.Distance(enemy.Position, Setups.I.Center) < this.coreSafeRadius * 0.75;
+            if (isOnProperDemageClose) {
+                this.game.SubScore(5);
+
+                enemy.MarkToBeRemoved();
+                this.HitPlayer(enemy.Power);
+            }
+        }
+
         public HitPlayer(power: number): void {
             this.game.Hit(power);
+        }
+
+        public Draw(): void {
+            this.DrawCore();
+
+            this.DrawEnemy();
+            this.DrawGuns();
+
+            this.game.Draw();
+            super.Draw();
+        }
+
+        public DrawCore() {
+            //core area
+            Setups.I.Draw.CircleStroke(<StrokeCircleParams>{ position: Setups.I.Center, radius: this.coreSafeRadius, color: Color4.Gray().GetTransparent(0.1) });
+
+            //gloving area or shiled,
+            var color1 = Color4.ColorFromHex('#7777FF');
+            Setups.I.Draw.CircleFill(<FillCircleParams>{ position: Setups.I.Center, radius: 30, color: color1.GetTransparent(0.2) });
+            Setups.I.Draw.CircleFill(<FillCircleParams>{ position: Setups.I.Center, radius: 10, color: color1.GetTransparent(0.5) });
+            Setups.I.Draw.CircleFill(<FillCircleParams>{ position: Setups.I.Center, radius: 6, color: color1.GetTransparent(0.5) });
+
+        }
+
+        public DrawEnemy(): void {
+            for (var enemyKey in this.enemies) {
+                this.enemies[enemyKey].Draw();
+            }
+        }
+
+        public DrawGuns(): void {
+            for (var gunsKey in this.guns) {
+                this.guns[gunsKey].Draw();
+            }
         }
     }
 }

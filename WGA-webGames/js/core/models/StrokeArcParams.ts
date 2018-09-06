@@ -9,9 +9,9 @@ module WGAAppModule {
             this.thickness = thickness;
         }
 
-        public Normilize(item: StrokeArcParams): void {
+        public static Normilize(item: StrokeArcParams): void {
             FillArcParams.Normilize(item);
-            if (this.thickness == null) { this.thickness = 1; }
+            if (item.thickness == null) { item.thickness = 1; }
         }
     }
 }

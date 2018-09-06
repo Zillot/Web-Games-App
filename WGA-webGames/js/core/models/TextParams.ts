@@ -10,11 +10,11 @@ module WGAAppModule {
             super(params);
         }
 
-        public Normilize(item: TextParams): void {
+        public static Normilize(item: TextParams): void {
             StandartParams.Normilize(item);
-            if (this.str == null) { throw "str can not be null"; }
-            if (this.fontName == null) { this.fontName = "serif" }
-            if (this.fontSize == null) { this.fontSize = 10 }
+            if (item.str == null) { throw "str can not be null"; }
+            if (item.fontName == null) { item.fontName = "serif" }
+            if (item.fontSize == null) { item.fontSize = 10 }
         }
     }
 }

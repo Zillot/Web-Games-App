@@ -19,22 +19,19 @@ module WGAAppModule {
 
         protected drawGun(): void {
             var value = this.AngleControll.GetVal() + Math.PI;
-            var color1 = Color4.ColorFromHex('#7777FF');
-            var color2 = Color4.ColorFromHex('#7777FF');
-
-            Setups.I.Draw.CircleFill(<FillCircleParams>{ position: this.Position, radius: 30, color: color1.GetTransparent(0.2) });
-            Setups.I.Draw.CircleFill(<FillCircleParams>{ position: this.Position, radius: 10, color: color1.GetTransparent(0.5) });
-            Setups.I.Draw.CircleFill(<FillCircleParams>{ position: this.Position, radius: 6, color: color1.GetTransparent(0.5) });
+            var color = Color4.ColorFromHex('#7777FF');
 
             var forward = Vector2.Left().RotateTo(value - Math.PI);
             var side = Vector2.Left().RotateTo(value - Math.PI + Math.PI / 2);
             var point = this.Position.ADD(forward.MUL(54));
 
-            Setups.I.Draw.ArcFill(<FillArcParams>{ position: this.Position, radius: 50, startAngle: value + 0.09, endAngle: value + this.Width / 2, color: color2 });
-            Setups.I.Draw.ArcFill(<FillArcParams>{ position: this.Position, radius: 50, startAngle: value - 0.09, endAngle: value - this.Width / 2, color: color2 });
+            //shild part
+            Setups.I.Draw.ArcStroke(<StrokeArcParams>{ position: this.Position, radius: 50, startAngle: value + 0.09, endAngle: value + this.Width / 2, color: color });
+            Setups.I.Draw.ArcStroke(<StrokeArcParams>{ position: this.Position, radius: 50, startAngle: value - 0.09, endAngle: value - this.Width / 2, color: color });
 
-            Setups.I.Draw.Line(<LineParams>{ pointFrom: point, pointTo: point.ADD(side.MUL(4)).ADD(forward.MUL(-4)), thickness: 1, color: color2 });
-            Setups.I.Draw.Line(<LineParams>{ pointFrom: point, pointTo: point.ADD(side.MUL(-4)).ADD(forward.MUL(-4)), thickness: 1, color: color2 });
+            //arrow in the center
+            Setups.I.Draw.Line(<LineParams>{ pointFrom: point, pointTo: point.ADD(side.MUL(4)).ADD(forward.MUL(-4)), thickness: 1, color: color });
+            Setups.I.Draw.Line(<LineParams>{ pointFrom: point, pointTo: point.ADD(side.MUL(-4)).ADD(forward.MUL(-4)), thickness: 1, color: color });
         }
 
         //-------

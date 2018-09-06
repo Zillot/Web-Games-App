@@ -18,5 +18,9 @@ module WGAAppModule {
             var scale = 0.8 + (this.Hp / this.MaxHp) * 0.2;
             Setups.I.ExDraw.DrawZombie(this.Position, this.Angle, this.Color, this.Color.GetInvertColor(), scale);
         }
+
+        public NotOnTheGameField() {
+            return this.Position.X > Setups.I.WindowWidth + 100;
+        }
     }
 }

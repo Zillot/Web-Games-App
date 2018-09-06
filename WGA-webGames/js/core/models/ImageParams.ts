@@ -8,7 +8,7 @@ module WGAAppModule {
             super(params);
         }
 
-        public Normilize(item: ImageParams): void {
+        public static Normilize(item: ImageParams): void {
             StandartParams.Normilize(item);
             if (item.size == null) { item.size = new Vector2(0, 0); }
         }

@@ -1,7 +1,9 @@
+/// <reference path="../abstract/DeleteAble.ts"/>
+
 module WGAAppModule {
     'use strict';
 
-    export class Bullet {
+    export class Bullet extends DeleteAble {
         public Position: Vector2;
         public Direction: Vector2;
         public Power: number;
@@ -9,6 +11,8 @@ module WGAAppModule {
         public HitDistance: number;
 
         constructor(position: Vector2, direction: Vector2, power: number, speed: number) {
+            super();
+
             this.Position = position.GetCopy();
             this.Direction = direction.GetCopy();
             this.Power = power;
@@ -22,6 +26,10 @@ module WGAAppModule {
         }
         public Draw(): void {
             Setups.I.Draw.RectFill(<FillRectParams>{ position: this.Position, size: new Vector2(5, 5), color: Color4.Black() });
+        }
+
+        public NotOnTheGameField() {
+            return this.Position.X < -100
         }
     }
 }
