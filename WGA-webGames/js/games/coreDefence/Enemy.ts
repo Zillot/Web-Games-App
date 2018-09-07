@@ -34,6 +34,10 @@ module WGAAppModule {
                 toProcess = this.MaxDistance;
             }
 
+            this.CalculateSpeed(toProcess, toCenter);
+        }
+
+        public CalculateSpeed(toProcess: number, toCenter: number) {
             this.Speed = ((toProcess / this.MaxDistance) * this.MaxDistance);
 
             if (this.Speed < 10) {

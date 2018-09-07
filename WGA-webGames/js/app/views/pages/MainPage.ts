@@ -4,61 +4,63 @@ module WGAAppModule {
     'use strict';
 
     export class MainPage extends Page {
+        public SelectGame1Btn = Button.GetButton({
+            name: "SelectGame1Btn",
+            text: "Play Zombie Shooter",
+            onClick: function () {
+                Setups.I.App.SelectGameByName('zombieShooter')
+            },
+            position: new Vector2(Setups.I.Center.X, 300),
+            size: new Vector2(200, 40),
+            color: Color4.White()
+        });
+        public SelectGame2Btn = Button.GetButton({
+            name: "SelectGame2Btn",
+            text: "Play Core Defence",
+            onClick: function () {
+                Setups.I.App.SelectGameByName('coreDefence')
+            },
+            position: new Vector2(Setups.I.Center.X, 350),
+            size: new Vector2(200, 40),
+            color: Color4.White()
+        });
+        public SelectGame3Btn = Button.GetButton({
+            name: "SelectGame3Btn",
+            text: "Play Castle Defence",
+            onClick: function () {
+                Setups.I.App.SelectGameByName('castleDeffence')
+            },
+            position: new Vector2(Setups.I.Center.X, 400),
+            size: new Vector2(200, 40),
+            color: Color4.White()
+        });
+        public EsternEqq1Btn = Button.GetButton({
+            name: "EsternEqq1Btn",
+            text: "Blow up a nuclear bomb",
+            onClick: function () { },
+            position: new Vector2(Setups.I.Center.X, 450),
+            size: new Vector2(200, 40),
+            color: Color4.White()
+        });
+        public CamTestBtn = Button.GetButton({
+            name: "CamTestBtn",
+            text: "Cam Test",
+            onClick: function () {
+                Setups.I.Pages.NavigateTo("CameraTest");
+            },
+            position: new Vector2(Setups.I.WindowWidth - 60, 30),
+            size: new Vector2(100, 40),
+            color: Color4.Blue()
+        });
+
         constructor() {
             super();
 
-            this.Buttons.push(Button.GetButton({
-                name: "SelectGame1Btn",
-                text: "Play Zombie Shooter",
-                onClick: function () {
-                    Setups.I.App.SelectGameByName('zombieShooter')
-                },
-                position: new Vector2(Setups.I.Center.X, 300),
-                size: new Vector2(200, 40),
-                color: Color4.White()
-            }));
-
-            this.Buttons.push(Button.GetButton({
-                name: "SelectGame2Btn",
-                text: "Play Core Defence",
-                onClick: function () {
-                    Setups.I.App.SelectGameByName('coreDefence')
-                },
-                position: new Vector2(Setups.I.Center.X, 350),
-                size: new Vector2(200, 40),
-                color: Color4.White()
-            }));
-
-            this.Buttons.push(Button.GetButton({
-                name: "SelectGame3Btn",
-                text: "Play Castle Defence",
-                onClick: function () {
-                    Setups.I.App.SelectGameByName('castleDeffence')
-                },
-                position: new Vector2(Setups.I.Center.X, 400),
-                size: new Vector2(200, 40),
-                color: Color4.White()
-            }));
-
-            this.Buttons.push(Button.GetButton({
-                name: "EsternEqq1Btn",
-                text: "Blow up a nuclear bomb",
-                onClick: function () { },
-                position: new Vector2(Setups.I.Center.X, 450),
-                size: new Vector2(200, 40),
-                color: Color4.White()
-            }));
-
-            this.Buttons.push(Button.GetButton({
-                name: "CamTestBtn",
-                text: "Cam Test",
-                onClick: function () {
-                    Setups.I.Pages.NavigateTo("CameraTest");
-                },
-                position: new Vector2(Setups.I.WindowWidth - 60, 30),
-                size: new Vector2(100, 40),
-                color: Color4.Blue()
-            }));
+            this.Buttons.push(this.SelectGame1Btn);
+            this.Buttons.push(this.SelectGame2Btn);
+            this.Buttons.push(this.SelectGame3Btn);
+            this.Buttons.push(this.EsternEqq1Btn);
+            this.Buttons.push(this.CamTestBtn);
         }
 
         public Draw() {

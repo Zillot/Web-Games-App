@@ -55,22 +55,7 @@ module WGAAppModule {
         }
 
         public SpawnEnemy(): void {
-            var x = Setups.I.Utils.RandI(-100, Setups.I.WindowWidth + 100);
-            var y = 0;
-
-            if (x < 0 || x > Setups.I.WindowWidth) {
-                y = Setups.I.Utils.RandI(-100, Setups.I.WindowHeight + 100);
-            }
-            else {
-                if (Setups.I.Utils.RandI(0, 1) >= 1) {
-                    y = Setups.I.Utils.RandI(-100, -10);
-                }
-                else {
-                    y = Setups.I.Utils.RandI(Setups.I.WindowHeight + 10, Setups.I.WindowHeight + 100);
-                }
-            }
-
-            var pos = new Vector2(x, y);
+            var pos = Setups.I.Utils.RandVector().MUL(Setups.I.WindowWidth + 150);
             var hp = 50 * this.game.Level;
             var speed = 200 * (this.game.Level / 2);
 
@@ -101,20 +86,31 @@ module WGAAppModule {
         }
 
         public CheckEnemyDistance(enemy: Enemy) {
-            var isCloseEnought = Vector2.Distance(enemy.Position, Setups.I.Center) < this.coreSafeRadius + enemy.Radius;
-            var isNotTooClose = Vector2.Distance(enemy.Position, Setups.I.Center) > this.coreSafeRadius - enemy.Radius * 2;
-            if (isCloseEnought && !isNotTooClose) {
-                var enemyAngle = Vector2.Left().AngleTo(enemy.Position.SUB(Setups.I.Center));
+            var fromEnemyToCenter = Vector2.Distance(enemy.Position, Setups.I.Center);
+
+            this.tryToDefendWithGun(fromEnemyToCenter, enemy);
+
+            if (!enemy.ShouldBeRemoved()) {
+                this.tryToHitCore(fromEnemyToCenter, enemy);
+            }
+        }
+
+        public tryToDefendWithGun(fromEnemyToCenter: number, enemy: Enemy) {
+            var isCloseEnought = fromEnemyToCenter < this.coreSafeRadius + enemy.Radius;
+            var isNotTooClose = fromEnemyToCenter < this.coreSafeRadius - enemy.Radius * 2;
+            if (isCloseEnought && isNotTooClose) {
+                var enemyAngle = enemy.Direction.AngleTo(Vector2.Left());
                 var rightGunAngle = this.guns.filter(x => x.CoveredByShield(enemyAngle))[0];
 
                 if (rightGunAngle) {
                     this.game.AddScore(10);
                     enemy.MarkToBeRemoved();
-                    return;
                 }
             }
+        }
 
-            var isOnProperDemageClose = Vector2.Distance(enemy.Position, Setups.I.Center) < this.coreSafeRadius * 0.75;
+        public tryToHitCore(fromEnemyToCenter: number, enemy: Enemy) {
+            var isOnProperDemageClose = fromEnemyToCenter < this.coreSafeRadius * 0.75;
             if (isOnProperDemageClose) {
                 this.game.SubScore(5);
 
@@ -141,7 +137,7 @@ module WGAAppModule {
             //core area
             Setups.I.Draw.CircleStroke(<StrokeCircleParams>{ position: Setups.I.Center, radius: this.coreSafeRadius, color: Color4.Gray().GetTransparent(0.1) });
 
-            //gloving area or shiled,
+            //gloving area or shiled
             var color1 = Color4.ColorFromHex('#7777FF');
             Setups.I.Draw.CircleFill(<FillCircleParams>{ position: Setups.I.Center, radius: 30, color: color1.GetTransparent(0.2) });
             Setups.I.Draw.CircleFill(<FillCircleParams>{ position: Setups.I.Center, radius: 10, color: color1.GetTransparent(0.5) });

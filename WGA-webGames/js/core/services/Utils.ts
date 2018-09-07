@@ -13,5 +13,8 @@ module WGAAppModule {
         public RandColor(): Color4 {
             return new Color4(this.RandI(0, 255), this.RandI(0, 255), this.RandI(0, 255), 1);
         }
+        public RandVector(): Vector2 {
+            return Vector2.Left().RotateTo(this.RandF(0, Math.PI * 2));
+        }
     }
 }
