@@ -42,8 +42,18 @@ module WGAAppModule {
         }
 
         public static GetButton(buttonBody: any): Button {
-            buttonBody.Init();
-            return buttonBody;
+            var newButton = new Button();
+            newButton.name = buttonBody.name;
+            newButton.text = buttonBody.text;
+            newButton.onClick = buttonBody.onClick;
+            newButton.position = buttonBody.position;
+            newButton.size = buttonBody.size;
+            newButton.color = buttonBody.color;
+            newButton.fontSize = buttonBody.fontSize;
+
+            newButton.Init();
+
+            return newButton;
         }
     }
 }
