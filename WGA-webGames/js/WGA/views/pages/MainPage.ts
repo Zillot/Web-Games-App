@@ -8,7 +8,7 @@ module WGAAppModule {
             name: "SelectGame1Btn",
             text: "Play Zombie Shooter",
             onClick: function () {
-                Setups.I.App.SelectGameByName('zombieShooter')
+                Setups.I.Pages.NavigateTo("ZombieShooter");
             },
             position: new Vector2(Setups.I.Center.X, 300),
             size: new Vector2(200, 40),
@@ -18,7 +18,7 @@ module WGAAppModule {
             name: "SelectGame2Btn",
             text: "Play Core Defence",
             onClick: function () {
-                Setups.I.App.SelectGameByName('coreDefence')
+                Setups.I.Pages.NavigateTo("CoreDefence");
             },
             position: new Vector2(Setups.I.Center.X, 350),
             size: new Vector2(200, 40),
@@ -28,7 +28,7 @@ module WGAAppModule {
             name: "SelectGame3Btn",
             text: "Play Castle Defence",
             onClick: function () {
-                Setups.I.App.SelectGameByName('castleDeffence')
+                Setups.I.Pages.NavigateTo("CastleDeffence");
             },
             position: new Vector2(Setups.I.Center.X, 400),
             size: new Vector2(200, 40),
