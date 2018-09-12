@@ -8,6 +8,9 @@
         public constructor() {
             this.navigateMode = NavigateMode.Undefined;
             this.navigateProcess = new Value(0, 5);
+
+        public PrepareToInstantNavigating() {
+            this.navigateProcess.SetValue(1);
         }
 
         public NavigateToStart(finishEvent: CallbackFunction) {

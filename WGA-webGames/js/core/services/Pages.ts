@@ -34,6 +34,11 @@ module WGAAppModule {
             this.pages[pageName] = page;
         }
 
+        public InstantNavigateTo(pageName: string) {
+            this.pageTransition.PrepareToInstantNavigating();
+            this.navigateToPage(this.pages[pageName], true);
+        }
+
         public NavigateTo(pageName: string) {
             this.navigateToPage(this.pages[pageName], true);
         }
