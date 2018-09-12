@@ -9,6 +9,8 @@ module WGAAppModule {
         private dir: number;
         private pause: number;
 
+        private multypliCallbacks: boolean;
+
         constructor(value: number, speed: number) {
             this.callbacks = [];
             this.value = value;
@@ -16,6 +18,12 @@ module WGAAppModule {
             this.speed = speed;
             this.dir = 1;
             this.pause = 1;
+
+            this.multypliCallbacks = false;
+        }
+
+        public SetMultypliCallbacksState(state: boolean) {
+           this.multypliCallbacks = state;
         }
 
         public ClearCallback(): void {
@@ -67,7 +75,7 @@ module WGAAppModule {
             else if (this.value > value) {
                 this.dir = -1;
             }
-            else if (this.value == value) {
+            else if (this.value == value && !this.multypliCallbacks) {
                 this.dir = 0;
             }
         }

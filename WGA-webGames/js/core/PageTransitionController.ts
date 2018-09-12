@@ -2,12 +2,17 @@
     'use strict';
 
     export class PageTransitionController implements IUpdateable, IDrawable {
+        private static SPEED: number = 5;
+
         private navigateProcess: Value;
         private navigateMode: NavigateMode;
 
         public constructor() {
             this.navigateMode = NavigateMode.Undefined;
-            this.navigateProcess = new Value(0, 5);
+            this.navigateProcess = new Value(0, PageTransitionController.SPEED);
+            this.navigateProcess.SetMultypliCallbacksState(true);
+            
+        }
 
         public PrepareToInstantNavigating() {
             this.navigateProcess.SetValue(1);
@@ -16,8 +21,7 @@
         public NavigateToStart(finishEvent: CallbackFunction) {
             this.navigateMode = NavigateMode.Entering;
 
-            this.navigateProcess.SetValue(0);
-            this.navigateProcess.GoTo(1, 5, () => {
+            this.navigateProcess.GoTo(1, PageTransitionController.SPEED, () => {
                 this.navigateMode = NavigateMode.Still;
                 finishEvent();
             });
@@ -26,7 +30,7 @@
         public NavigateFromStart(finishEvent: CallbackFunction) {
             this.navigateMode = NavigateMode.Leaving;
 
-            this.navigateProcess.GoTo(1, 5, () => {
+            this.navigateProcess.GoTo(0, PageTransitionController.SPEED, () => {
                 this.navigateMode = NavigateMode.Navigated;
                 finishEvent();
             });
@@ -38,10 +42,6 @@
 
         public Draw(): void {
             var value = this.navigateProcess.GetVal();
-
-            if (this.navigateMode == NavigateMode.Leaving) {
-                value = 1 - value;
-            }
 
             if (this.navigateMode == NavigateMode.Navigated) {
                 value = 1;
