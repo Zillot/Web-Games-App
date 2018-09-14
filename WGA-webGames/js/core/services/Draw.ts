@@ -232,14 +232,19 @@ module WGAAppModule {
         }
         private drawText(params: TextParams, type: string): number {
             TextParams.Normilize(params);
-            params.origin = params.origin.MUL(new Vector2(-1, -1));
+            if (type != "measure") {
+                params.origin = params.origin.MUL(new Vector2(-1, -1));
+            }
+
+            var x = 0;
+            var y = 0;
 
             if (type != "measure") {
                 var sizeX = this.textMeasure(params);
                 var sizeY = params.fontSize;
 
-                var x = (sizeX / 2) * params.origin.X;
-                var y = -(sizeY / 2) + (sizeY / 2) * params.origin.Y;
+                x = (sizeX / 2) * params.origin.X;
+                y = -(sizeY / 2) + (sizeY / 2) * params.origin.Y;
             }
 
             this.ctx.save();
