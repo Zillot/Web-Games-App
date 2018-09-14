@@ -40,7 +40,7 @@ module WGAAppModule {
 
         //-------
         public CoveredByShield(angle: number): boolean {
-            var value = this.Direction.AngleTo(Vector2.Left());
+            var value = this.Direction.AngleAbsTo(Vector2.Left());
             return angle > value - this.Width / 2 && angle < value + this.Width / 2;
         }
     }

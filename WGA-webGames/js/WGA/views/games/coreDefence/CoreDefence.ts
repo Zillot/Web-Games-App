@@ -97,7 +97,7 @@ module WGAAppModule {
             var isCloseEnought = fromEnemyToCenter < this.coreSafeRadius + enemy.Radius;
             var isNotTooClose = fromEnemyToCenter < this.coreSafeRadius - enemy.Radius * 2;
             if (isCloseEnought && isNotTooClose) {
-                var enemyAngle = enemy.Direction.AngleTo(Vector2.Left());
+                var enemyAngle = enemy.Direction.MUL(-1).AngleAbsTo(Vector2.Left());
                 var rightGunAngle = this.guns.filter(x => x.CoveredByShield(enemyAngle))[0];
 
                 if (rightGunAngle) {
