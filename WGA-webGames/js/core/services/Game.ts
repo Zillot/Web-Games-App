@@ -45,7 +45,7 @@ module WGAAppModule {
         }
 
         public AddScore(amount: number) {
-            this.score -= amount;
+            this.score += amount;
         }
         public SubScore(amount: number) {
             this.score -= amount;
