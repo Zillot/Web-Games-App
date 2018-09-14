@@ -57,7 +57,7 @@ module WGAAppModule {
         }
 
         public SpawnZombie(): void {
-            var pos = new Vector2(-40, Setups.I.Utils.RandI(100, Setups.I.WindowHeight - 50));
+            var pos = new Vector2(-40, Setups.I.Utils.RandI(100, Setups.I.WindowHeight - 100));
             var hp = 50 * this.game.Level;
             var speed = 50 * (this.game.Level / 2);
 
@@ -137,6 +137,7 @@ module WGAAppModule {
         public Draw(): void {
             this.DrawZombies();
             this.DrawGuns();
+
             this.game.Draw(() => {
                 Setups.I.Draw.TextFill(<TextParams>{ str: "Killed: " + this.killed, position: new Vector2(10, 29), color: Color4.Gray(), fontName: "serif", fontSize: 18, origin: new Vector2(-1, 0) });
             });
