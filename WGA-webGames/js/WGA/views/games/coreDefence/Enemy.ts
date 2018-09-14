@@ -52,7 +52,17 @@ module WGAAppModule {
         }
 
         public Draw(): void {
-            Setups.I.Draw.CircleFill(<FillCircleParams>{ position: this.Position, radius: this.Radius * 2, color: this.Color });
+            var toCenter = Vector2.Distance(this.Position, Setups.I.Center);
+            var dashCoef = this.DistanceToDash / toCenter;
+            dashCoef = dashCoef > 1 ? 1 : dashCoef;
+            dashCoef = dashCoef < 0 ? 0 : dashCoef;
+
+            if (toCenter > this.DistanceToDash) {
+                Setups.I.Draw.Line(<LineParams>{ pointFrom: this.Direction.MUL(-1000).ADD(Setups.I.Center), pointTo: this.Position, color: this.Color, thickness: this.Radius * 5 * (1 - dashCoef) });
+            }
+
+            Setups.I.Draw.CircleFill(<FillCircleParams>{ position: this.Position, radius: this.Radius * 1.5 + this.Radius * 2 * (1 - dashCoef), color: this.Color });
+            Setups.I.Draw.CircleFill(<FillCircleParams>{ position: this.Position, radius: this.Radius * 1.5 + this.Radius * 2 * (1 - dashCoef), color: Color4.Black().GetTransparent(dashCoef) });
         }
     }
 }
