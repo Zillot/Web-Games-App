@@ -3,9 +3,11 @@
 
     export class Page implements IUpdateable, IDrawable {
         public Buttons: Button[];
+        public Modals: Modal[];
 
         public constructor() {
             this.Buttons = [];
+            this.Modals = [];
         }
 
         public Dispose(): void {
@@ -31,6 +33,10 @@
                 var button = this.Buttons[buttonKey];
                 button.Draw();
             }
+        }
+
+        public ShowModal() {
+
         }
     }
 }

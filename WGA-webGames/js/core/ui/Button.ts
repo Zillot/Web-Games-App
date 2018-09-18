@@ -1,8 +1,9 @@
 module WGAAppModule {
     'use strict';
 
-    export class Button {
-        private name: string;
+    export class Button implements IUiComponent {
+        public Name: string;
+
         private text: string;
         private onClick: any;
         private position: Vector2;
@@ -15,8 +16,11 @@ module WGAAppModule {
 
         public Init(): void {
             Setups.I.Input.OnInputEvent(() => {
-                this.Click();
-            }, this.name + '-OnClick', EventsTypes.MouseButtonPressed, KeyCodes.LeftMouseClick);
+                    this.Click();
+                },
+                this.Name + '-OnClick',
+                EventsTypes.MouseButtonPressed,
+                KeyCodes.LeftMouseClick);
         }
 
         public Dispose(): void {
@@ -43,7 +47,7 @@ module WGAAppModule {
 
         public static GetButton(buttonBody: any): Button {
             var newButton = new Button();
-            newButton.name = buttonBody.name;
+            newButton.Name = buttonBody.name;
             newButton.text = buttonBody.text;
             newButton.onClick = buttonBody.onClick;
             newButton.position = buttonBody.position;
