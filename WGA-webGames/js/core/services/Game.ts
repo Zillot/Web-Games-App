@@ -62,6 +62,10 @@ module WGAAppModule {
             }
         }
 
+        public IsPlayerDead() {
+            return this.health <= 0;
+        }
+
         public Draw(additionalDraw?: any) {
             Setups.I.Draw.RectFill(<FillRectParams>{ position: new Vector2(0, 0), size: new Vector2(Setups.I.WindowWidth, 60), origin: new Vector2(1, 1), color: new Color4(0, 0, 0, 0.1) });
 

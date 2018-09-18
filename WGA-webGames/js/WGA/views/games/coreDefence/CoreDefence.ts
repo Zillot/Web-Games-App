@@ -64,7 +64,7 @@ module WGAAppModule {
             for (var gunsKey in this.guns) {
                 var gun = this.guns[gunsKey];
 
-                gun.Update(timeDelta);
+                gun.Update(timeDelta, null);
             }
         }
 

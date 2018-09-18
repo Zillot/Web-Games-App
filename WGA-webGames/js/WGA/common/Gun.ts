@@ -2,6 +2,9 @@ module WGAAppModule {
     'use strict';
 
     export class Gun {
+        static RELOADINGPAUSE: number = 0.3;
+        static DEMMAGEPOWER: number = 10;
+        
         public Position: Vector2;
         public Direction: Vector2;
         public Power: number;
@@ -13,7 +16,7 @@ module WGAAppModule {
         public Bullets: Bullet[];
 
         constructor(position: Vector2, rotationSpeed: number) {
-            this.Power = 10;
+            this.Power = Gun.DEMMAGEPOWER;
             this.Direction = new Vector2(-1, 0);
             this.Position = position;
 
@@ -24,8 +27,21 @@ module WGAAppModule {
             this.AngleControll = new Value(0, rotationSpeed);
         }
 
-        public Update(timeDelta: number): void {
+        public Update(timeDelta: number, tryToHitEvent): void {
+            this.UpdateRotation(timeDelta);
+            this.ReloadingProccess(timeDelta);
+            this.UpdateBullets(timeDelta, tryToHitEvent);
+            this.ShootByGun();
+            this.RemoveDeadBullets();
+        }
 
+        public ReloadingProccess(timeDelta: number): void {
+            if (this.Reload > 0) {
+                this.Reload -= timeDelta;
+            }
+        }
+
+        public UpdateRotation(timeDelta: number): void {
             var toMouseDir = Setups.I.Input.GetMousePosition().SUB(this.Position).Normalize();
             var delta = Vector2.AngleBetween(this.Direction, toMouseDir);
 
@@ -33,36 +49,60 @@ module WGAAppModule {
             this.AngleControll.Update(timeDelta);
 
             this.Direction = Vector2.Left().RotateTo(this.AngleControll.GetVal());
+        }
 
-            if (this.Reload > 0) {
-                this.Reload -= timeDelta;
-            }
+        public UpdateBullets(timeDelta: number, tryToHitEvent): void {
+            for (var bulletKey in this.Bullets) {
+                var bullet = this.Bullets[bulletKey];
 
-            for (var item in this.Bullets) {
-                this.Bullets[item].Update(timeDelta);
+                bullet.Update(timeDelta);
+
+                if (bullet.NotOnTheGameField()) {
+                    bullet.MarkToBeRemoved();
+                    continue;
+                }
+
+                if (tryToHitEvent) {
+                    tryToHitEvent(bullet);
+                }
             }
         }
+
+        public RemoveDeadBullets(): void {
+            for (var i = 0; i < this.Bullets.length; i++) {
+                if (this.Bullets[i].ShouldBeRemoved()) {
+                    this.Bullets.splice(i, 1);
+                }
+            }
+        }
+
         public Draw(): void {
-            this.drawBullets();
-            this.drawGun();
+            this.DrawBullets();
+            this.DrawGun();
         }
-        //-------------
-        protected drawBullets(): void {
+
+        public DrawBullets(): void {
             for (var item in this.Bullets) {
                 this.Bullets[item].Draw();
             }
         }
 
-        protected drawGun(): void {
+        public DrawGun(): void {
             Setups.I.Draw.RectFill(<FillRectParams>{ position: this.Position, size: new Vector2(50, 10), origin: new Vector2(1, 0), color: Color4.ColorFromHex('#00FF00'), angle: this.AngleControll.GetVal() });
             Setups.I.Draw.RectFill(<FillRectParams>{ position: this.Position, size: new Vector2(5, 5), origin: new Vector2(0, 0), color: Color4.ColorFromHex('#FFFF00') });
         }
 
+        public ShootByGun(): void {
+            if (Setups.I.Input.GetMouseState() == MouseState.Down) {
+                this.Shoot(Setups.I.Input.GetMousePosition());
+            }
+        }
+
         public Shoot(point: Vector2): void {
             if (this.Reload <= 0) {
-                this.Reload = 0.3;
+                this.Reload = Gun.RELOADINGPAUSE;
                 var pos = this.Position;
-                var power = 10;
+                var power = Gun.DEMMAGEPOWER;
                 var speed = 1000 + Setups.I.Utils.RandF(-1, 1);
 
                 this.Bullets.push(new Bullet(pos.ADD(this.Direction.MUL(40)), this.Direction, power, speed));

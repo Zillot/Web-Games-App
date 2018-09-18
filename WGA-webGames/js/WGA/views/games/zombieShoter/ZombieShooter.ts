@@ -68,47 +68,23 @@ module WGAAppModule {
             for (var gunKey in this.guns) {
                 var gun = this.guns[gunKey];
 
-                gun.Update(timeDelta);
-                this.ShootByGun(gun);
-                this.UpdateBulelts(gun);
+                gun.Update(timeDelta, this.TryToHitEveryZombieWithBullet);
             }
         }
 
-        public ShootByGun(gun: Gun): void  {
-            if (Setups.I.Input.GetMouseState() == MouseState.Down) {
-                gun.Shoot(Setups.I.Input.GetMousePosition());
-            }
-        }
+        public TryToHitEveryZombieWithBullet(bullet: Bullet): void {
+            for (var zombieKey in this.zombies) {
+                var zombie = this.zombies[zombieKey];
 
-        public UpdateBulelts(gun: Gun): void  {
-            for (var bulletKey in gun.Bullets) {
-                var bullet = gun.Bullets[bulletKey];
-
-                if (bullet.NotOnTheGameField()) {
+                if (zombie.TryHit(bullet)) {
                     bullet.MarkToBeRemoved();
-                    continue;
                 }
 
-                for (var zombieKey in this.zombies) {
-                    this.TryToHitZombieWithBullet(this.zombies[zombieKey], bullet);
+                if (zombie.Hp <= 0) {
+                    this.killed++;
+                    this.game.AddScore(10);
+                    zombie.MarkToBeRemoved();
                 }
-
-                if (bullet.ShouldBeRemoved()) {
-                    var index = gun.Bullets.indexOf(bullet);
-                    gun.Bullets.splice(index, 1);
-                }
-            }
-        }
-
-        public TryToHitZombieWithBullet(zombie: Zombie, bullet: Bullet): void {
-            if (zombie.TryHit(bullet)) {
-                bullet.MarkToBeRemoved();
-            }
-
-            if (zombie.Hp <= 0) {
-                this.killed++;
-                this.game.AddScore(10);
-                zombie.MarkToBeRemoved();
             }
         }
 
@@ -117,30 +93,41 @@ module WGAAppModule {
                 var zombie = this.zombies[zombieKey];
 
                 zombie.Update(timeDelta);
+
                 if (zombie.NotOnTheGameField()) {
                     zombie.MarkToBeRemoved();
                     this.game.SubScore(5);
                     this.HitPlayer(zombie.Power);
                 }
 
-                if (zombie.ShouldBeRemoved()) {
-                    var index = this.zombies.indexOf(zombie);
-                    this.zombies.splice(index, 1);
-                }
+                this.RemoveDeadZombie(zombie);
+            }
+        }
+
+        public RemoveDeadZombie(zombie: Zombie): void {
+            if (zombie.ShouldBeRemoved()) {
+                var index = this.zombies.indexOf(zombie);
+                this.zombies.splice(index, 1);
             }
         }
 
         public HitPlayer(power: number): void {
             this.game.Hit(power);
+
+            if (this.game.IsPlayerDead()) {
+                this.ShowModal();
+            }
         }
 
         public Draw(): void {
             this.DrawZombies();
             this.DrawGuns();
 
-            this.game.Draw(() => {
-                Setups.I.Draw.TextFill(<TextParams>{ str: "Killed: " + this.killed, position: new Vector2(10, 29), color: Color4.Gray(), fontName: "serif", fontSize: 18, origin: new Vector2(-1, 0) });
-            });
+            this.game.Draw(this.DrawGameMenu);
+        }
+
+        public DrawGameMenu() {
+            Setups.I.Draw.TextFill(<TextParams>{ str: "Killed: " + this.killed, position: new Vector2(10, 29), color: Color4.Gray(), fontName: "serif", fontSize: 18, origin: new Vector2(-1, 0) });
         }
 
         public DrawZombies(): void {
