@@ -25,8 +25,8 @@ module WGAAppModule {
         protected drawGun(): void {
             var value = this.AngleControll.GetVal() + Math.PI;
 
-            var forward = Vector2.Left().RotateTo(value - Math.PI);
-            var side = Vector2.Left().RotateTo(value - Math.PI + Math.PI / 2);
+            var forward = Vector2.Left.RotateTo(value - Math.PI);
+            var side = Vector2.Left.RotateTo(value - Math.PI + Math.PI / 2);
             var point = this.Position.ADD(forward.MUL(54));
 
             //shild part
@@ -40,7 +40,7 @@ module WGAAppModule {
 
         //-------
         public CoveredByShield(angle: number): boolean {
-            var value = this.Direction.AngleAbsTo(Vector2.Left());
+            var value = this.Direction.AngleAbsTo(Vector2.Left);
             return angle > value - this.Width / 2 && angle < value + this.Width / 2;
         }
     }

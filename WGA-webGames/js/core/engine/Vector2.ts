@@ -167,63 +167,63 @@ module WGAAppModule {
             return ang
         }
         public static Angle(v1: Vector2): number {
-            return Vector2.AngleBetween(v1, Vector2.Up());
+            return Vector2.AngleBetween(v1, Vector2.Up);
         }
         public static AngleAbs(v1: Vector2): number {
-            return Vector2.AngleAbsBetween(v1, Vector2.Up());
+            return Vector2.AngleAbsBetween(v1, Vector2.Up);
         }
 
         private static up: Vector2;
-        public static Up(): Vector2 {
+        public static get Up(): Vector2 {
             if (!Vector2.up) {
                 Vector2.up = new Vector2(0, -1);
             }
             return Vector2.up.GetCopy();
         }
         private static upright: Vector2;
-        public static Upright(): Vector2 {
+        public static get Upright(): Vector2 {
             if (!Vector2.upright) {
                 Vector2.upright = new Vector2(1, -1).Normalize();
             }
             return Vector2.upright.GetCopy();
         }
         private static right: Vector2;
-        public static Right(): Vector2 {
+        public static get Right(): Vector2 {
             if (!Vector2.right) {
                 Vector2.right = new Vector2(1, 0);
             }
             return Vector2.right.GetCopy();
         }
         private static rightdown: Vector2;
-        public static Rightdown(): Vector2 {
+        public static get Rightdown(): Vector2 {
             if (!Vector2.rightdown) {
                 Vector2.rightdown = new Vector2(1, 1).Normalize();
             }
             return Vector2.rightdown.GetCopy();
         }
         private static down: Vector2;
-        public static Down(): Vector2 {
+        public static get Down(): Vector2 {
             if (!Vector2.down) {
                 Vector2.down = new Vector2(0, 1);
             }
             return Vector2.down.GetCopy();
         }
         private static downleft: Vector2;
-        public static Downleft(): Vector2 {
+        public static get Downleft(): Vector2 {
             if (!Vector2.downleft) {
                 Vector2.downleft = new Vector2(-1, 1).Normalize();
             }
             return Vector2.downleft.GetCopy();
         }
         private static left: Vector2;
-        public static Left(): Vector2 {
+        public static get Left(): Vector2 {
             if (!Vector2.left) {
                 Vector2.left = new Vector2(-1, 0);
             }
             return Vector2.left.GetCopy();
         }
         private static leftup: Vector2;
-        public static Leftup(): Vector2 {
+        public static get Leftup(): Vector2 {
             if (!Vector2.leftup) {
                 Vector2.leftup = new Vector2(-1, -1).Normalize();
             }

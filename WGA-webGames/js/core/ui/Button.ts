@@ -24,7 +24,11 @@ module WGAAppModule {
         }
 
         public Dispose(): void {
+            Setups.I.Input.RemoveHandler(this.Name + '-OnClick', EventsTypes.MouseButtonPressed);
+        }
 
+        public SetOnClick(onClick) {
+            this.onClick = onClick;
         }
 
         public Update(timeDelta: number): void {
@@ -32,9 +36,9 @@ module WGAAppModule {
         }
 
         public Draw(): void {
-            Setups.I.Draw.RectFill(<FillRectParams>{ position: this.position, size: this.size.ADD(new Vector2(3)), color: Color4.Black() });
+            Setups.I.Draw.RectFill(<FillRectParams>{ position: this.position, size: this.size.ADD(new Vector2(3)), color: Color4.Black });
             Setups.I.Draw.RectFill(<FillRectParams>{ position: this.position, size: this.size, color: this.color });
-            Setups.I.Draw.TextFill(<TextParams>{ str: this.text, position: this.position, color: Color4.Black(), fontSize: 14 });
+            Setups.I.Draw.TextFill(<TextParams>{ str: this.text, position: this.position, color: Color4.Black, fontSize: 14 });
         }
         //-------------
         public Click(): void {

@@ -16,16 +16,10 @@ module WGAAppModule {
         constructor() {
             super();
 
-            this.Buttons.push(Button.GetButton({
-                name: "BuildTower",
-                text: "B",
-                onClick: function () {
-                    this.GoToBuildMode()
-                },
-                position: new Vector2(20, 20),
-                size: new Vector2(40, 40),
-                color: Color4.White()
-            }));
+            this.Buttons.push(CastleDefenceUI.BuildTower);
+            CastleDefenceUI.BuildTower.SetOnClick(function () {
+                this.GoToBuildMode();
+            });
         }
 
         public GoToBuildMode(): void {
@@ -39,8 +33,11 @@ module WGAAppModule {
             this.game.NextLevelEvent = () => { };
 
             this.towers = [];
+
+            super.Init();
         }
 
+        //============ UPDATE ============
         public Update(timeDelta: number): void {
             this.game.Update(timeDelta);
             this.castle.Update(timeDelta);
@@ -55,10 +52,10 @@ module WGAAppModule {
 
             var allowToBuild = this.IsAllowToBuild(this.towerToBuild);
             if (allowToBuild) {
-                this.SetBuildColors(Color4.Green(), Color4.DarkGreen());
+                this.SetBuildColors(Color4.Green, Color4.DarkGreen);
             }
             else {
-                this.SetBuildColors(Color4.Red(), Color4.DarkRed());
+                this.SetBuildColors(Color4.Red, Color4.DarkRed);
             }
 
             this.BuildTowerIfMousePressed(allowToBuild)
@@ -101,6 +98,7 @@ module WGAAppModule {
             this.game.Hit(power);
         }
 
+        //============ DRAW ============
         public Draw(): void {
             this.game.Draw();
             this.castle.Draw();

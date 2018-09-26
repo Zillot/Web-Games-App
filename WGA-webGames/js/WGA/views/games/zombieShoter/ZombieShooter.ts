@@ -33,16 +33,20 @@ module WGAAppModule {
             };
 
             this.guns.push(new Gun(new Vector2(Setups.I.WindowWidth - 50, Setups.I.WindowHeight / 2), 0.5));
+
+            super.Init();
         }
 
+        //============ UPDATE ============
         public Update(timeDelta: number): void {
+            super.Update(timeDelta);
+
             this.UpdateSpawnLogic(timeDelta);
 
             this.UpdateZombies(timeDelta);
             this.UpdateGuns(timeDelta);
 
             this.game.Update(timeDelta);
-            super.Update(timeDelta);
         }
 
         public UpdateSpawnLogic(timeDelta: number): void {
@@ -115,19 +119,21 @@ module WGAAppModule {
             this.game.Hit(power);
 
             if (this.game.IsPlayerDead()) {
-                this.ShowModal();
+                this.ShowModal(ZombieShooterUI.GameOverModal);
             }
         }
 
+        //============ DRAW ============
         public Draw(): void {
             this.DrawZombies();
             this.DrawGuns();
 
             this.game.Draw(this.DrawGameMenu);
+            super.Draw();
         }
 
         public DrawGameMenu() {
-            Setups.I.Draw.TextFill(<TextParams>{ str: "Killed: " + this.killed, position: new Vector2(10, 29), color: Color4.Gray(), fontName: "serif", fontSize: 18, origin: new Vector2(-1, 0) });
+            Setups.I.Draw.TextFill(<TextParams>{ str: "Killed: " + this.killed, position: new Vector2(10, 29), color: Color4.Gray, fontName: "serif", fontSize: 18, origin: new Vector2(-1, 0) });
         }
 
         public DrawZombies(): void {

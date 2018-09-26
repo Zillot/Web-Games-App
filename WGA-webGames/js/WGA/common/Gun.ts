@@ -48,7 +48,7 @@ module WGAAppModule {
             this.AngleControll.GoToDelta(delta);
             this.AngleControll.Update(timeDelta);
 
-            this.Direction = Vector2.Left().RotateTo(this.AngleControll.GetVal());
+            this.Direction = Vector2.Left.RotateTo(this.AngleControll.GetVal());
         }
 
         public UpdateBullets(timeDelta: number, tryToHitEvent): void {

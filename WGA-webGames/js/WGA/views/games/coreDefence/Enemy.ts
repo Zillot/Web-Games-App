@@ -18,7 +18,7 @@ module WGAAppModule {
 
             this.Color = Setups.I.Utils.RandColor();
             this.Power = 20;
-            this.Angle = Vector2.AngleAbsBetween(Vector2.Right(), this.Direction);
+            this.Angle = Vector2.AngleAbsBetween(Vector2.Right, this.Direction);
 
             this.MinDistance = 100;
             this.MaxDistance = 600;
@@ -62,7 +62,7 @@ module WGAAppModule {
             }
 
             Setups.I.Draw.CircleFill(<FillCircleParams>{ position: this.Position, radius: this.Radius * 1.5 + this.Radius * 2 * (1 - dashCoef), color: this.Color });
-            Setups.I.Draw.CircleFill(<FillCircleParams>{ position: this.Position, radius: this.Radius * 1.5 + this.Radius * 2 * (1 - dashCoef), color: Color4.Black().GetTransparent(dashCoef) });
+            Setups.I.Draw.CircleFill(<FillCircleParams>{ position: this.Position, radius: this.Radius * 1.5 + this.Radius * 2 * (1 - dashCoef), color: Color4.Black.GetTransparent(dashCoef) });
         }
     }
 }

@@ -69,10 +69,10 @@ module WGAAppModule {
         public Draw(additionalDraw?: any) {
             Setups.I.Draw.RectFill(<FillRectParams>{ position: new Vector2(0, 0), size: new Vector2(Setups.I.WindowWidth, 60), origin: new Vector2(1, 1), color: new Color4(0, 0, 0, 0.1) });
 
-            Setups.I.Draw.TextFill(<TextParams>{ str: "Level: " + this.level, position: new Vector2(Setups.I.Center.X, 5), color: Color4.Gray(), fontName: "serif", fontSize: 30, origin: new Vector2(0, -1) });
-            Setups.I.Draw.TextFill(<TextParams>{ str: "Score: " + this.score, position: new Vector2(Setups.I.Center.X, 35), color: Color4.Gray(), fontName: "serif", fontSize: 18, origin: new Vector2(0, -1) });
-            Setups.I.Draw.TextFill(<TextParams>{ str: this.money + " :Money", position: new Vector2(Setups.I.WindowWidth - 10, 7), color: Color4.Gray(), fontName: "serif", fontSize: 18, origin: new Vector2(1, -1) });
-            Setups.I.Draw.TextFill(<TextParams>{ str: this.health + " :Health", position: new Vector2(Setups.I.WindowWidth - 10, 33), color: Color4.Gray(), fontName: "serif", fontSize: 18, origin: new Vector2(1, -1) });
+            Setups.I.Draw.TextFill(<TextParams>{ str: "Level: " + this.level, position: new Vector2(Setups.I.Center.X, 5), color: Color4.Gray, fontName: "serif", fontSize: 30, origin: new Vector2(0, -1) });
+            Setups.I.Draw.TextFill(<TextParams>{ str: "Score: " + this.score, position: new Vector2(Setups.I.Center.X, 35), color: Color4.Gray, fontName: "serif", fontSize: 18, origin: new Vector2(0, -1) });
+            Setups.I.Draw.TextFill(<TextParams>{ str: this.money + " :Money", position: new Vector2(Setups.I.WindowWidth - 10, 7), color: Color4.Gray, fontName: "serif", fontSize: 18, origin: new Vector2(1, -1) });
+            Setups.I.Draw.TextFill(<TextParams>{ str: this.health + " :Health", position: new Vector2(Setups.I.WindowWidth - 10, 33), color: Color4.Gray, fontName: "serif", fontSize: 18, origin: new Vector2(1, -1) });
 
             if (additionalDraw) {
                 additionalDraw();

@@ -25,7 +25,7 @@ module WGAAppModule {
             this.Position = this.Position.ADD(this.Direction.MUL(this.Speed * timeDelta));
         }
         public Draw(): void {
-            Setups.I.Draw.RectFill(<FillRectParams>{ position: this.Position, size: new Vector2(5, 5), color: Color4.Black() });
+            Setups.I.Draw.RectFill(<FillRectParams>{ position: this.Position, size: new Vector2(5, 5), color: Color4.Black });
         }
 
         public NotOnTheGameField() {

@@ -10,33 +10,46 @@
             this.Modals = [];
         }
 
-        public Dispose(): void {
+        public Init(): void {
             for (var buttonKey in this.Buttons) {
-                var button = this.Buttons[buttonKey];
-                button.Dispose();
+                this.Buttons[buttonKey].Init();
+            }
+            for (var modalKey in this.Modals) {
+                this.Modals[modalKey].Init();
             }
         }
 
-        public Init(): void {
-
+        public Dispose(): void {
+            for (var buttonKey in this.Buttons) {
+                this.Buttons[buttonKey].Dispose();
+            }
+            for (var modalKey in this.Modals) {
+                this.Modals[modalKey].Dispose();
+            }
         }
         
         public Update(timeDelta: number): void {
             for (var buttonKey in this.Buttons) {
-                var button = this.Buttons[buttonKey];
-                button.Update(timeDelta);
+                this.Buttons[buttonKey].Update(timeDelta);
+            }
+            for (var modalKey in this.Modals) {
+                this.Modals[modalKey].Update(timeDelta);
             }
         }
 
         public Draw(): void {
             for (var buttonKey in this.Buttons) {
-                var button = this.Buttons[buttonKey];
-                button.Draw();
+                this.Buttons[buttonKey].Draw();
+            }
+            for (var modalKey in this.Modals) {
+                this.Modals[modalKey].Draw();
             }
         }
 
-        public ShowModal() {
-
+        public ShowModal(modal: Modal) {
+            modal.Init();
+            this.Modals.push(modal);
+            modal.Show();
         }
     }
 }

@@ -9,7 +9,7 @@
             this.pause = true;
 
             Setups.I.Pages.CreatePage("Main", new MainPage());
-            Setups.I.Pages.CreatePage("CameraTest", new CameraTestMenu());
+            Setups.I.Pages.CreatePage("CameraTest", new CameraTest());
 
             Setups.I.Pages.CreatePage("ZombieShooter", new ZombieShooter());
             Setups.I.Pages.CreatePage("CoreDefence", new CoreDefence());

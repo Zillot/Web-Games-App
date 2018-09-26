@@ -8,7 +8,9 @@ module WGAAppModule {
             super();
         }
 
-        public abstract Init(): void;
+        public Init(): void {
+            super.Init();
+        }
 
         public Dispose(): void {
             super.Dispose();

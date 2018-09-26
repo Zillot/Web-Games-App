@@ -10,6 +10,8 @@ module WGAAppModule {
         private position: Vector2;
         private size: Vector2;
 
+        private showProcess: Value;
+
         constructor(name: string, header: string, text: string) {
             this.position = Setups.I.Center.SUB(new Vector2(100, 70));
             this.size = new Vector2(200, 140);
@@ -19,17 +21,29 @@ module WGAAppModule {
             this.text = text;
 
             this.uiComponents = [];
+
+            this.showProcess = new Value(0, 1);
+        }
+
+        public AddUiComponent(newUiComponent: IUiComponent) {
+            this.uiComponents.push(newUiComponent);
         }
 
         public Init(): void {
-
+            for (var uiComponentKey in this.uiComponents) {
+                this.uiComponents[uiComponentKey].Init();
+            }
         }
 
         public Dispose(): void {
-
+            for (var uiComponentKey in this.uiComponents) {
+                this.uiComponents[uiComponentKey].Dispose();
+            }
         }
 
         public Update(timeDelta: number): void {
+            this.showProcess.Update(timeDelta);
+
             for (var uiComponentKey in this.uiComponents) {
                 var uiComponent = this.uiComponents[uiComponentKey];
 
@@ -37,8 +51,12 @@ module WGAAppModule {
             }
         }
 
+        public Show() {
+            this.showProcess.GoTo(1);
+        }
+
         public Draw(): void {
-            Setups.I.Draw.RectFill(<FillRectParams>{ position: this.position, size: this.size, color: new Color4(229, 229, 229, 1) });
+            Setups.I.Draw.RectFill(<FillRectParams>{ position: this.position, size: this.size, color: new Color4(229, 229, 229, this.showProcess.GetVal()) });
 
             //TODO: camera for relative ui components
             for (var uiComponentKey in this.uiComponents) {

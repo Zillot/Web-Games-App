@@ -29,8 +29,11 @@ module WGAAppModule {
             };
 
             this.guns.push(new CoreGun(5));
+
+            super.Init();
         }
 
+        //============ UPDATE ============
         public Update(timeDelta: number): void {
             this.UpdateSpawnLogic(timeDelta);
 
@@ -97,7 +100,7 @@ module WGAAppModule {
             var isCloseEnought = fromEnemyToCenter < this.coreSafeRadius + enemy.Radius;
             var isNotTooClose = fromEnemyToCenter < this.coreSafeRadius - enemy.Radius * 2;
             if (isCloseEnought && isNotTooClose) {
-                var enemyAngle = enemy.Direction.MUL(-1).AngleAbsTo(Vector2.Left());
+                var enemyAngle = enemy.Direction.MUL(-1).AngleAbsTo(Vector2.Left);
                 var rightGunAngle = this.guns.filter(x => x.CoveredByShield(enemyAngle))[0];
 
                 if (rightGunAngle) {
@@ -121,6 +124,7 @@ module WGAAppModule {
             this.game.Hit(power);
         }
 
+        //============ DRAW ============
         public Draw(): void {
             this.DrawCore();
 
@@ -133,7 +137,7 @@ module WGAAppModule {
 
         public DrawCore() {
             //core area
-            Setups.I.Draw.CircleStroke(<StrokeCircleParams>{ position: Setups.I.Center, radius: this.coreSafeRadius, color: Color4.Gray().GetTransparent(0.1) });
+            Setups.I.Draw.CircleStroke(<StrokeCircleParams>{ position: Setups.I.Center, radius: this.coreSafeRadius, color: Color4.Gray.GetTransparent(0.1) });
 
             //gloving area or shiled
             var color1 = Color4.ColorFromHex('#7777FF');

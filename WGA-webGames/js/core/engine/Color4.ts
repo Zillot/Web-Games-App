@@ -36,7 +36,7 @@ module WGAAppModule {
         }
 
         private static white: Color4;
-        public static White(): Color4 {
+        public static get White(): Color4 {
             if (!Color4.white) {
                 Color4.white = new Color4(255, 255, 255, 1);
             }
@@ -44,7 +44,7 @@ module WGAAppModule {
         }
 
         private static black: Color4;
-        public static Black(): Color4 {
+        public static get Black(): Color4 {
             if (!Color4.black) {
                 Color4.black = new Color4(0, 0, 0, 1);
             }
@@ -52,7 +52,7 @@ module WGAAppModule {
         }
 
         private static gray: Color4;
-        public static Gray(): Color4 {
+        public static get Gray(): Color4 {
             if (!Color4.gray) {
                 Color4.gray = new Color4(100, 100, 100, 1);
             }
@@ -60,7 +60,7 @@ module WGAAppModule {
         }
 
         private static red: Color4;
-        public static Red(): Color4 {
+        public static get Red(): Color4 {
             if (!Color4.red) {
                 Color4.red = new Color4(255, 64, 0, 1);
             }
@@ -68,7 +68,7 @@ module WGAAppModule {
         }
 
         private static darkRed: Color4;
-        public static DarkRed(): Color4 {
+        public static get DarkRed(): Color4 {
             if (!Color4.darkRed) {
                 Color4.darkRed = new Color4(255, 128, 64, 1);
             }
@@ -76,7 +76,7 @@ module WGAAppModule {
         }
 
         private static orange: Color4;
-        public static Orange(): Color4 {
+        public static get Orange(): Color4 {
             if (Color4.orange == null) {
                 Color4.orange = new Color4(255, 128, 1, 1);
             }
@@ -84,7 +84,7 @@ module WGAAppModule {
         }
 
         private static yellow: Color4;
-        public static Yellow(): Color4 {
+        public static get Yellow(): Color4 {
             if (Color4.yellow == null) {
                 Color4.yellow = new Color4(255, 255, 0, 1);
             }
@@ -92,7 +92,7 @@ module WGAAppModule {
         }
 
         private static green: Color4;
-        public static Green(): Color4 {
+        public static get Green(): Color4 {
             if (Color4.green == null) {
                 Color4.green = new Color4(64, 255, 0, 1);
             }
@@ -100,7 +100,7 @@ module WGAAppModule {
         }
 
         private static darkGreen: Color4;
-        public static DarkGreen(): Color4 {
+        public static get DarkGreen(): Color4 {
             if (Color4.darkGreen == null) {
                 Color4.darkGreen = new Color4(128, 255, 64, 1);
             }
@@ -108,7 +108,7 @@ module WGAAppModule {
         }
 
         private static cyan: Color4;
-        public static Cyan(): Color4 {
+        public static get Cyan(): Color4 {
             if (Color4.cyan == null) {
                 Color4.cyan = new Color4(0, 255, 255, 1);
             }
@@ -116,7 +116,7 @@ module WGAAppModule {
         }
 
         private static blue: Color4;
-        public static Blue() {
+        public static get Blue() {
             if (Color4.blue == null) {
                 Color4.blue = new Color4(0, 0, 255, 1);
             }
@@ -124,7 +124,7 @@ module WGAAppModule {
         }
 
         private static violet: Color4;
-        public static Violet(): Color4 {
+        public static get Violet(): Color4 {
             if (Color4.violet == null) {
                 Color4.violet = new Color4(191, 0, 255, 1);
             }
@@ -132,7 +132,7 @@ module WGAAppModule {
         }
 
         private static purple: Color4;
-        public static Purple(): Color4 {
+        public static get Purple(): Color4 {
             if (Color4.purple == null) {
                 Color4.purple = new Color4(255, 0, 191, 1);
             }
@@ -140,7 +140,7 @@ module WGAAppModule {
         }
 
         private static tomato: Color4;
-        public static Tomato(): Color4 {
+        public static get Tomato(): Color4 {
             if (Color4.tomato == null) {
                 Color4.tomato = new Color4(230, 46, 0, 1);
             }

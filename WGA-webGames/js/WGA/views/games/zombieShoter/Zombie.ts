@@ -13,7 +13,7 @@ module WGAAppModule {
 
             this.Color = Setups.I.Utils.RandColor();
             this.Power = 20;
-            this.Angle = Vector2.AngleAbsBetween(Vector2.Right(), this.Direction);
+            this.Angle = Vector2.AngleAbsBetween(Vector2.Right, this.Direction);
         }
 
         public Draw(): void {
