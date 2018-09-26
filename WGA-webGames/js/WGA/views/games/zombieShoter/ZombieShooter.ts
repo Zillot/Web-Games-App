@@ -41,12 +41,12 @@ module WGAAppModule {
         public Update(timeDelta: number): void {
             super.Update(timeDelta);
 
+            this.game.Update(timeDelta);
+
             this.UpdateSpawnLogic(timeDelta);
 
             this.UpdateZombies(timeDelta);
             this.UpdateGuns(timeDelta);
-
-            this.game.Update(timeDelta);
         }
 
         public UpdateSpawnLogic(timeDelta: number): void {
@@ -116,10 +116,15 @@ module WGAAppModule {
         }
 
         public HitPlayer(power: number): void {
+            var oldState = this.game.IsPlayerDead();
+
             this.game.Hit(power);
 
-            if (this.game.IsPlayerDead()) {
+            if (oldState != this.game.IsPlayerDead()) {
                 this.ShowModal(ZombieShooterUI.GameOverModal);
+                for (var gunKey in this.guns) {
+                    this.guns[gunKey].Hit(100);
+                }
             }
         }
 

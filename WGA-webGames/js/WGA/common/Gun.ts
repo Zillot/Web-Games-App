@@ -12,6 +12,7 @@ module WGAAppModule {
 
         public Reload: number;
         public Angle: number;
+        public Health: number;
 
         public Bullets: Bullet[];
 
@@ -23,12 +24,16 @@ module WGAAppModule {
             this.Bullets = [];
 
             this.Reload = 0;
+            this.Health = 100;
 
             this.AngleControll = new Value(0, rotationSpeed);
         }
 
+        //============ UPDATE ============
         public Update(timeDelta: number, tryToHitEvent): void {
-            this.UpdateRotation(timeDelta);
+            if (!this.IsDead()) {
+                this.UpdateRotation(timeDelta);
+            }
             this.ReloadingProccess(timeDelta);
             this.UpdateBullets(timeDelta, tryToHitEvent);
             this.ShootByGun();
@@ -76,6 +81,19 @@ module WGAAppModule {
             }
         }
 
+        public Hit(value: number): void {
+            var oldSatate = this.IsDead();
+            this.Health -= value;
+            if (oldSatate != this.IsDead()) {
+                //TODO: just died logic
+            }
+        }
+
+        public IsDead(): boolean {
+            return this.Health <= 0;
+        }
+
+        //============ DRAW ============
         public Draw(): void {
             this.DrawBullets();
             this.DrawGun();
@@ -93,7 +111,7 @@ module WGAAppModule {
         }
 
         public ShootByGun(): void {
-            if (Setups.I.Input.GetMouseState() == MouseState.Down) {
+            if (Setups.I.Input.GetMouseState() == MouseState.Down && !this.IsDead()) {
                 this.Shoot(Setups.I.Input.GetMousePosition());
             }
         }
