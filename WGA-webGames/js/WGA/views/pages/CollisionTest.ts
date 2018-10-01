@@ -31,27 +31,28 @@ module WGAAppModule {
 
             this.Rects[0].SetPositionFromCenter(Setups.I.Input.GetMousePosition());
 
-            for (var rectKey1 in this.Rects) {
-                var rect1 = this.Rects[rectKey1];
+            this.checkRectsIntersections();
+        }
 
-                for (var rectKey2 in this.Rects) {
-                    var rect2 = this.Rects[rectKey2];
+        public checkRectsIntersections() {
+            for (var i = 0; i < this.Rects.length; i++) {
+                var rect1 = this.Rects[i];
 
-                    if (rect1 == rect2) {
-                        continue;
-                    }
+                for (var j = i + 1; j < this.Rects.length; j++) {
+                    var rect2 = this.Rects[j];
 
                     var intersect = Setups.I.Geometry.IsRectsIntersect(rect1, rect2);
 
-                    (<any>rect1).intersect = true;
-                    (<any>rect2).intersect = true;
+                    if (intersect) {
+                        (<any>rect1).intersect = true;
+                        (<any>rect2).intersect = true;
+                    }
                 }
             }
         }
 
         public Draw(): void {
             this.DrawRectangles();
-
             super.Draw();
         }
 
