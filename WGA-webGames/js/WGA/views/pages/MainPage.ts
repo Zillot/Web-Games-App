@@ -12,7 +12,8 @@ module WGAAppModule {
             this.Buttons.push(MainPageUI.SelectGame3Btn);
             this.Buttons.push(MainPageUI.EsternEqq1Btn);
             this.Buttons.push(MainPageUI.CamTestBtn);
-        }
+            this.Buttons.push(MainPageUI.CollisionTestBtn);
+        } 
 
         public Draw() {
             Setups.I.Draw.RectFill(<FillRectParams>{ position: new Vector2(0, 0), size: new Vector2(Setups.I.WindowWidth, Setups.I.WindowHeight), origin: new Vector2(-1, -1), color: Color4.Black.GetTransparent(0.5) });

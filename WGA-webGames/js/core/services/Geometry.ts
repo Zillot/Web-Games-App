@@ -11,7 +11,7 @@ module WGAAppModule {
 
         public IsRectsIntersect(rect1: Rect, rect2: Rect) {
             var onX = rect1.Left < rect2.Right && rect1.Right > rect2.Left;
-            var onY = rect1.Bottom < rect2.Top && rect1.Top > rect2.Bottom;
+            var onY = rect1.Top < rect2.Bottom && rect1.Bottom > rect2.Top;
 
             return onX && onY;
         }

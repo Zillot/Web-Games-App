@@ -88,11 +88,30 @@ module WGAAppModule {
                     },
                     position: new Vector2(Setups.I.WindowWidth - 60, 30),
                     size: new Vector2(100, 40),
-                    color: Color4.Blue
+                    color: Color4.Cyan
                 })
             }
 
+
             return this.camTestBtn;
+        }
+
+        public static collisionTestBtn: Button;
+        public static get CollisionTestBtn() {
+            if (this.collisionTestBtn == null) {
+                this.collisionTestBtn = Button.GetButton({
+                    name: "CollisionTestBtn",
+                    text: "Collision Test",
+                    onClick: function () {
+                        Setups.I.Pages.NavigateTo("CollisionTest");
+                    },
+                    position: new Vector2(Setups.I.WindowWidth - 60, 80),
+                    size: new Vector2(100, 40),
+                    color: Color4.Cyan
+                })
+            }
+
+            return this.collisionTestBtn;
         }
     }
 }

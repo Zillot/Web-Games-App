@@ -17,8 +17,8 @@ module WGAAppModule {
                 var x = Setups.I.Utils.RandI(50, Setups.I.WindowWidth - 50);
                 var y = Setups.I.Utils.RandI(50, Setups.I.WindowHeight - 50);
 
-                var width = Setups.I.Utils.RandI(10, 50);
-                var height = Setups.I.Utils.RandI(10, 50);
+                var width = Setups.I.Utils.RandI(10, 100);
+                var height = Setups.I.Utils.RandI(10, 100);
 
                 this.Rects.push(new Rect(x, y, x + width, y + height));
             }
@@ -35,6 +35,10 @@ module WGAAppModule {
         }
 
         public checkRectsIntersections() {
+            for (var rectKey in this.Rects) {
+                (<any>this.Rects[rectKey]).intersect = false;
+            }
+
             for (var i = 0; i < this.Rects.length; i++) {
                 var rect1 = this.Rects[i];
 

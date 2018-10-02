@@ -10,6 +10,7 @@
 
             Setups.I.Pages.CreatePage("Main", new MainPage());
             Setups.I.Pages.CreatePage("CameraTest", new CameraTest());
+            Setups.I.Pages.CreatePage("CollisionTest", new CollisionTest());
 
             Setups.I.Pages.CreatePage("ZombieShooter", new ZombieShooter());
             Setups.I.Pages.CreatePage("CoreDefence", new CoreDefence());

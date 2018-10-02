@@ -14,22 +14,30 @@ module WGAAppModule {
             this.Bottom = bottom;
         }
 
-        public GetCenter() {
-            return new Vector2(this.Left + (this.Right - this.Left) / 2, this.Top + (this.Bottom - this.Top) / 2)
+        public get Width(): number {
+            return this.Right - this.Left;
         }
 
-        public GetSize() {
-            return new Vector2(this.Right - this.Left, this.Bottom - this.Top)
+        public get Height(): number {
+            return this.Bottom - this.Top;
         }
 
-        public SetPositionFromCenter(position: Vector2) {
-            var xDelta = this.Left - position.X;
-            var YDelta = this.Top - position.Y;
+        public GetCenter(): Vector2 {
+            return new Vector2(this.Left + this.Width / 2, this.Top + this.Height / 2)
+        }
 
-            this.Left += xDelta
-            this.Right += xDelta
-            this.Top += YDelta
-            this.Bottom += YDelta
+        public GetSize(): Vector2 {
+            return new Vector2(this.Width, this.Height)
+        }
+
+        public SetPositionFromCenter(position: Vector2): void {
+            var width = this.Width;
+            var height = this.Height;
+
+            this.Left = position.X - width / 2;
+            this.Right = this.Left + width;
+            this.Top = position.Y - height / 2;
+            this.Bottom = this.Top + height;
         }
 
         public static FromVectors(position: Vector2, size: Vector2): Rect {
