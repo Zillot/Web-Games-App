@@ -229,5 +229,19 @@ module WGAAppModule {
             }
             return Vector2.leftup.GetCopy();
         }
+        private static zero: Vector2;
+        public static get Zero(): Vector2 {
+            if (!Vector2.zero) {
+                Vector2.zero = new Vector2(0, 0).Normalize();
+            }
+            return Vector2.zero.GetCopy();
+        }
+        private static one: Vector2;
+        public static get One(): Vector2 {
+            if (!Vector2.one) {
+                Vector2.one = new Vector2(1, 1);
+            }
+            return Vector2.one.GetCopy();
+        }
     }
 }
