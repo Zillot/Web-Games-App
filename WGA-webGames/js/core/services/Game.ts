@@ -6,9 +6,9 @@ module WGAAppModule {
         private scoreGoal: number;
         private scoreCurrent: number;
 
-        private money: number;
-        private score: number;
-        private health: number;
+        private money: Value;
+        private score: Value;
+        private health: Value;
 
         public NextLevelEvent: any;
 
@@ -17,9 +17,9 @@ module WGAAppModule {
             this.scoreGoal = scoreGoal;
             this.scoreCurrent = 0;
 
-            this.money = 0;
-            this.score = 0;
-            this.health = health;
+            this.money = new Value(0, 1);
+            this.score = new Value(0, 1);
+            this.health = new Value(0, 1);
         }
 
         //start getters
@@ -41,17 +41,19 @@ module WGAAppModule {
         //end getters
 
         public Hit(amount: number) {
-            this.health -= amount;
+            this.health.GoToDelta(-amount);
         }
 
         public AddScore(amount: number) {
-            this.score += amount;
+            this.score.GoToDelta(amount);
         }
         public SubScore(amount: number) {
-            this.score -= amount;
+            this.score.GoToDelta(-amount);
         }
 
         public Update(timeDelta: number) {
+            this.score.Update(timeDelta);
+
             if (this.scoreCurrent >= this.scoreGoal) {
                 this.scoreGoal = this.scoreGoal * 3;
                 this.level++;
@@ -63,16 +65,16 @@ module WGAAppModule {
         }
 
         public IsPlayerDead() {
-            return this.health <= 0;
+            return this.health.GetVal() <= 0;
         }
 
         public Draw(additionalDraw?: any) {
             Setups.I.Draw.RectFill(<FillRectParams>{ position: new Vector2(0, 0), size: new Vector2(Setups.I.WindowWidth, 60), origin: new Vector2(1, 1), color: new Color4(0, 0, 0, 0.1) });
 
             Setups.I.Draw.TextFill(<TextParams>{ str: "Level: " + this.level, position: new Vector2(Setups.I.Center.X, 5), color: Color4.Gray, fontName: "serif", fontSize: 30, origin: new Vector2(0, -1) });
-            Setups.I.Draw.TextFill(<TextParams>{ str: "Score: " + this.score, position: new Vector2(Setups.I.Center.X, 35), color: Color4.Gray, fontName: "serif", fontSize: 18, origin: new Vector2(0, -1) });
-            Setups.I.Draw.TextFill(<TextParams>{ str: this.money + " :Money", position: new Vector2(Setups.I.WindowWidth - 10, 7), color: Color4.Gray, fontName: "serif", fontSize: 18, origin: new Vector2(1, -1) });
-            Setups.I.Draw.TextFill(<TextParams>{ str: this.health + " :Health", position: new Vector2(Setups.I.WindowWidth - 10, 33), color: Color4.Gray, fontName: "serif", fontSize: 18, origin: new Vector2(1, -1) });
+            Setups.I.Draw.TextFill(<TextParams>{ str: "Score: " + this.score.GetVal, position: new Vector2(Setups.I.Center.X, 35), color: Color4.Gray, fontName: "serif", fontSize: 18, origin: new Vector2(0, -1) });
+            Setups.I.Draw.TextFill(<TextParams>{ str: this.money.GetVal() + " :Money", position: new Vector2(Setups.I.WindowWidth - 10, 7), color: Color4.Gray, fontName: "serif", fontSize: 18, origin: new Vector2(1, -1) });
+            Setups.I.Draw.TextFill(<TextParams>{ str: this.health.GetVal() + " :Health", position: new Vector2(Setups.I.WindowWidth - 10, 33), color: Color4.Gray, fontName: "serif", fontSize: 18, origin: new Vector2(1, -1) });
 
             if (additionalDraw) {
                 additionalDraw();
