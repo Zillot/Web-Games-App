@@ -90,6 +90,12 @@ module WGAAppModule {
         public Line(params: LineParams): void {
             this.line(params);
         }
+        public PolygonStroke(params: StrokePolygonParams): void {
+            this.polygon(params, 'stroke');
+        }
+        public PolygonFill(params: FillPolygonParams): void {
+            this.polygon(new StrokePolygonParams(params, 0), 'fill');
+        }
         public TriangleStroke(params: StrokeTriangleParams): void {
             this.triangle(params, 'stroke');
         }
@@ -157,6 +163,56 @@ module WGAAppModule {
             this.ctx.lineTo(x + params.size.X, y);
             this.ctx.lineTo(x + params.size.X / 2, y - params.size.Y);
             this.ctx.lineTo(x, y);
+
+            if (type == 'stroke') {
+                this.ctx.lineWidth = params.thickness;
+                this.ctx.strokeStyle = params.color.GetRgba();
+                this.ctx.stroke();
+            }
+            else if (type == 'fill') {
+                this.ctx.fillStyle = params.color.GetRgba();
+                this.ctx.fill();
+            }
+
+            this.ctx.restore();
+        }
+
+        private polygon(params: StrokePolygonParams, type: string): void {
+            StrokePolygonParams.Normilize(params);
+            params.origin = params.origin.MUL(new Vector2(-1, -1));
+
+            var size = params.points[0];
+
+            for (var i = 0; i < params.points.length; i++) {
+                var point = params.points[i];
+
+                if (size.X < point.X) {
+                    size.X = point.X;
+                }
+
+                if (size.Y < point.Y) {
+                    size.Y = point.Y;
+                }
+            }
+
+            var startPoint = params.position.X + size.X * 0.5 * params.origin.X;
+
+            this.ctx.save();
+
+            this.ctx.translate(params.position.X, params.position.Y);
+            this.ctx.scale((<Vector2>params.scale).X, (<Vector2>params.scale).Y);
+            this.ctx.rotate(params.angle);
+
+            var x = -(size.X / 2) + (size.X / 2) * params.origin.X;
+            var y = (size.Y / 2) + (size.Y / 2) * params.origin.Y;
+
+            this.ctx.beginPath();
+            this.ctx.moveTo(x, y);
+
+            for (var i = 0; i < params.points.length; i++) {
+                var point = params.points[i];
+                this.ctx.lineTo(x + point.X, y + point.Y);
+            }
 
             if (type == 'stroke') {
                 this.ctx.lineWidth = params.thickness;
