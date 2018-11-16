@@ -7,7 +7,7 @@ module WGAAppModule {
         private speed: number;
         private cubes: number;
         private size: number;
-        private direction: Vector2;
+        private leftRigthDir: Vector2;
 
         private proccess: Value;
         private pointsTop: Vector2[];
@@ -18,9 +18,18 @@ module WGAAppModule {
             this.Position = position;
             this.speed = speed;
 
-            this.proccess = new Value(0, 1);
+            this.proccess = new Value(0, speed);
+            this.StartMoving();
 
             this.SetCubeData(size, cubes);
+        }
+
+        public StartMoving() {
+            this.proccess.GoTo(1, this.speed, this.EndMoving);
+        }
+
+        public EndMoving() {
+            this.proccess.GoTo(0, this.speed, this.StartMoving);
         }
 
         public SetCubeData(size: number, cubes: number) {
@@ -54,18 +63,20 @@ module WGAAppModule {
         }
 
         public Draw(): void {
-            var position = this.Position.SUB(this.direction.MUL(this.size));
+            var upDownDir = this.leftRigthDir.RotateTo(Math.PI / 2);
+            var position = this.Position.SUB(this.leftRigthDir.MUL(this.size * (this.cubes / 2) * this.proccess.GetVal()));
+            var position = this.Position.SUB(upDownDir.MUL(this.size * (this.cubes / 2) * this.proccess.GetVal()));
 
-            for (var i = 0; i < 3; i++) {
-                for (var j = 0; j < 3; j++) {
-                    var cubePosition = position.ADD(this.direction.MUL(this.size).MUL(j));
+            for (var i = 0; i < this.cubes; i++) {
+                for (var j = 0; j < this.cubes; j++) {
+                    var cubePosition = position.ADD(this.leftRigthDir.MUL(this.size * j * this.proccess.GetVal()));
 
                     Setups.I.Draw.PolygonFill(<FillPolygonParams> { color: new Color4(102, 153, 255, 1), position: cubePosition, points: this.pointsTop });
                     Setups.I.Draw.PolygonFill(<FillPolygonParams> { color: new Color4(51, 119, 255, 1), position: cubePosition, points: this.pointsLeft });
                     Setups.I.Draw.PolygonFill(<FillPolygonParams> { color: new Color4(255, 133, 102, 1), position: cubePosition, points: this.pointsRight });
                 }
 
-                position = position.ADD(this.direction.RotateTo(Math.PI / 2).MUL(this.size));
+                position = position.ADD(this.leftRigthDir.RotateTo(Math.PI / 2).MUL(this.size * this.proccess.GetVal()));
             }
         }
     }
