@@ -1,4 +1,6 @@
 /// <reference path="../../../../core/abstracts/WGAGame.ts"/>
+/// <reference path="../../../../core/engine/Vector2.ts"/>
+/// <reference path="../../../../core/engine/Color4.ts"/>
 
 module WGAAppModule {
     'use strict';
