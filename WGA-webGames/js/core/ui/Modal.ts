@@ -1,8 +1,10 @@
 module WGAAppModule {
     'use strict';
 
-    export class Modal {
-        private name: string;
+    export class Modal implements IUiComponent {
+        public Name: string;
+
+        private modalName: string;
         private header: string;
         private text: string;
         private uiComponents: IUiComponent[];
@@ -12,11 +14,11 @@ module WGAAppModule {
 
         private showProcess: Value;
 
-        constructor(name: string, header: string, text: string) {
+        constructor(modalName: string, header: string, text: string) {
             this.position = Setups.I.Center.SUB(new Vector2(100, 70));
             this.size = new Vector2(200, 140);
 
-            this.name = name;
+            this.modalName = modalName;
             this.header = header;
             this.text = text;
 

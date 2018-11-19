@@ -4,51 +4,39 @@
     export class Page implements IUpdateable, IDrawable {
         public Buttons: Button[];
         public Modals: Modal[];
+        public UiComponents: IUiComponent[];
 
         public constructor() {
-            this.Buttons = [];
-            this.Modals = [];
+            this.UiComponents = [];
         }
 
         public Init(): void {
-            for (var buttonKey in this.Buttons) {
-                this.Buttons[buttonKey].Init();
-            }
-            for (var modalKey in this.Modals) {
-                this.Modals[modalKey].Init();
+            for (var uiComponent in this.UiComponents) {
+                this.UiComponents[uiComponent].Init();
             }
         }
 
         public Dispose(): void {
-            for (var buttonKey in this.Buttons) {
-                this.Buttons[buttonKey].Dispose();
-            }
-            for (var modalKey in this.Modals) {
-                this.Modals[modalKey].Dispose();
+            for (var uiComponent in this.UiComponents) {
+                this.UiComponents[uiComponent].Dispose();
             }
         }
         
         public Update(timeDelta: number): void {
-            for (var buttonKey in this.Buttons) {
-                this.Buttons[buttonKey].Update(timeDelta);
-            }
-            for (var modalKey in this.Modals) {
-                this.Modals[modalKey].Update(timeDelta);
+            for (var uiComponent in this.UiComponents) {
+                this.UiComponents[uiComponent].Update(timeDelta);
             }
         }
 
         public Draw(): void {
-            for (var buttonKey in this.Buttons) {
-                this.Buttons[buttonKey].Draw();
-            }
-            for (var modalKey in this.Modals) {
-                this.Modals[modalKey].Draw();
+            for (var uiComponent in this.UiComponents) {
+                this.UiComponents[uiComponent].Draw();
             }
         }
 
         public ShowModal(modal: Modal) {
             modal.Init();
-            this.Modals.push(modal);
+            this.UiComponents.push(modal);
             modal.Show();
         }
     }
