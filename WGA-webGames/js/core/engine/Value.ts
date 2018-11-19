@@ -38,6 +38,10 @@ module WGAAppModule {
             }
         }
 
+        public Play(): void {
+            this.pause = 1;
+        }
+
         public Pause(): void {
             this.pause = 0;
         }
