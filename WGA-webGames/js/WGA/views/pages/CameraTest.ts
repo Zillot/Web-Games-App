@@ -9,15 +9,7 @@ module WGAAppModule {
         constructor() {
             super();
 
-            this.UiComponents.push(CameraTestUI.UpButton);
-            this.UiComponents.push(CameraTestUI.DownButton);
-            this.UiComponents.push(CameraTestUI.RightButton);
-            this.UiComponents.push(CameraTestUI.LeftButton);
-            this.UiComponents.push(CameraTestUI.ZoomPlusButton);
-            this.UiComponents.push(CameraTestUI.ZoomMInusButton);
-            this.UiComponents.push(CameraTestUI.RotatePlusButton);
-            this.UiComponents.push(CameraTestUI.RotateMinusButton);
-            this.UiComponents.push(CameraTestUI.RotateResetButton);
+            CameraTestUI.SetupUI(this.UiComponents);
         }
 
         public Init(): void {

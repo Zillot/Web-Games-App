@@ -6,6 +6,10 @@ module WGAAppModule {
     'use strict';
 
     export class CastleDefenceUI {
+        public static SetupUI(uiComponents: IUiComponent[]) {
+            uiComponents.push(CastleDefenceUI.BuildTower);
+        }
+
         private static buildTower: Button;
         public static get BuildTower() {
             if (this.buildTower == null) {

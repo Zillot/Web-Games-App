@@ -7,8 +7,13 @@ module WGAAppModule {
     'use strict';
 
     export class ZombieShooterUI {
+        public static SetupUI(uiComponents: IUiComponent[]) {
+            uiComponents.push(ZombieShooterUI.ToMainButton);
+            uiComponents.push(ZombieShooterUI.RestartButton);
+        }
+
         private static toMainButton: Button;
-        public static get ToMainButton() {
+        private static get ToMainButton() {
             if (this.toMainButton == null) {
                 this.toMainButton = Button.GetButton({
                     name: "ToMainButton",

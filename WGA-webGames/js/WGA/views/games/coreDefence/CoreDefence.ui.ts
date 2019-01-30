@@ -8,5 +8,7 @@ module WGAAppModule {
 
     export class CoreDefenceUI {
 
+        public static SetupUI(uiComponents: IUiComponent[]) {
+        }
     }
 }

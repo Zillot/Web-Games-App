@@ -2,7 +2,6 @@
     'use strict';
 
     export class Page implements IUpdateable, IDrawable {
-        public Buttons: Button[];
         public Modals: Modal[];
         public UiComponents: IUiComponent[];
 

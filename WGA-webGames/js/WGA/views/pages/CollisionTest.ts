@@ -8,6 +8,8 @@ module WGAAppModule {
         
         constructor() {
             super();
+
+            CollisionTestUI.SetupUI(this.UiComponents);
         }
 
         public Init(): void {

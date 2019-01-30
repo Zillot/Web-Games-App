@@ -7,5 +7,7 @@ module WGAAppModule {
     'use strict';
 
     export class FiveInLIneUI {
+        public static SetupUI(uiComponents: IUiComponent[]) {
+        }
     }
 }

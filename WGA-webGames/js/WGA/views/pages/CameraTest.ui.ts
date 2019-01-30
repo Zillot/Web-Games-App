@@ -7,7 +7,19 @@ module WGAAppModule {
     'use strict';
 
     export class CameraTestUI {
-        public static upButton: Button;
+        public static SetupUI(uiComponents: IUiComponent[]) {
+            uiComponents.push(CameraTestUI.UpButton);
+            uiComponents.push(CameraTestUI.DownButton);
+            uiComponents.push(CameraTestUI.RightButton);
+            uiComponents.push(CameraTestUI.LeftButton);
+            uiComponents.push(CameraTestUI.ZoomPlusButton);
+            uiComponents.push(CameraTestUI.ZoomMInusButton);
+            uiComponents.push(CameraTestUI.RotatePlusButton);
+            uiComponents.push(CameraTestUI.RotateMinusButton);
+            uiComponents.push(CameraTestUI.RotateResetButton);
+        }
+
+        private static upButton: Button;
         public static get UpButton() {
             if (this.upButton == null) {
                 this.upButton = Button.GetButton({
@@ -26,7 +38,7 @@ module WGAAppModule {
             return this.upButton;
         }
 
-        public static downButton: Button;
+        private static downButton: Button;
         public static get DownButton() {
             if (this.downButton == null) {
                 this.downButton = Button.GetButton({
@@ -45,7 +57,7 @@ module WGAAppModule {
             return this.downButton;
         }
 
-        public static rightButton: Button;
+        private static rightButton: Button;
         public static get RightButton() {
             if (this.rightButton == null) {
                 this.rightButton = Button.GetButton({
@@ -64,7 +76,7 @@ module WGAAppModule {
             return this.rightButton;
         }
 
-        public static leftButton: Button;
+        private static leftButton: Button;
         public static get LeftButton() {
             if (this.leftButton == null) {
                 this.leftButton = Button.GetButton({
@@ -83,7 +95,7 @@ module WGAAppModule {
             return this.leftButton;
         }
 
-        public static zoomPlusButton: Button;
+        private static zoomPlusButton: Button;
         public static get ZoomPlusButton() {
             if (this.zoomPlusButton == null) {
                 this.zoomPlusButton = Button.GetButton({
@@ -102,7 +114,7 @@ module WGAAppModule {
             return this.zoomPlusButton;
         }
 
-        public static zoomMInusButton: Button;
+        private static zoomMInusButton: Button;
         public static get ZoomMInusButton() {
             if (this.zoomMInusButton == null) {
                 this.zoomMInusButton = Button.GetButton({
@@ -121,7 +133,7 @@ module WGAAppModule {
             return this.zoomMInusButton;
         }
 
-        public static rotatePlusButton: Button;
+        private static rotatePlusButton: Button;
         public static get RotatePlusButton() {
             if (this.rotatePlusButton == null) {
                 this.rotatePlusButton = Button.GetButton({
@@ -140,7 +152,7 @@ module WGAAppModule {
             return this.rotatePlusButton;
         }
 
-        public static rotateMinusButton: Button;
+        private static rotateMinusButton: Button;
         public static get RotateMinusButton() {
             if (this.rotateMinusButton == null) {
                 this.rotateMinusButton = Button.GetButton({
@@ -159,7 +171,7 @@ module WGAAppModule {
             return this.rotateMinusButton;
         }
 
-        public static rotateResetButton: Button;
+        private static rotateResetButton: Button;
         public static get RotateResetButton() {
             if (this.rotateResetButton == null) {
                 this.rotateResetButton = Button.GetButton({

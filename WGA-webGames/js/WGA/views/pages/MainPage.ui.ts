@@ -7,6 +7,17 @@ module WGAAppModule {
     'use strict';
 
     export class MainPageUI {
+        public static SetupUI(uiComponents: IUiComponent[]) {
+            uiComponents.push(MainPageUI.SelectGame1Btn);
+            uiComponents.push(MainPageUI.SelectGame2Btn);
+            uiComponents.push(MainPageUI.SelectGame3Btn);
+            uiComponents.push(MainPageUI.EsternEqq1Btn);
+            uiComponents.push(MainPageUI.CamTestBtn);
+            uiComponents.push(MainPageUI.CollisionTestBtn);
+            
+            uiComponents.push(new MainIco(new Vector2(100, 100), 40, 3, 1));
+        }
+
         public static selectGame1Btn: Button;
         public static get SelectGame1Btn() {
             if (this.selectGame1Btn == null) {

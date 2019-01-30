@@ -32,6 +32,8 @@ module WGAAppModule {
         }
 
         public Init(): void {
+            FiveInLIneUI.SetupUI(this.UiComponents);
+
             this.cubes = [];
             this.cubesPrediction = [];
             this.cuberPerAppear = 1;

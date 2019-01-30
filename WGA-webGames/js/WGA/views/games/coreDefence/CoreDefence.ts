@@ -16,6 +16,8 @@ module WGAAppModule {
         }
 
         public Init(): void {
+            CoreDefenceUI.SetupUI(this.UiComponents);
+
             this.enemies = [];
             this.guns = [];
 

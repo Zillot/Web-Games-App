@@ -7,14 +7,7 @@ module WGAAppModule {
         constructor() {
             super();
 
-            this.UiComponents.push(MainPageUI.SelectGame1Btn);
-            this.UiComponents.push(MainPageUI.SelectGame2Btn);
-            this.UiComponents.push(MainPageUI.SelectGame3Btn);
-            this.UiComponents.push(MainPageUI.EsternEqq1Btn);
-            this.UiComponents.push(MainPageUI.CamTestBtn);
-            this.UiComponents.push(MainPageUI.CollisionTestBtn);
-
-            this.UiComponents.push(new MainIco(new Vector2(100, 100), 40, 3, 1));
+            MainPageUI.SetupUI(this.UiComponents);
         } 
 
         public Draw() {

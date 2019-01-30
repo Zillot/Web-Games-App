@@ -7,5 +7,8 @@ module WGAAppModule {
     'use strict';
 
     export class CollisionTestUI {
+        public static SetupUI(uiComponents: IUiComponent[]) {
+
+        }
     }
 }

@@ -16,7 +16,8 @@ module WGAAppModule {
         constructor() {
             super();
 
-            this.Buttons.push(CastleDefenceUI.BuildTower);
+            CoreDefenceUI.SetupUI(this.UiComponents);
+
             CastleDefenceUI.BuildTower.SetOnClick(function () {
                 this.GoToBuildMode();
             });

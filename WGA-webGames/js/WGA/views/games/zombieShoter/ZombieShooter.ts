@@ -20,8 +20,7 @@ module WGAAppModule {
         }
 
         public Init(): void {
-            this.UiComponents.push(ZombieShooterUI.ToMainButton);
-            this.UiComponents.push(ZombieShooterUI.RestartButton);
+            ZombieShooterUI.SetupUI(this.UiComponents);
 
             this.zombies = [];
             this.guns = [];
