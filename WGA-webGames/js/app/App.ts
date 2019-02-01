@@ -28,6 +28,7 @@
                 this.currentGame.Game.Update(timeDelta);
             }
         }
+
         public Draw(): void {
             if (this.pause == true) {
                 Setups.I.Draw.adjustMenuViewToCamera();

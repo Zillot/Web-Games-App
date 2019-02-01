@@ -12,6 +12,10 @@ module WGAAppModule {
             super.Init();
         }
 
+        public RestartGame(): void {
+
+        }
+
         public Dispose(): void {
             super.Dispose();
         }

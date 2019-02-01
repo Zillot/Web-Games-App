@@ -50,14 +50,20 @@ module WGAAppModule {
             return this.value;
         }
 
+        public GetGoalVal(): number {
+            return this.valueGoal;
+        }
+
         public SetValue(value: number): void {
             this.valueGoal = value;
             this.value = value;
             this.pause = 0;
         }
 
-        public GoToDelta(delta: number, speed?: number, callback?: CallbackFunction): void {
+        public GoToDelta(delta: number, speed?: number, callback?: CallbackFunction): number {
             this.GoTo(this.value + delta, speed, callback);
+
+            return this.valueGoal;
         }
 
         public GoTo(value: number, speed?: number, callback?: CallbackFunction): void {
