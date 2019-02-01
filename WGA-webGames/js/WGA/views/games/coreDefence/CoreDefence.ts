@@ -16,8 +16,15 @@ module WGAAppModule {
         }
 
         public Init(): void {
+            DefaultUI.RestartButton.SetOnClick(this.RestartGame);
             CoreDefenceUI.SetupUI(this.UiComponents);
 
+            this.RestartGame();
+
+            super.Init();
+        }
+
+        public RestartGame(): void {
             this.enemies = [];
             this.guns = [];
 
@@ -26,13 +33,23 @@ module WGAAppModule {
             this.coreSafeRadius = 50;
 
             this.game = new Game(20, 100);
-            this.game.NextLevelEvent = () => {
-                this.maxEnemies += (2 * this.game.Level);
-            };
+            this.game.NextLevelEvent = this.NextLevelHandler;
+            this.game.GameOverEvent = this.GameOverHandler;
 
             this.guns.push(new CoreGun(5));
+        }
 
-            super.Init();
+        public NextLevelHandler() {
+            this.maxEnemies += (2 * this.game.Level);
+        }
+
+        public GameOverHandler() {
+            this.ShowModal(CoreDefenceUI.GameOverModal);
+
+            for (var gunKey in this.guns) {
+                var gun = this.guns[gunKey];
+                gun.Hit(gun.Health);
+            }
         }
 
         //============ UPDATE ============
@@ -101,6 +118,7 @@ module WGAAppModule {
         public tryToDefendWithGun(fromEnemyToCenter: number, enemy: Enemy) {
             var isCloseEnought = fromEnemyToCenter < this.coreSafeRadius + enemy.Radius;
             var isNotTooClose = fromEnemyToCenter < this.coreSafeRadius - enemy.Radius * 2;
+
             if (isCloseEnought && isNotTooClose) {
                 var enemyAngle = enemy.Direction.MUL(-1).AngleAbsTo(Vector2.Left);
                 var rightGunAngle = this.guns.filter(x => x.CoveredByShield(enemyAngle))[0];
@@ -118,12 +136,8 @@ module WGAAppModule {
                 this.game.SubScore(5);
 
                 enemy.MarkToBeRemoved();
-                this.HitPlayer(enemy.Power);
+                this.game.Hit(enemy.Power);
             }
-        }
-
-        public HitPlayer(power: number): void {
-            this.game.Hit(power);
         }
 
         //============ DRAW ============
@@ -146,7 +160,6 @@ module WGAAppModule {
             Setups.I.Draw.CircleFill(<FillCircleParams>{ position: Setups.I.Center, radius: 30, color: color1.GetTransparent(0.2) });
             Setups.I.Draw.CircleFill(<FillCircleParams>{ position: Setups.I.Center, radius: 10, color: color1.GetTransparent(0.5) });
             Setups.I.Draw.CircleFill(<FillCircleParams>{ position: Setups.I.Center, radius: 6, color: color1.GetTransparent(0.5) });
-
         }
 
         public DrawEnemy(): void {

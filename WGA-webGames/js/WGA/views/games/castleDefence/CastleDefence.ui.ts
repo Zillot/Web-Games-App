@@ -24,5 +24,9 @@ module WGAAppModule {
 
             return this.buildTower;
         }
+
+        public static get GameOverModal() {
+            return DefaultUI.GameOverModal("Game over", "So many servant give their lives, just so you can have fun. Hope you happy now");
+        }
     }
 }

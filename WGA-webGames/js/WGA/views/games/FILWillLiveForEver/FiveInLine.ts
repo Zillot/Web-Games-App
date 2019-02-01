@@ -52,6 +52,18 @@ module WGAAppModule {
             super.Init();
         }
 
+        public RestartGame(): void {
+
+        }
+
+        public NextLevelHandler() {
+
+        }
+
+        public GameOverHandler() {
+            this.ShowModal(FiveInLIneUI.GameOverModal);
+        }
+
         public SetRandomCubesTo(): void {
             var freePoints = [];
 

@@ -15,27 +15,33 @@ module WGAAppModule {
 
         constructor() {
             super();
-
-            CoreDefenceUI.SetupUI(this.UiComponents);
-
-            CastleDefenceUI.BuildTower.SetOnClick(function () {
-                this.GoToBuildMode();
-            });
-        }
-
-        public GoToBuildMode(): void {
-            this.towerToBuild = new Tower(this.GetTowerToBuildPosition(), 100, new Vector2(50, 80), 0);
         }
 
         public Init(): void {
-            this.game = new Game(20, 100);
-            this.castle = new Castle(new Vector2(Setups.I.WindowWidth / 2, Setups.I.WindowHeight), 100);
-
-            this.game.NextLevelEvent = () => { };
-
-            this.towers = [];
+            CastleDefenceUI.SetupUI(this.UiComponents);
+            CastleDefenceUI.BuildTower.SetOnClick(function () {
+                this.GoToBuildMode();
+            });
 
             super.Init();
+        }
+
+        public RestartGame(): void {
+            this.castle = new Castle(new Vector2(Setups.I.WindowWidth / 2, Setups.I.WindowHeight), 100);
+
+            this.game = new Game(20, 100);
+            this.game.NextLevelEvent = this.NextLevelHandler;
+            this.game.GameOverEvent = this.GameOverHandler;
+
+            this.towers = [];
+        }
+
+        public NextLevelHandler() {
+
+        }
+
+        public GameOverHandler() {
+            this.ShowModal(CastleDefenceUI.GameOverModal);
         }
 
         //============ UPDATE ============
@@ -47,7 +53,6 @@ module WGAAppModule {
                 this.TowerBildingUpdate();
             }
         }
-
         public TowerBildingUpdate() {
             this.towerToBuild.Position = this.GetTowerToBuildPosition();
 
@@ -95,8 +100,8 @@ module WGAAppModule {
             this.towers.push(new Tower(tower.Position, 100, new Vector2(50, 80), 0));
         }
 
-        public HitPlayer(power: number): void {
-            this.game.Hit(power);
+        public GoToBuildMode(): void {
+            this.towerToBuild = new Tower(this.GetTowerToBuildPosition(), 100, new Vector2(50, 80), 0);
         }
 
         //============ DRAW ============

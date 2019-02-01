@@ -20,8 +20,15 @@ module WGAAppModule {
         }
 
         public Init(): void {
+            DefaultUI.RestartButton.SetOnClick(this.RestartGame);
             ZombieShooterUI.SetupUI(this.UiComponents);
 
+            this.RestartGame();
+
+            super.Init();
+        }
+
+        public RestartGame(): void {
             this.zombies = [];
             this.guns = [];
 
@@ -30,13 +37,23 @@ module WGAAppModule {
             this.zombieSpawnPause = 0;
 
             this.game = new Game(20, 100);
-            this.game.NextLevelEvent = () => {
-                this.maxZombies += (2 * this.game.Level);
-            };
+            this.game.NextLevelEvent = this.NextLevelHandler;
+            this.game.GameOverEvent = this.GameOverHandler;
 
             this.guns.push(new Gun(new Vector2(Setups.I.WindowWidth - 50, Setups.I.WindowHeight / 2), 0.5));
+        }
 
-            super.Init();
+        public NextLevelHandler() {
+            this.maxZombies += (2 * this.game.Level);
+        }
+
+        public GameOverHandler() {
+            this.ShowModal(ZombieShooterUI.GameOverModal);
+
+            for (var gunKey in this.guns) {
+                var gun = this.guns[gunKey];
+                gun.Hit(gun.Health);
+            }
         }
 
         //============ UPDATE ============
@@ -103,7 +120,7 @@ module WGAAppModule {
                 if (zombie.NotOnTheGameField()) {
                     zombie.MarkToBeRemoved();
                     this.game.SubScore(5);
-                    this.HitPlayer(zombie.Power);
+                    this.game.Hit(zombie.Power);
                 }
 
                 this.RemoveDeadZombie(zombie);
@@ -114,19 +131,6 @@ module WGAAppModule {
             if (zombie.ShouldBeRemoved()) {
                 var index = this.zombies.indexOf(zombie);
                 this.zombies.splice(index, 1);
-            }
-        }
-
-        public HitPlayer(power: number): void {
-            var oldState = this.game.IsPlayerDead();
-
-            this.game.Hit(power);
-
-            if (oldState != this.game.IsPlayerDead()) {
-                this.ShowModal(ZombieShooterUI.GameOverModal);
-                for (var gunKey in this.guns) {
-                    this.guns[gunKey].Hit(100);
-                }
             }
         }
 

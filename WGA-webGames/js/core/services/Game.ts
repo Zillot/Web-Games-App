@@ -11,6 +11,7 @@ module WGAAppModule {
         private health: Value;
 
         public NextLevelEvent: any;
+        public GameOverEvent: any;
 
         constructor(scoreGoal: number, health: number) {
             this.level = 1;
@@ -41,7 +42,20 @@ module WGAAppModule {
         //end getters
 
         public Hit(amount: number) {
-            this.health.GoToDelta(-amount);
+            var health = this.health.GetGoalVal();
+            if (health == 0) {
+                return;
+            }
+
+            var health = this.health.GoToDelta(-amount);
+
+            if (health < 0) {
+                this.health.GoToDelta(0);
+            }
+
+            if (health == 0 && this.GameOverEvent) {
+                this.GameOverEvent();
+            }
         }
 
         public AddScore(amount: number) {
