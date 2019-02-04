@@ -12,6 +12,7 @@ module WGAAppModule {
         private coreSafeRadius: number;
 
         private game: Game;
+        private cityWall: CityWall;
 
         private killed: number;
 
@@ -35,6 +36,8 @@ module WGAAppModule {
             this.killed = 0;
             this.maxZombies = 4;
             this.zombieSpawnPause = 0;
+
+            this.cityWall = new CityWall(new Vector2(Setups.I.WindowWidth - 20, Setups.I.WindowHeight / 2), 1);
 
             this.game = new Game(20, 100);
             this.game.NextLevelEvent = this.NextLevelHandler;
@@ -61,6 +64,7 @@ module WGAAppModule {
             super.Update(timeDelta);
 
             this.game.Update(timeDelta);
+            this.cityWall.Update(timeDelta);
 
             this.UpdateSpawnLogic(timeDelta);
 
@@ -136,6 +140,8 @@ module WGAAppModule {
 
         //============ DRAW ============
         public Draw(): void {
+            this.cityWall.Draw();
+
             this.DrawZombies();
             this.DrawGuns();
 

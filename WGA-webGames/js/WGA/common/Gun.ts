@@ -96,6 +96,7 @@ module WGAAppModule {
         //============ DRAW ============
         public Draw(): void {
             this.DrawBullets();
+            this.DrawBackground();
             this.DrawGun();
         }
 
@@ -105,9 +106,31 @@ module WGAAppModule {
             }
         }
 
+        public DrawBackground(): void {
+            Setups.I.Draw.CircleFill(<FillCircleParams> {
+                position: this.Position,
+                radius: 20,
+                origin: new Vector2(0, 0),
+                color: Color4.ColorFromHex('#00FF00'),
+                angle: this.AngleControll.GetVal()
+            });
+        }
+
         public DrawGun(): void {
-            Setups.I.Draw.RectFill(<FillRectParams>{ position: this.Position, size: new Vector2(50, 10), origin: new Vector2(1, 0), color: Color4.ColorFromHex('#00FF00'), angle: this.AngleControll.GetVal() });
-            Setups.I.Draw.RectFill(<FillRectParams>{ position: this.Position, size: new Vector2(5, 5), origin: new Vector2(0, 0), color: Color4.ColorFromHex('#FFFF00') });
+            Setups.I.Draw.RectFill(<FillRectParams> {
+                position: this.Position,
+                size: new Vector2(50, 10),
+                origin: new Vector2(1, 0),
+                color: Color4.ColorFromHex('#00FF00'),
+                angle: this.AngleControll.GetVal()
+            });
+
+            Setups.I.Draw.RectFill(<FillRectParams> {
+                position: this.Position,
+                size: new Vector2(5, 5),
+                origin: new Vector2(0, 0),
+                color: Color4.ColorFromHex('#FFFF00')
+            });
         }
 
         public ShootByGun(): void {
