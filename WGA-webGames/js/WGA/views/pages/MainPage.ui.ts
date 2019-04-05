@@ -15,7 +15,8 @@ module WGAAppModule {
             uiComponents.push(MainPageUI.CamTestBtn);
             uiComponents.push(MainPageUI.CollisionTestBtn);
             
-            uiComponents.push(new MainIco(new Vector2(100, 100), 40, 3, 1));
+            uiComponents.push(new MainIco(new Vector2(100, 100), 30, 3, 1));
+            uiComponents.push(new SpinnerIco(new Vector2(100, 100), 20, 10, 2));
         }
 
         public static selectGame1Btn: Button;
