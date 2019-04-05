@@ -96,11 +96,13 @@ module WGAAppModule {
             if (this.dir == 1 && this.value >= this.valueGoal || this.dir == -1 && this.value <= this.valueGoal) {
                 this.value = this.valueGoal;
                 this.dir = 0;
-                for (var callbackKey in this.callbacks) {
-                    this.callbacks[callbackKey]();
-                }
 
+                var callbacksToCall = this.callbacks;
                 this.ClearCallback();
+
+                for (var callbackKey in callbacksToCall) {
+                    callbacksToCall[callbackKey]();
+                }
             }
         }
     }

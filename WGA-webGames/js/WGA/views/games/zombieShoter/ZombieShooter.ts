@@ -145,12 +145,15 @@ module WGAAppModule {
             this.DrawZombies();
             this.DrawGuns();
 
-            this.game.Draw(this.DrawGameMenu);
+            var those = this;
+            this.game.Draw(() => {
+                those.DrawGameMenu(those);
+            });
             super.Draw();
         }
 
-        public DrawGameMenu() {
-            Setups.I.Draw.TextFill(<TextParams>{ str: "Killed: " + this.killed, position: new Vector2(10, 29), color: Color4.Gray, fontName: "serif", fontSize: 18, origin: new Vector2(-1, 0) });
+        public DrawGameMenu(those) {
+            Setups.I.Draw.TextFill(<TextParams>{ str: "Killed: " + those.killed, position: new Vector2(10, 29), color: Color4.Gray, fontName: "serif", fontSize: 18, origin: new Vector2(-1, 0) });
         }
 
         public DrawZombies(): void {

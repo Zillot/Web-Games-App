@@ -12,6 +12,7 @@ module WGAAppModule {
         constructor(position: Vector2, hp: number) {
             super(position, new Vector2(1, 0), hp, 0, 30);
 
+            this.points = [];
             this.Color = Color4.Blue;
             this.Level = 1;
 

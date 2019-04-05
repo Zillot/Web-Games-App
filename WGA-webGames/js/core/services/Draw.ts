@@ -179,21 +179,33 @@ module WGAAppModule {
 
         private polygon(params: StrokePolygonParams, type: string): void {
             StrokePolygonParams.Normilize(params);
-            params.origin = params.origin.MUL(new Vector2(-1, -1));
+            params.origin = params.origin.MUL(new Vector2(0, 0));
 
-            var size = params.points[0];
+            var leftTop = params.points[0].GetCopy();
+            var rightBottom = params.points[0].GetCopy();
 
             for (var i = 0; i < params.points.length; i++) {
                 var point = params.points[i];
 
-                if (size.X < point.X) {
-                    size.X = point.X;
+                if (leftTop.X < point.X) {
+                    leftTop.X = point.X;
                 }
 
-                if (size.Y < point.Y) {
-                    size.Y = point.Y;
+                if (leftTop.Y < point.Y) {
+                    leftTop.Y = point.Y;
+                }
+
+                if (rightBottom.X > point.X) {
+                    rightBottom.X = point.X;
+                }
+
+                if (rightBottom.Y > point.Y) {
+                    rightBottom.Y = point.Y;
                 }
             }
+
+            var size = rightBottom.SUB(leftTop);
+            size = new Vector2(Math.abs(size.X), Math.abs(size.Y));
 
             var startPoint = params.position.X + size.X * 0.5 * params.origin.X;
 
@@ -203,15 +215,20 @@ module WGAAppModule {
             this.ctx.scale((<Vector2>params.scale).X, (<Vector2>params.scale).Y);
             this.ctx.rotate(params.angle);
 
-            var x = -(size.X / 2) + (size.X / 2) * params.origin.X;
-            var y = (size.Y / 2) + (size.Y / 2) * params.origin.Y;
+            var x = 0;
+            var y = 0;
 
             this.ctx.beginPath();
             this.ctx.moveTo(x, y);
 
             for (var i = 0; i < params.points.length; i++) {
                 var point = params.points[i];
-                this.ctx.lineTo(x + point.X, y + point.Y);
+                if (i == 0) {
+                    this.ctx.moveTo(x + point.X, y + point.Y);
+                }
+                else {
+                    this.ctx.lineTo(x + point.X, y + point.Y);
+                }
             }
 
             if (type == 'stroke') {
