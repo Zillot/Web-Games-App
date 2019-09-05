@@ -1,0 +1,1 @@
+﻿export type KeyEventFunction = (code: number, char: string) => void;
