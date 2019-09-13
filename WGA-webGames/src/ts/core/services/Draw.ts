@@ -71,14 +71,14 @@ export class Draw {
             return;
         }
 
-        this.cameraMathPosition = this.cameraPosition.MUL(Setups.I.FrameScale).SUB(Setups.I.Center.MUL(this.cameraZoom * Setups.I.FrameScale));
+        this.cameraMathPosition = this.cameraPosition.MUL(Setups.I.CameraScale).SUB(Setups.I.Center.MUL(this.cameraZoom * Setups.I.CameraScale));
     }
 
     public adjustMenuViewToCamera() {
         this.ctx.save();
 
-        this.ctx.translate(Setups.I.FrameRealOffset.X, Setups.I.FrameRealOffset.Y);
-        this.ctx.scale(Setups.I.FrameScale, Setups.I.FrameScale);
+        this.ctx.translate(Setups.I.FrameOffset.X, Setups.I.FrameOffset.Y);
+        this.ctx.scale(Setups.I.CameraScale, Setups.I.CameraScale);
     }
 
     public adjustViewToCamera() {
@@ -86,10 +86,10 @@ export class Draw {
 
         //TODO Fix camera rotation
         //this.ctx.translate(-Setups.I.Center.X, -Setups.I.Center.Y);
-        this.ctx.translate(this.cameraMathPosition.X + Setups.I.FrameRealOffset.X, this.cameraMathPosition.Y + Setups.I.FrameRealOffset.Y);
+        this.ctx.translate(this.cameraMathPosition.X + Setups.I.FrameOffset.X, this.cameraMathPosition.Y + Setups.I.FrameOffset.Y);
 
         this.ctx.rotate(this.cameraAngle);
-        this.ctx.scale(this.cameraZoom * Setups.I.FrameScale, this.cameraZoom * Setups.I.FrameScale);
+        this.ctx.scale(this.cameraZoom * Setups.I.CameraScale, this.cameraZoom * Setups.I.CameraScale);
 
         //var tempCamVector = Vector2.GetRotated(this.cameraPosition, -this.cameraAngle);
         //var tempCenterVector = Vector2.GetRotated(Setups.I.Center, -this.cameraAngle);

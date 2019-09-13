@@ -104,7 +104,7 @@ export class Input {
         }
     }
     public GetMousePosition(): Vector2 {
-        return this.mousePos.SUB(Setups.I.FrameRealOffset).MUL(Setups.I.BackFrameScale);
+        return this.mousePos.SUB(Setups.I.FrameOffset).MUL(Setups.I.BackFrameScale);
     }
     public OnInputEvent(handler: any, name: string, typeId: number, keyCode: number): WGAEventContainer {
         this.RemoveHandler(name, typeId);

@@ -27,14 +27,7 @@ export class Core {
 
         this.canvas = document.getElementById(Setups.I.FramesCanvasName);
 
-        this.canvas.width = Setups.I.WindowWidth;
-        this.canvas.height = Setups.I.WindowHeight;
-        this.canvas.style.width = Setups.I.WindowWidth + 'px';
-        this.canvas.style.height = Setups.I.WindowHeight + 'px';
-
-        //this.canvas.style.position = "absolute";
-        //this.canvas.style.left = "calc(50 % - 400px)";
-        //this.canvas.style.top = "calc(50 % - 300px)";
+        this.UpdateCanvasPosition();
 
         if (this.canvas.getContext) {
             this.canvasCtx = this.canvas.getContext('2d');
@@ -44,6 +37,21 @@ export class Core {
         }
 
         Setups.I.Draw.SetCtx(this.canvasCtx, Setups.I.FramesCanvasName);
+    }
+
+    public UpdateCanvasPosition(): void {
+        if (!this.canvas) {
+            return;
+        }
+
+        this.canvas.width = Setups.I.WindowWidth;
+        this.canvas.height = Setups.I.WindowHeight;
+        this.canvas.style.width = Setups.I.CanvasWidth + 'px';
+        this.canvas.style.height = Setups.I.CanvasHeight + 'px';
+
+        this.canvas.style.position = "absolute";
+        this.canvas.style.left = Setups.I.FrameRealOffset.X + "px";
+        this.canvas.style.top = Setups.I.FrameRealOffset.Y + "px";
     }
 
     public Run(): void {
