@@ -1,4 +1,4 @@
-﻿import { IUpdateable } from "./interfaces/IUpdateable";
+import { IUpdateable } from "./interfaces/IUpdateable";
 import { IDrawable } from "./interfaces/IDrawable";
 import { Value } from "./engine/Value";
 import { NavigateMode } from "./models/PageState";
@@ -7,6 +7,7 @@ import { FillRectParams } from "./models/FillRectParams";
 import { Data } from "../app/Data";
 import { Color4 } from "./engine/Color4";
 import { CallbackFunction } from "./CallbackFunction";
+import { Draw } from './services/Draw';
 
 export class PageTransitionController implements IUpdateable, IDrawable {
     private static SPEED: number = 5;
@@ -14,11 +15,10 @@ export class PageTransitionController implements IUpdateable, IDrawable {
     private navigateProcess: Value;
     private navigateMode: NavigateMode;
 
-    public constructor() {
+    constructor() {
         this.navigateMode = NavigateMode.Undefined;
         this.navigateProcess = new Value(0, PageTransitionController.SPEED);
         this.navigateProcess.SetMultypliCallbacksState(true);
-            
     }
 
     public PrepareToInstantNavigating() {
@@ -55,7 +55,7 @@ export class PageTransitionController implements IUpdateable, IDrawable {
         }
 
         if (this.navigateMode == NavigateMode.Entering || this.navigateMode == NavigateMode.Leaving || this.navigateMode == NavigateMode.Still) {
-            Data.I.Draw.RectFill(<FillRectParams>{ position: new Vector2(0, 0), size: new Vector2(Data.I.WindowWidth, Data.I.WindowHeight), origin: new Vector2(-1, -1), color: Color4.Black.GetTransparent(value) });
+            Draw.I.RectFill(<FillRectParams>{ position: new Vector2(0, 0), size: Data.I.WindowSize, origin: new Vector2(-1, -1), color: Color4.Black.GetTransparent(value) });
         }
     }
 }

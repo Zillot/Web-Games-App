@@ -1,7 +1,14 @@
 import { Data } from "../../app/Data";
 import { Vector2 } from '../engine/Vector2';
+import { Draw } from './Draw';
+import { WGAApp } from 'src/ts/app/WGAApp';
 
 export class Core {
+    public static I: Core;
+    public static _initialize = (() => {
+        Core.I = new Core();
+    })();
+
     private lastFrameTimeMs: number;
     private maxFPS: number;
     private delta: number;
@@ -15,7 +22,7 @@ export class Core {
     private canvas: any;
     private canvasCtx: any;
 
-    constructor() {
+    public Initialize(): void{
         this.lastFrameTimeMs = 0;
         this.maxFPS = 60;
         this.delta = 0;
@@ -26,7 +33,7 @@ export class Core {
         this.perFrameMsAwg = 0;
         this.speedLevel = 1000; //1000 - normal, more = slower
 
-        this.canvas = document.getElementById(Data.I.FramesCanvasName);
+        this.canvas = document.getElementById(Draw.I.MainCanvasName);
 
         this.WindowScalingProccess();
         window.onresize = (event) => {
@@ -40,7 +47,7 @@ export class Core {
             return;
         }
 
-        Data.I.Draw.SetCtx(this.canvasCtx, Data.I.FramesCanvasName);
+        Draw.I.SetCtx(this.canvasCtx, Draw.I.MainCanvasName);
     }
 
     public WindowScalingProccess() {
@@ -49,29 +56,29 @@ export class Core {
     }
 
     public RecalculateWindowsSize() {
-        Data.I.RealWindowWidth = window.innerWidth;
-        Data.I.RealWindowHeight = window.innerHeight;
+        Data.I.RealWindowSize = new Vector2(window.innerWidth, window.innerHeight);
 
-        var sw = Data.I.RealWindowWidth / Data.I.WindowWidth;
-        var sh = Data.I.RealWindowHeight / Data.I.WindowHeight;
+        var sw = Data.I.RealWindowSize.X / Data.I.WindowSize.X;
+        var sh = Data.I.RealWindowSize.Y / Data.I.WindowSize.Y;
 
-        var bsw = Data.I.WindowWidth / Data.I.RealWindowWidth;
-        var bsh = Data.I.WindowHeight / Data.I.RealWindowHeight;
+        var bsw = Data.I.WindowSize.X / Data.I.RealWindowSize.X;
+        var bsh = Data.I.WindowSize.Y / Data.I.RealWindowSize.Y;
 
         Data.I.FrameScale = Math.min(sw, sh);
         Data.I.BackFrameScale = Math.max(bsw, bsh);
 
-        Data.I.CanvasWidth = Data.I.WindowWidth * Data.I.FrameScale;
-        Data.I.CanvasHeight = Data.I.WindowHeight * Data.I.FrameScale;
+        Data.I.CanvasSize = new Vector2(
+            Data.I.WindowSize.X * Data.I.FrameScale,
+            Data.I.WindowSize.Y * Data.I.FrameScale);
 
-        var tx = (Data.I.RealWindowWidth - (Data.I.CanvasWidth)) / 2;
-        var ty = (Data.I.RealWindowHeight - (Data.I.CanvasHeight)) / 2;
+        Data.I.FrameRealOffset = new Vector2(
+            (Data.I.RealWindowSize.X - (Data.I.CanvasSize.X)) / 2,
+            (Data.I.RealWindowSize.Y - (Data.I.CanvasSize.Y)) / 2);
 
-        Data.I.FrameRealOffset = new Vector2(tx, ty);
         Data.I.FrameOffset = new Vector2(0, 0);
 
-        Data.I.Center = new Vector2(Data.I.WindowWidth, Data.I.WindowHeight).DIV(2);
-        Data.I.RealCenter = new Vector2(Data.I.RealWindowWidth, Data.I.RealWindowHeight).DIV(2);
+        Data.I.Center = new Vector2(Data.I.WindowSize.X, Data.I.WindowSize.Y).DIV(2);
+        Data.I.RealCenter = new Vector2(Data.I.RealWindowSize.X, Data.I.RealWindowSize.Y).DIV(2);
     }
 
     public UpdateCanvasPosition(): void {
@@ -79,10 +86,11 @@ export class Core {
             return;
         }
 
-        this.canvas.width = Data.I.WindowWidth;
-        this.canvas.height = Data.I.WindowHeight;
-        this.canvas.style.width = Data.I.CanvasWidth + 'px';
-        this.canvas.style.height = Data.I.CanvasHeight + 'px';
+        this.canvas.width = Data.I.WindowSize.X;
+        this.canvas.height = Data.I.WindowSize.Y;
+
+        this.canvas.style.width = Data.I.CanvasSize.X + 'px';
+        this.canvas.style.height = Data.I.CanvasSize.Y + 'px';
 
         this.canvas.style.position = "absolute";
         this.canvas.style.left = Data.I.FrameRealOffset.X + "px";
@@ -127,15 +135,15 @@ export class Core {
     }
 
     public Update(timeDelta: number): void {
-        if (Data.I.App != null) {
-            Data.I.App.Update(timeDelta);
+        if (WGAApp.I != null) {
+            WGAApp.I.Update(timeDelta);
         }
     }
     public Draw(ctx: any): void {
         ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-        if (Data.I.App != null) {
-            Data.I.App.Draw();
+        if (WGAApp.I != null) {
+            WGAApp.I.Draw();
         }
     }
 }

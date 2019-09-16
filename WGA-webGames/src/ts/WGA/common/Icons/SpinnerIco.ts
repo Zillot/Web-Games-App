@@ -6,6 +6,7 @@ import { Value } from "../../../core/engine/Value";
 import { FillCircleParams } from "../../../core/models/FillCircleParams";
 import { Color4 } from "../../../core/engine/Color4";
 import { Data } from "../../../app/Data";
+import { Draw } from 'src/ts/core/services/Draw';
 
 export class SpinnerIco implements IUpdateable, IDrawable, IUiComponent {
     public Position: Vector2;
@@ -72,7 +73,7 @@ export class SpinnerIco implements IUpdateable, IDrawable, IUiComponent {
             }
 
             scale = scale < 0.3 ? 0.3 : scale;
-            Data.I.Draw.CircleFill(<FillCircleParams>{ color: Color4.Blue, radius: this.radius / (this.circles / 3), scale: scale, position: cubePosition });
+            Draw.I.CircleFill(<FillCircleParams>{ color: Color4.Blue, radius: this.radius / (this.circles / 3), scale: scale, position: cubePosition });
             direction = direction.RotateTo(rotateStep);
         }
     }

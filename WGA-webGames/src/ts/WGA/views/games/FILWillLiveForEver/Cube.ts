@@ -4,6 +4,8 @@ import { Vector2 } from "../../../../core/engine/Vector2";
 import { Value } from "../../../../core/engine/Value";
 import { Color4 } from "../../../../core/engine/Color4";
 import { Unit } from "../../../common/Unit";
+import { ExDraw } from 'src/ts/WGA/services/ExDraw';
+import { Draw } from 'src/ts/core/services/Draw';
 
 export class Cube extends Unit {
     public Color: Color4;
@@ -30,8 +32,8 @@ export class Cube extends Unit {
         this.Opacity.Update(timeDelta);
     }
 
-    public Draw(): void {
-        Data.I.Draw.RectFill(<FillRectParams> {
+    public Draw(exDraw: ExDraw): void {
+        Draw.I.RectFill(<FillRectParams> {
             position: this.Position,
             size: this.Size,
             scale: this.Transition.GetVal(),

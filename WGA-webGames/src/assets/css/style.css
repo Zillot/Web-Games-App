@@ -13,8 +13,8 @@ div {
    position: absolute;
 }
 
-#WorkingDraw {
-   position: absolute;
-   top: -2000px;
-   left: -2000px;
+.DrawField_working {
+    position: absolute;
+    top: -2000px;
+    left: -2000px;
 }

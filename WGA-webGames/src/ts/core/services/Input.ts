@@ -6,21 +6,27 @@ import { EventsTypes } from "../models/EventsTypes";
 import { KeyCodes } from "../models/KeyCodes";
 
 import * as $ from 'jquery';
+import { Draw } from './Draw';
 
 export class Input {
+    public static I: Input;
+    public static _initialize = (() => {
+        Input.I = new Input();
+    })();
+
     private mousePos: Vector2;
     private mouseDown: number;
 
     private eventsHandlers: WGAEventContainer[];
     private enableEvent: boolean;
 
-    constructor() {
+    public Initialize() {
         this.mousePos = new Vector2();
         this.eventsHandlers = [];
 
         this.mouseDown = 0;
 
-        var canvas = document.getElementById(Data.I.FramesCanvasName);
+        var canvas = document.getElementById(Draw.I.MainCanvasName);
         document.body.onmousedown = () => this.MouseDownFun(this);
         document.body.onmouseup = () => this.MouseUpFun(this);
         canvas.addEventListener('mousemove', evt => this.MouseMoveFun(this, canvas, evt), false);

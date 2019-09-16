@@ -2,11 +2,13 @@ import { FillRectParams } from "../models/FillRectParams";
 import { IUiComponent } from "./Interfaces/IUiComponent";
 import { Vector2 } from "../engine/Vector2";
 import { Color4 } from "../engine/Color4";
-import { Data } from "../../app/Data";
 import { EventsTypes } from "../models/EventsTypes";
 import { TextParams } from "../models/TextParams";
 import { KeyCodes } from "../models/KeyCodes";
 import { Rect } from "../engine/Rect";
+import { Geometry } from '../services/Geometry';
+import { Draw } from '../services/Draw';
+import { Input } from '../services/Input';
 
 export class Button implements IUiComponent {
     public Name: string;
@@ -22,7 +24,7 @@ export class Button implements IUiComponent {
     }
 
     public Init(): void {
-        Data.I.Input.OnInputEvent(() => {
+        Input.I.OnInputEvent(() => {
                 this.Click();
             },
             this.Name + '-OnClick',
@@ -31,7 +33,7 @@ export class Button implements IUiComponent {
     }
 
     public Dispose(): void {
-        Data.I.Input.RemoveHandler(this.Name + '-OnClick', EventsTypes.MouseButtonPressed);
+        Input.I.RemoveHandler(this.Name + '-OnClick', EventsTypes.MouseButtonPressed);
     }
 
     public SetOnClick(onClick: any) {
@@ -43,13 +45,13 @@ export class Button implements IUiComponent {
     }
 
     public Draw(): void {
-        Data.I.Draw.RectFill(<FillRectParams>{ position: this.position, size: this.size.ADD(new Vector2(3)), color: Color4.Black });
-        Data.I.Draw.RectFill(<FillRectParams>{ position: this.position, size: this.size, color: this.color });
-        Data.I.Draw.TextFill(<TextParams>{ str: this.text, position: this.position, color: Color4.Black, fontSize: 14 });
+        Draw.I.RectFill(<FillRectParams>{ position: this.position, size: this.size.ADD(new Vector2(3)), color: Color4.Black });
+        Draw.I.RectFill(<FillRectParams>{ position: this.position, size: this.size, color: this.color });
+        Draw.I.TextFill(<TextParams>{ str: this.text, position: this.position, color: Color4.Black, fontSize: 14 });
     }
     //-------------
     public Click(): void {
-        if (Data.I.Geometry.IsPointInRect(Data.I.Input.GetMousePosition(), Rect.FromVectors(this.position.SUB(this.size.DIV(2)), this.size))) {
+        if (Geometry.IsPointInRect(Input.I.GetMousePosition(), Rect.FromVectors(this.position.SUB(this.size.DIV(2)), this.size))) {
             if (this.onClick != null) {
                 this.onClick();
             }

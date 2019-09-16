@@ -5,6 +5,7 @@ import { Color4 } from "../../../../core/engine/Color4";
 import { Data } from "../../../../app/Data";
 import { StrokeArcParams } from "../../../../core/models/StrokeArcParams";
 import { LineParams } from "../../../../core/models/LineParams";
+import { Draw } from 'src/ts/core/services/Draw';
 
 export class CoreGun extends Gun {
     public Position: Vector2;
@@ -33,12 +34,12 @@ export class CoreGun extends Gun {
         var point = this.Position.ADD(forward.MUL(54));
 
         //shild part
-        Data.I.Draw.ArcStroke(<StrokeArcParams>{ position: this.Position, radius: 50, startAngle: value + 0.09, endAngle: value + this.Width / 2, color: this.Color });
-        Data.I.Draw.ArcStroke(<StrokeArcParams>{ position: this.Position, radius: 50, startAngle: value - 0.09, endAngle: value - this.Width / 2, color: this.Color });
+        Draw.I.ArcStroke(<StrokeArcParams>{ position: this.Position, radius: 50, startAngle: value + 0.09, endAngle: value + this.Width / 2, color: this.Color });
+        Draw.I.ArcStroke(<StrokeArcParams>{ position: this.Position, radius: 50, startAngle: value - 0.09, endAngle: value - this.Width / 2, color: this.Color });
 
         //arrow in the center
-        Data.I.Draw.Line(<LineParams>{ pointFrom: point, pointTo: point.ADD(side.MUL(4)).ADD(forward.MUL(-4)), thickness: 1, color: this.Color });
-        Data.I.Draw.Line(<LineParams>{ pointFrom: point, pointTo: point.ADD(side.MUL(-4)).ADD(forward.MUL(-4)), thickness: 1, color: this.Color });
+        Draw.I.Line(<LineParams>{ pointFrom: point, pointTo: point.ADD(side.MUL(4)).ADD(forward.MUL(-4)), thickness: 1, color: this.Color });
+        Draw.I.Line(<LineParams>{ pointFrom: point, pointTo: point.ADD(side.MUL(-4)).ADD(forward.MUL(-4)), thickness: 1, color: this.Color });
     }
 
     //-------

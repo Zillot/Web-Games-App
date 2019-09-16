@@ -4,6 +4,7 @@ import { TextParams } from "../models/TextParams";
 import { FillRectParams } from "../models/FillRectParams";
 import { Color4 } from "../engine/Color4";
 import { Value } from "../engine/Value";
+import { Draw } from './Draw';
 
 export class Game {
     private level: number;
@@ -87,12 +88,12 @@ export class Game {
     }
 
     public Draw(additionalDraw?: any) {
-        Data.I.Draw.RectFill(<FillRectParams>{ position: new Vector2(0, 0), size: new Vector2(Data.I.WindowWidth, 60), origin: new Vector2(1, 1), color: new Color4(0, 0, 0, 0.1) });
+        Draw.I.RectFill(<FillRectParams>{ position: new Vector2(0, 0), size: new Vector2(Data.I.WindowSize.X, 60), origin: new Vector2(1, 1), color: new Color4(0, 0, 0, 0.1) });
 
-        Data.I.Draw.TextFill(<TextParams>{ str: "Level: " + this.level, position: new Vector2(Data.I.Center.X, 5), color: Color4.Gray, fontName: "serif", fontSize: 30, origin: new Vector2(0, -1) });
-        Data.I.Draw.TextFill(<TextParams>{ str: "Score: " + this.score.GetVal, position: new Vector2(Data.I.Center.X, 35), color: Color4.Gray, fontName: "serif", fontSize: 18, origin: new Vector2(0, -1) });
-        Data.I.Draw.TextFill(<TextParams>{ str: this.money.GetVal() + " :Money", position: new Vector2(Data.I.WindowWidth - 10, 7), color: Color4.Gray, fontName: "serif", fontSize: 18, origin: new Vector2(1, -1) });
-        Data.I.Draw.TextFill(<TextParams>{ str: this.health.GetVal() + " :Health", position: new Vector2(Data.I.WindowWidth - 10, 33), color: Color4.Gray, fontName: "serif", fontSize: 18, origin: new Vector2(1, -1) });
+        Draw.I.TextFill(<TextParams>{ str: "Level: " + this.level, position: new Vector2(Data.I.Center.X, 5), color: Color4.Gray, fontName: "serif", fontSize: 30, origin: new Vector2(0, -1) });
+        Draw.I.TextFill(<TextParams>{ str: "Score: " + this.score.GetVal, position: new Vector2(Data.I.Center.X, 35), color: Color4.Gray, fontName: "serif", fontSize: 18, origin: new Vector2(0, -1) });
+        Draw.I.TextFill(<TextParams>{ str: this.money.GetVal() + " :Money", position: new Vector2(Data.I.WindowSize.X - 10, 7), color: Color4.Gray, fontName: "serif", fontSize: 18, origin: new Vector2(1, -1) });
+        Draw.I.TextFill(<TextParams>{ str: this.health.GetVal() + " :Health", position: new Vector2(Data.I.WindowSize.X - 10, 33), color: Color4.Gray, fontName: "serif", fontSize: 18, origin: new Vector2(1, -1) });
 
         if (additionalDraw) {
             additionalDraw();

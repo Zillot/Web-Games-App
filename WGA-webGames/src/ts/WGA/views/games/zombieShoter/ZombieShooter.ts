@@ -11,8 +11,13 @@ import { CityWall } from "./CityWall";
 import { DefaultUI } from "../Default.ui";
 import { GamePage } from "../../../../core/abstracts/GamePage";
 import { bound } from "../../../../core/Bound";
+import { ExDraw } from 'src/ts/WGA/services/ExDraw';
+import { Utils } from 'src/ts/core/services/Utils';
+import { Draw } from 'src/ts/core/services/Draw';
 
 export class ZombieShooter extends GamePage {
+    private _exDraw: ExDraw;
+
     private zombies: Zombie[];
     private guns: Gun[];
 
@@ -27,6 +32,8 @@ export class ZombieShooter extends GamePage {
 
     constructor() {
         super();
+
+        this._exDraw = new ExDraw();
     }
 
     public Init(): void {
@@ -46,13 +53,13 @@ export class ZombieShooter extends GamePage {
         this.maxZombies = 4;
         this.zombieSpawnPause = 0;
 
-        this.cityWall = new CityWall(new Vector2(Data.I.WindowWidth - 20, Data.I.WindowHeight / 2), 1);
+        this.cityWall = new CityWall(new Vector2(Data.I.WindowSize.X - 20, Data.I.WindowSize.Y / 2), 1);
 
         this.game = new Game(20, 100);
         this.game.NextLevelEvent = this.NextLevelHandler;
         this.game.GameOverEvent = this.GameOverHandler;
 
-        this.guns.push(new Gun(new Vector2(Data.I.WindowWidth - 50, Data.I.WindowHeight / 2), 0.5));
+        this.guns.push(new Gun(new Vector2(Data.I.WindowSize.X - 50, Data.I.WindowSize.Y / 2), 0.5));
     }
 
     public NextLevelHandler() {
@@ -93,7 +100,7 @@ export class ZombieShooter extends GamePage {
     }
 
     public SpawnZombie(): void {
-        var pos = new Vector2(-40, Data.I.Utils.RandI(100, Data.I.WindowHeight - 100));
+        var pos = new Vector2(-40, Utils.RandI(100, Data.I.WindowSize.Y - 100));
         var hp = 50 * this.game.Level;
         var speed = 50 * (this.game.Level / 2);
 
@@ -149,7 +156,7 @@ export class ZombieShooter extends GamePage {
 
     //============ DRAW ============
     public Draw(): void {
-        this.cityWall.Draw();
+        this.cityWall.Draw(this._exDraw);
 
         this.DrawZombies();
         this.DrawGuns();
@@ -161,7 +168,7 @@ export class ZombieShooter extends GamePage {
     }
 
     public DrawGameMenu() {
-        Data.I.Draw.TextFill(<TextParams>{ str: "Killed: " + this.killed, position: new Vector2(10, 29), color: Color4.Gray, fontName: "serif", fontSize: 18, origin: new Vector2(-1, 0) });
+        Draw.I.TextFill(<TextParams>{ str: "Killed: " + this.killed, position: new Vector2(10, 29), color: Color4.Gray, fontName: "serif", fontSize: 18, origin: new Vector2(-1, 0) });
     }
 
     @bound
@@ -172,13 +179,13 @@ export class ZombieShooter extends GamePage {
 
     public DrawZombies(): void {
         for (var zombiesKey in this.zombies) {
-            this.zombies[zombiesKey].Draw();
+            this.zombies[zombiesKey].Draw(this._exDraw);
         }
     }
 
     public DrawGuns(): void {
         for (var gundsKey in this.guns) {
-            this.guns[gundsKey].Draw();
+            this.guns[gundsKey].Draw(this._exDraw);
         }
     }
 }

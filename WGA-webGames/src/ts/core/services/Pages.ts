@@ -2,6 +2,11 @@ import { Page } from "../abstracts/Page";
 import { PageTransitionController } from "../PageTransitionController";
 
 export class Pages {
+    public static I: Pages;
+    public static _initialize = (() => {
+        Pages.I = new Pages();
+    })();
+
     private pages: Page[];
     private history: Page[];
 
@@ -9,7 +14,12 @@ export class Pages {
 
     private pageTransition: PageTransitionController;
 
+
     constructor() {
+        this.Reset();
+    }
+
+    public Reset() {
         this.pages = [];
         this.history = [];
 

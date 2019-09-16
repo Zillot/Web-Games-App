@@ -1,12 +1,13 @@
 import { Deleteable } from "../../core/abstracts/Deleteable";
 import { IUpdateable } from "../../core/interfaces/IUpdateable";
-import { IDrawable } from "../../core/interfaces/IDrawable";
 import { Vector2 } from "../../core/engine/Vector2";
 import { FillCircleParams } from "../../core/models/FillCircleParams";
-import { Data } from "../../app/Data";
 import { Bullet } from "./Bullet";
+import { ExDraw } from '../services/ExDraw';
+import { IWGADrawable } from '../Interface/IWGADrawable';
+import { Draw } from 'src/ts/core/services/Draw';
 
-export class Unit extends Deleteable implements IUpdateable, IDrawable {
+export class Unit extends Deleteable implements IUpdateable, IWGADrawable {
     public Position: Vector2;
     public Direction: Vector2;
     public MaxHp: number;
@@ -29,8 +30,8 @@ export class Unit extends Deleteable implements IUpdateable, IDrawable {
     public Update(timeDelta: number): void {
         this.Position = this.Position.ADD(this.Direction.MUL(this.Speed * timeDelta));
     }
-    public Draw(): void {
-        Data.I.Draw.CircleFill(<FillCircleParams>{ position: this.Position, radius: 2 });
+    public Draw(exdraw: ExDraw): void {
+        Draw.I.CircleFill(<FillCircleParams>{ position: this.Position, radius: 2 });
     }
     //-------------
     public TryHit(bullet: Bullet): boolean {

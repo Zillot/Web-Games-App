@@ -7,6 +7,8 @@ import { TextParams } from "../../../core/models/TextParams";
 import { Color4 } from "../../../core/engine/Color4";
 import { FillCircleParams } from "../../../core/models/FillCircleParams";
 import { CameraTestUI } from "./CameraTest.ui";
+import { Draw } from 'src/ts/core/services/Draw';
+import { Input } from 'src/ts/core/services/Input';
 
 export class CameraTest extends Page {
     public angleCon: Value;
@@ -39,7 +41,7 @@ export class CameraTest extends Page {
 
     public Draw(): void {
         //game camera applied
-        Data.I.Draw.adjustViewToCamera();
+        Draw.I.adjustViewToCamera();
 
         this.DrawBackground();
         this.DrawText();
@@ -47,31 +49,31 @@ export class CameraTest extends Page {
         this.DrawFigures();
         this.DrawMousePosition();
 
-        Data.I.Draw.removeCameraInfuence();
+        Draw.I.removeCameraInfuence();
 
         super.Draw();
     }
 
     public DrawBackground() {
-        Data.I.Draw.RectFill(<FillRectParams>{ position: new Vector2(0, 0), size: new Vector2(Data.I.WindowWidth, Data.I.WindowHeight), color: Color4.Gray.GetTransparent(0.1), origin: new Vector2(-1, -1) });
+        Draw.I.RectFill(<FillRectParams>{ position: new Vector2(0, 0), size: Data.I.WindowSize, color: Color4.Gray.GetTransparent(0.1), origin: new Vector2(-1, -1) });
     }
 
     public DrawText() {
-        Data.I.Draw.TextFill(<TextParams>{ str: 'test text 1', position: new Vector2(200, 200), color: Color4.Black, fontSize: 50, origin: new Vector2(0), angle: this.angleCon.GetVal() });
-        Data.I.Draw.TextFill(<TextParams>{ str: 'test text 2', position: new Vector2(200, 350), color: Color4.Black, fontSize: 30, origin: new Vector2(0) });
+        Draw.I.TextFill(<TextParams>{ str: 'test text 1', position: new Vector2(200, 200), color: Color4.Black, fontSize: 50, origin: new Vector2(0), angle: this.angleCon.GetVal() });
+        Draw.I.TextFill(<TextParams>{ str: 'test text 2', position: new Vector2(200, 350), color: Color4.Black, fontSize: 30, origin: new Vector2(0) });
     }
 
     public DrawRotatingRectangles() {
-        Data.I.Draw.RectFill(<FillRectParams>{ position: new Vector2(400, 200), size: new Vector2(50, 50), color: Color4.Red.GetTransparent(0.2), angle: this.angleCon.GetVal() / 2 });
-        Data.I.Draw.RectFill(<FillRectParams>{ position: new Vector2(400, 220), size: new Vector2(50, 50), color: Color4.Purple.GetTransparent(0.2), angle: -this.angleCon.GetVal() / 2 });
+        Draw.I.RectFill(<FillRectParams>{ position: new Vector2(400, 200), size: new Vector2(50, 50), color: Color4.Red.GetTransparent(0.2), angle: this.angleCon.GetVal() / 2 });
+        Draw.I.RectFill(<FillRectParams>{ position: new Vector2(400, 220), size: new Vector2(50, 50), color: Color4.Purple.GetTransparent(0.2), angle: -this.angleCon.GetVal() / 2 });
     }
 
     public DrawFigures() {
-        Data.I.Draw.RectFill(<FillRectParams>{ position: new Vector2(Data.I.Center.X, 500), size: new Vector2(200, 50), color: Color4.Blue });
-        Data.I.Draw.CircleFill(<FillCircleParams>{ position: Data.I.Center, radius: 10, color: Color4.Red });
+        Draw.I.RectFill(<FillRectParams>{ position: new Vector2(Data.I.Center.X, 500), size: new Vector2(200, 50), color: Color4.Blue });
+        Draw.I.CircleFill(<FillCircleParams>{ position: Data.I.Center, radius: 10, color: Color4.Red });
     }
 
     public DrawMousePosition() {
-        Data.I.Draw.RectFill(<FillRectParams>{ position: Data.I.Input.GetMousePosition(), size: new Vector2(10, 10), color: Color4.Blue });
+        Draw.I.RectFill(<FillRectParams>{ position: Input.I.GetMousePosition(), size: new Vector2(10, 10), color: Color4.Blue });
     }
 }

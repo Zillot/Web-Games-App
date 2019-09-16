@@ -18,22 +18,26 @@ import { FillPolygonParams } from "../models/FillPolygonParams";
 declare var $: any;
 
 export class Draw {
+    public static I: Draw;
+    public static _initialize = (() => {
+        Draw.I = new Draw();
+    })();
+
     private ctx: any;
     private cameraMathPosition: Vector2;
     private cameraPosition: Vector2;
     private cameraZoom: number;
     private cameraAngle: number;
 
-    public static PI2() { return 6.283185307179586476925286766559; }
-    public static PI() { return 3.1415926535897932384626433832795; }
-
-    constructor() {
-        this.ResetCamera();
-    }
+    public MainCanvasName: string;
 
     public SetCtx(ctx: any, canvasName: string): void {
         this.ctx = ctx;
         this.currentCanvasName = canvasName;
+    }
+
+    public SetMainCanvas(canvasName: string) {
+        Draw.I.MainCanvasName = canvasName;
     }
 
     //camera control
@@ -384,8 +388,8 @@ export class Draw {
     public StartToDrawImageResource(width: number, height: number) {
         this.savedCtx = this.ctx;
 
-        this.currentCanvasName = Data.I.WorkingDrawCanvasName;
-        var canvas: any = document.getElementById(Data.I.WorkingDrawCanvasName);
+        this.currentCanvasName = Draw.I.MainCanvasName + "_working";
+        var canvas: any = document.getElementById(Draw.I.MainCanvasName + "_working");
             
         canvas.width = width;
         canvas.height = height;
@@ -401,11 +405,11 @@ export class Draw {
         }
     }
     public EndToDrawImageResource() {
-        this.currentCanvasName = Data.I.FramesCanvasName;
+        this.currentCanvasName = Draw.I.MainCanvasName;
         this.ctx = this.savedCtx;
     }
 
     public MakeScreenShot() {
-        return (<any>document.getElementById(Data.I.WorkingDrawCanvasName)).toDataURL();
+        return (<any>document.getElementById(Draw.I.MainCanvasName + "_working")).toDataURL();
     }
 }

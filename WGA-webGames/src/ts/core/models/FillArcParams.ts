@@ -1,5 +1,5 @@
 import { FillCircleParams } from "./FillCircleParams";
-import { Draw } from "../services/Draw";
+import { Utils } from '../services/Utils';
 
 export class FillArcParams extends FillCircleParams {
     public radius: number;
@@ -15,6 +15,6 @@ export class FillArcParams extends FillCircleParams {
     public static Normilize(item: FillArcParams): void {
         FillCircleParams.Normilize(item);
         if (item.startAngle == null) { item.startAngle = 0; }
-        if (item.endAngle == null) { item.endAngle = Draw.PI() * 2; }
+        if (item.endAngle == null) { item.endAngle = Utils.PI() * 2; }
     }
 }

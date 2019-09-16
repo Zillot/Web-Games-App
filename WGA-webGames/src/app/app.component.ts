@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Data } from '../ts/app/Data';
+import { Initializer } from 'src/ts/app/Initializer';
 
 @Component({
     selector: 'app-root',
@@ -10,7 +10,7 @@ export class AppComponent {
     title = 'TestProject';
 
     constructor() {
-        var data = new Data();
-        Data.I.Core.Run();
+        var initializer = new Initializer();
+        initializer.Initialize();
     };
 }

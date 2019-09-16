@@ -4,6 +4,7 @@ import { Vector2 } from "../../../core/engine/Vector2";
 import { Data } from "../../../app/Data";
 import { Color4 } from "../../../core/engine/Color4";
 import { Modal } from "../../../core/ui/Modal";
+import { Pages } from 'src/ts/core/services/Pages';
 
 export class DefaultUI {
     public static SetupUI(uiComponents: IUiComponent[]) {
@@ -17,7 +18,7 @@ export class DefaultUI {
                 name: "ToMainButton",
                 text: "I am quit",
                 onClick: function () {
-                    Data.I.Pages.NavigateTo("Main");
+                    Pages.I.NavigateTo("Main");
                 },
                 position: new Vector2(Data.I.Center.X / 2 - 65, Data.I.Center.Y / 2 + 200),
                 size: new Vector2(120, 40),

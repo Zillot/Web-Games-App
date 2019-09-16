@@ -7,6 +7,9 @@ import { CubePrediction } from "./CubePrediction";
 import { FiveInLIneUI } from "./FiveInLine.ui";
 import { Data } from "../../../../app/Data";
 import { TextParams } from "../../../../core/models/TextParams";
+import { ExDraw } from 'src/ts/WGA/services/ExDraw';
+import { Utils } from 'src/ts/core/services/Utils';
+import { Draw } from 'src/ts/core/services/Draw';
 
 export class FiveInLIne extends GamePage {
     private static INITIAL_CUBES: number = 15;
@@ -22,6 +25,8 @@ export class FiveInLIne extends GamePage {
     private static PREDICTION_SIZE: Vector2 = new Vector2(3, 2);
     private static PREDICTION_OFFSET: Vector2 = new Vector2(10, 10);
 
+    private _exDraw: ExDraw;
+
     private game: Game;
 
     private cubes: Cube[];
@@ -32,6 +37,8 @@ export class FiveInLIne extends GamePage {
 
     constructor() {
         super();
+
+        this._exDraw = new ExDraw();
     }
 
     public Init(): void {
@@ -86,14 +93,14 @@ export class FiveInLIne extends GamePage {
     }
 
     public GetNewRandomCube(freePoints: Vector2[], offset: Vector2): Cube {
-        var index = freePoints[Data.I.Utils.RandI(0, freePoints.length)];
+        var index = freePoints[Utils.RandI(0, freePoints.length)];
         var filedPostion = new Vector2(index.X, index.Y);
         var newCube = new Cube(
             FiveInLIne.CUDE_SIZE.MUL(filedPostion),
             filedPostion,
             FiveInLIne.CUDE_SIZE,
             FiveInLIne.MOVE_SPEED,
-            FiveInLIne.COLORS[Data.I.Utils.RandI(0, FiveInLIne.COLORS.length)]);
+            FiveInLIne.COLORS[Utils.RandI(0, FiveInLIne.COLORS.length)]);
 
         return newCube;
     }
@@ -154,7 +161,7 @@ export class FiveInLIne extends GamePage {
     }
 
     public DrawGameMenu() {
-        Data.I.Draw.TextFill(<TextParams> {
+        Draw.I.TextFill(<TextParams> {
             str: "score: " + this.score,
             position: new Vector2(10, 29),
             color: Color4.Gray,
@@ -166,13 +173,13 @@ export class FiveInLIne extends GamePage {
 
     public DrawField(): void {
         for (var cubeKey in this.cubes) {
-            this.cubes[cubeKey].Draw();
+            this.cubes[cubeKey].Draw(this._exDraw);
         }
     }
 
     public DrawPredictin(): void {
         for (var cubesPredictionKey in this.cubesPrediction) {
-            this.cubesPrediction[cubesPredictionKey].Draw();
+            this.cubesPrediction[cubesPredictionKey].Draw(this._exDraw);
         }
     }
 }

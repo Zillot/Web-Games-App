@@ -6,6 +6,10 @@ import { FillCircleParams } from "../../core/models/FillCircleParams";
 import { Color4 } from "../../core/engine/Color4";
 import { FillRectParams } from "../../core/models/FillRectParams";
 import { MouseState } from "../../core/models/MouseState";
+import { ExDraw } from '../services/ExDraw';
+import { Utils } from 'src/ts/core/services/Utils';
+import { Draw } from 'src/ts/core/services/Draw';
+import { Input } from 'src/ts/core/services/Input';
 
 export class Gun {
     static RELOADINGPAUSE: number = 0.3;
@@ -53,7 +57,7 @@ export class Gun {
     }
 
     public UpdateRotation(timeDelta: number): void {
-        var toMouseDir = Data.I.Input.GetMousePosition().SUB(this.Position).Normalize();
+        var toMouseDir = Input.I.GetMousePosition().SUB(this.Position).Normalize();
         var delta = Vector2.AngleBetween(this.Direction, toMouseDir);
 
         this.AngleControll.GoToDelta(delta);
@@ -100,20 +104,20 @@ export class Gun {
     }
 
     //============ DRAW ============
-    public Draw(): void {
-        this.DrawBullets();
-        this.DrawBackground();
-        this.DrawGun();
+    public Draw(exDraw: ExDraw): void {
+        this.DrawBullets(exDraw);
+        this.DrawBackground(exDraw);
+        this.DrawGun(exDraw);
     }
 
-    public DrawBullets(): void {
+    public DrawBullets(exDraw: ExDraw): void {
         for (var item in this.Bullets) {
-            this.Bullets[item].Draw();
+            this.Bullets[item].Draw(exDraw);
         }
     }
 
-    public DrawBackground(): void {
-        Data.I.Draw.CircleFill(<FillCircleParams> {
+    public DrawBackground(exDraw: ExDraw): void {
+        Draw.I.CircleFill(<FillCircleParams> {
             position: this.Position,
             radius: 20,
             origin: new Vector2(0, 0),
@@ -122,8 +126,8 @@ export class Gun {
         });
     }
 
-    public DrawGun(): void {
-        Data.I.Draw.RectFill(<FillRectParams> {
+    public DrawGun(exDraw: ExDraw): void {
+        Draw.I.RectFill(<FillRectParams> {
             position: this.Position,
             size: new Vector2(50, 10),
             origin: new Vector2(1, 0),
@@ -131,7 +135,7 @@ export class Gun {
             angle: this.AngleControll.GetVal()
         });
 
-        Data.I.Draw.RectFill(<FillRectParams> {
+        Draw.I.RectFill(<FillRectParams> {
             position: this.Position,
             size: new Vector2(5, 5),
             origin: new Vector2(0, 0),
@@ -140,8 +144,8 @@ export class Gun {
     }
 
     public ShootByGun(): void {
-        if (Data.I.Input.GetMouseState() == MouseState.Down && !this.IsDead()) {
-            this.Shoot(Data.I.Input.GetMousePosition());
+        if (Input.I.GetMouseState() == MouseState.Down && !this.IsDead()) {
+            this.Shoot(Input.I.GetMousePosition());
         }
     }
 
@@ -150,7 +154,7 @@ export class Gun {
             this.Reload = Gun.RELOADINGPAUSE;
             var pos = this.Position;
             var power = Gun.DEMMAGEPOWER;
-            var speed = 1000 + Data.I.Utils.RandF(-1, 1);
+            var speed = 1000 + Utils.RandF(-1, 1);
 
             this.Bullets.push(new Bullet(pos.ADD(this.Direction.MUL(40)), this.Direction, power, speed));
         }

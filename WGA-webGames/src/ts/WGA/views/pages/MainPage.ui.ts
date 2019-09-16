@@ -5,6 +5,7 @@ import { Vector2 } from "../../../core/engine/Vector2";
 import { Button } from "../../../core/ui/Button";
 import { Data } from "../../../app/Data";
 import { Color4 } from "../../../core/engine/Color4";
+import { Pages } from 'src/ts/core/services/Pages';
 
 export class MainPageUI {
     public static SetupUI(uiComponents: IUiComponent[]) {
@@ -26,7 +27,7 @@ export class MainPageUI {
                 name: "SelectGame1Btn",
                 text: "Play Zombie Shooter",
                 onClick: function () {
-                    Data.I.Pages.NavigateTo("ZombieShooter");
+                    Pages.I.NavigateTo("ZombieShooter");
                 },
                 position: new Vector2(Data.I.Center.X, 300),
                 size: new Vector2(200, 40),
@@ -44,7 +45,7 @@ export class MainPageUI {
                 name: "SelectGame2Btn",
                 text: "Play Core Defence",
                 onClick: function () {
-                    Data.I.Pages.NavigateTo("CoreDefence");
+                    Pages.I.NavigateTo("CoreDefence");
                 },
                 position: new Vector2(Data.I.Center.X, 350),
                 size: new Vector2(200, 40),
@@ -62,7 +63,7 @@ export class MainPageUI {
                 name: "SelectGame3Btn",
                 text: "Play Castle Defence",
                 onClick: function () {
-                    Data.I.Pages.NavigateTo("CastleDeffence");
+                    Pages.I.NavigateTo("CastleDeffence");
                 },
                 position: new Vector2(Data.I.Center.X, 400),
                 size: new Vector2(200, 40),
@@ -96,9 +97,9 @@ export class MainPageUI {
                 name: "CamTestBtn",
                 text: "Cam Test",
                 onClick: function () {
-                    Data.I.Pages.NavigateTo("CameraTest");
+                    Pages.I.NavigateTo("CameraTest");
                 },
-                position: new Vector2(Data.I.WindowWidth - 60, 30),
+                position: new Vector2(Data.I.WindowSize.X - 60, 30),
                 size: new Vector2(100, 40),
                 color: Color4.Cyan
             })
@@ -115,9 +116,9 @@ export class MainPageUI {
                 name: "CollisionTestBtn",
                 text: "Collision Test",
                 onClick: function () {
-                    Data.I.Pages.NavigateTo("CollisionTest");
+                    Pages.I.NavigateTo("CollisionTest");
                 },
-                position: new Vector2(Data.I.WindowWidth - 60, 80),
+                position: new Vector2(Data.I.WindowSize.X - 60, 80),
                 size: new Vector2(100, 40),
                 color: Color4.Cyan
             })

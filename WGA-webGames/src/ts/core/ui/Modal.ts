@@ -4,6 +4,7 @@ import { Value } from "../engine/Value";
 import { Data } from "../../app/Data";
 import { FillRectParams } from "../models/FillRectParams";
 import { Color4 } from "../engine/Color4";
+import { Draw } from '../services/Draw';
 
 export class Modal extends IUiContainer {
     private modalName: string;
@@ -39,7 +40,7 @@ export class Modal extends IUiContainer {
     }
 
     public Draw(): void {
-        Data.I.Draw.RectFill(<FillRectParams>{ position: this.position, size: this.size, color: new Color4(229, 229, 229, this.showProcess.GetVal()) });
+        Draw.I.RectFill(<FillRectParams>{ position: this.position, size: this.size, color: new Color4(229, 229, 229, this.showProcess.GetVal()) });
 
         super.Draw();
     }
