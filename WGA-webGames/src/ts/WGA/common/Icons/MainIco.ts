@@ -5,7 +5,7 @@ import { Vector2 } from "../../../core/engine/Vector2";
 import { Value } from "../../../core/engine/Value";
 import { FillPolygonParams } from "../../../core/models/FillPolygonParams";
 import { Color4 } from "../../../core/engine/Color4";
-import { Data } from "../../../app/Setups";
+import { Data } from "../../../app/Data";
 
 export class MainIco implements IUpdateable, IDrawable, IUiComponent {
     public Position: Vector2;

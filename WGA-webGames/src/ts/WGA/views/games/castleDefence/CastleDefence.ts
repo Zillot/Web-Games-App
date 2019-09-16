@@ -5,7 +5,7 @@ import { Tower } from "./Tower";
 import { CastleDefenceUI } from "./CastleDefence.ui";
 import { Vector2 } from "../../../../core/engine/Vector2";
 import { Color4 } from "../../../../core/engine/Color4";
-import { Data } from "../../../../app/Setups";
+import { Data } from "../../../../app/Data";
 import { MouseState } from "../../../../core/models/MouseState";
 
 export class CastleDefence extends GamePage {

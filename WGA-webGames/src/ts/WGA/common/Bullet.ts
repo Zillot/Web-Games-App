@@ -1,6 +1,6 @@
 import { Deleteable } from "../../core/abstracts/Deleteable";
 import { Vector2 } from "../../core/engine/Vector2";
-import { Data } from "../../app/Setups";
+import { Data } from "../../app/Data";
 import { FillRectParams } from "../../core/models/FillRectParams";
 import { Color4 } from "../../core/engine/Color4";
 

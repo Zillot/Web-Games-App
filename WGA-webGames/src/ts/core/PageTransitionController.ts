@@ -4,7 +4,7 @@ import { Value } from "./engine/Value";
 import { NavigateMode } from "./models/PageState";
 import { Vector2 } from "./engine/Vector2";
 import { FillRectParams } from "./models/FillRectParams";
-import { Data } from "../app/Setups";
+import { Data } from "../app/Data";
 import { Color4 } from "./engine/Color4";
 import { CallbackFunction } from "./CallbackFunction";
 

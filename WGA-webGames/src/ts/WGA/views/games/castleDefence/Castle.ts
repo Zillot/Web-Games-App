@@ -1,7 +1,7 @@
 import { Unit } from "../../../common/Unit";
 import { Color4 } from "../../../../core/engine/Color4";
 import { Vector2 } from "../../../../core/engine/Vector2";
-import { Data } from "../../../../app/Setups";
+import { Data } from "../../../../app/Data";
 import { FillTriangleParams } from "../../../../core/models/FillTriangleParams";
 
 export class Castle extends Unit {

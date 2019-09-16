@@ -1,5 +1,5 @@
 import { Vector2 } from "../engine/Vector2";
-import { Data } from "../../app/Setups";
+import { Data } from "../../app/Data";
 import { TextParams } from "../models/TextParams";
 import { FillRectParams } from "../models/FillRectParams";
 import { Color4 } from "../engine/Color4";

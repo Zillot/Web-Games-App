@@ -1,4 +1,4 @@
-import { Data } from "../../app/Setups";
+import { Data } from "../../app/Data";
 import { StandartParams } from "../models/StandartParams";
 import { ImageParams } from "../models/ImageParams";
 import { StrokeArcParams } from "../models/StrokeArcParams";
@@ -85,14 +85,14 @@ export class Draw {
         this.ctx.save();
 
         //TODO Fix camera rotation
-        //this.ctx.translate(-Setups.I.Center.X, -Setups.I.Center.Y);
+        //this.ctx.translate(-Data.I.Center.X, -Data.I.Center.Y);
         this.ctx.translate(this.cameraMathPosition.X + Data.I.FrameOffset.X, this.cameraMathPosition.Y + Data.I.FrameOffset.Y);
 
         this.ctx.rotate(this.cameraAngle);
         this.ctx.scale(this.cameraZoom * Data.I.CameraScale, this.cameraZoom * Data.I.CameraScale);
 
         //var tempCamVector = Vector2.GetRotated(this.cameraPosition, -this.cameraAngle);
-        //var tempCenterVector = Vector2.GetRotated(Setups.I.Center, -this.cameraAngle);
+        //var tempCenterVector = Vector2.GetRotated(Data.I.Center, -this.cameraAngle);
         // this.ctx.translate(tempCamVector.X + tempCenterVector.X, tempCamVector.Y + tempCenterVector.Y);
     }
 

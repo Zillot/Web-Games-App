@@ -3,7 +3,7 @@ import { IUpdateable } from "../../core/interfaces/IUpdateable";
 import { IDrawable } from "../../core/interfaces/IDrawable";
 import { Vector2 } from "../../core/engine/Vector2";
 import { FillCircleParams } from "../../core/models/FillCircleParams";
-import { Data } from "../../app/Setups";
+import { Data } from "../../app/Data";
 import { Bullet } from "./Bullet";
 
 export class Unit extends Deleteable implements IUpdateable, IDrawable {

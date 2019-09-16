@@ -1,6 +1,6 @@
 import { IUiComponent } from "../../../core/ui/Interfaces/IUiComponent";
 import { Button } from "../../../core/ui/Button";
-import { Data } from "../../../app/Setups";
+import { Data } from "../../../app/Data";
 import { Vector2 } from "../../../core/engine/Vector2";
 import { Color4 } from "../../../core/engine/Color4";
 

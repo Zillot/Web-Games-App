@@ -1,7 +1,7 @@
 import { Unit } from "../../../common/Unit";
 import { Color4 } from "../../../../core/engine/Color4";
 import { Vector2 } from "../../../../core/engine/Vector2";
-import { Data } from "../../../../app/Setups";
+import { Data } from "../../../../app/Data";
 
 export class Zombie extends Unit {
     public Angle: number

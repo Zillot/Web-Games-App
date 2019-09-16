@@ -2,7 +2,7 @@ import { FillRectParams } from "../models/FillRectParams";
 import { IUiComponent } from "./Interfaces/IUiComponent";
 import { Vector2 } from "../engine/Vector2";
 import { Color4 } from "../engine/Color4";
-import { Data } from "../../app/Setups";
+import { Data } from "../../app/Data";
 import { EventsTypes } from "../models/EventsTypes";
 import { TextParams } from "../models/TextParams";
 import { KeyCodes } from "../models/KeyCodes";

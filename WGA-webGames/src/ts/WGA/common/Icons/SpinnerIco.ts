@@ -5,7 +5,7 @@ import { Vector2 } from "../../../core/engine/Vector2";
 import { Value } from "../../../core/engine/Value";
 import { FillCircleParams } from "../../../core/models/FillCircleParams";
 import { Color4 } from "../../../core/engine/Color4";
-import { Data } from "../../../app/Setups";
+import { Data } from "../../../app/Data";
 
 export class SpinnerIco implements IUpdateable, IDrawable, IUiComponent {
     public Position: Vector2;

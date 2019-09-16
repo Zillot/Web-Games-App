@@ -1,7 +1,7 @@
 import { IUiComponent } from "../../../core/ui/Interfaces/IUiComponent";
 import { Button } from "../../../core/ui/Button";
 import { Vector2 } from "../../../core/engine/Vector2";
-import { Data } from "../../../app/Setups";
+import { Data } from "../../../app/Data";
 import { Color4 } from "../../../core/engine/Color4";
 import { Modal } from "../../../core/ui/Modal";
 

@@ -1,4 +1,4 @@
-import { Data } from "../../app/Setups";
+import { Data } from "../../app/Data";
 import { Vector2 } from '../engine/Vector2';
 
 export class Core {

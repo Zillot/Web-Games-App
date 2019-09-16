@@ -1,7 +1,7 @@
 import { Unit } from "../../../common/Unit";
 import { Vector2 } from "../../../../core/engine/Vector2";
 import { Color4 } from "../../../../core/engine/Color4";
-import { Data } from "../../../../app/Setups";
+import { Data } from "../../../../app/Data";
 
 export class Tower extends Unit {
     public Size: Vector2;

@@ -1,5 +1,5 @@
 import { Page } from "../../../core/abstracts/Page";
-import { Data } from "../../../app/Setups";
+import { Data } from "../../../app/Data";
 import { Color4 } from "../../../core/engine/Color4";
 import { Rect } from "../../../core/engine/Rect";
 import { StrokeRectParams } from "../../../core/models/StrokeRectParams";

@@ -3,7 +3,7 @@ import { MainIco } from "../../common/Icons/MainIco";
 import { SpinnerIco } from "../../common/Icons/SpinnerIco";
 import { Vector2 } from "../../../core/engine/Vector2";
 import { Button } from "../../../core/ui/Button";
-import { Data } from "../../../app/Setups";
+import { Data } from "../../../app/Data";
 import { Color4 } from "../../../core/engine/Color4";
 
 export class MainPageUI {

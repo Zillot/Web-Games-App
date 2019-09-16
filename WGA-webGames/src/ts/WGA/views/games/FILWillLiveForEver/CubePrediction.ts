@@ -2,7 +2,7 @@ import { Cube } from "./Cube";
 import { Vector2 } from "../../../../core/engine/Vector2";
 import { Color4 } from "../../../../core/engine/Color4";
 import { FillRectParams } from "../../../../core/models/FillRectParams";
-import { Data } from "../../../../app/Setups";
+import { Data } from "../../../../app/Data";
 
 export class CubePrediction extends Cube {
     constructor(position: Vector2, fieldPosition: Vector2, size: Vector2, speed: number, color: Color4) {

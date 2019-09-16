@@ -1,7 +1,7 @@
 import { Color4 } from "../../../../core/engine/Color4";
 import { Unit } from "../../../common/Unit";
 import { Vector2 } from "../../../../core/engine/Vector2";
-import { Data } from "../../../../app/Setups";
+import { Data } from "../../../../app/Data";
 import { LineParams } from "../../../../core/models/LineParams";
 import { FillCircleParams } from "../../../../core/models/FillCircleParams";
 

@@ -5,7 +5,7 @@ import { Game } from "../../../../core/services/Game";
 import { Cube } from "./Cube";
 import { CubePrediction } from "./CubePrediction";
 import { FiveInLIneUI } from "./FiveInLine.ui";
-import { Data } from "../../../../app/Setups";
+import { Data } from "../../../../app/Data";
 import { TextParams } from "../../../../core/models/TextParams";
 
 export class FiveInLIne extends GamePage {

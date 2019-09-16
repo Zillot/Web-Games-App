@@ -2,7 +2,7 @@ import { Vector2 } from "../../../../core/engine/Vector2";
 import { Gun } from "../../../common/Gun";
 import { Bullet } from "../../../common/Bullet";
 import { Color4 } from "../../../../core/engine/Color4";
-import { Data } from "../../../../app/Setups";
+import { Data } from "../../../../app/Data";
 import { StrokeArcParams } from "../../../../core/models/StrokeArcParams";
 import { LineParams } from "../../../../core/models/LineParams";
 

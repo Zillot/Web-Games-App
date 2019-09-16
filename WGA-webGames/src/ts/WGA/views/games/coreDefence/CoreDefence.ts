@@ -1,4 +1,4 @@
-import { Data } from "../../../../app/Setups";
+import { Data } from "../../../../app/Data";
 import { StrokeCircleParams } from "../../../../core/models/StrokeCircleParams";
 import { Color4 } from "../../../../core/engine/Color4";
 import { FillCircleParams } from "../../../../core/models/FillCircleParams";

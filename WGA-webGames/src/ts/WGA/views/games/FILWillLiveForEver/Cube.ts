@@ -1,5 +1,5 @@
 import { FillRectParams } from "../../../../core/models/FillRectParams";
-import { Data } from "../../../../app/Setups";
+import { Data } from "../../../../app/Data";
 import { Vector2 } from "../../../../core/engine/Vector2";
 import { Value } from "../../../../core/engine/Value";
 import { Color4 } from "../../../../core/engine/Color4";

@@ -1,7 +1,7 @@
 import { IUiContainer } from "./Interfaces/IUiContainer";
 import { Vector2 } from "../engine/Vector2";
 import { Value } from "../engine/Value";
-import { Data } from "../../app/Setups";
+import { Data } from "../../app/Data";
 import { FillRectParams } from "../models/FillRectParams";
 import { Color4 } from "../engine/Color4";
 

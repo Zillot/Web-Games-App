@@ -1,5 +1,5 @@
 import { IUpdateable } from "../core/interfaces/IUpdateable";
-import { Data } from "./Setups";
+import { Data } from "./Data";
 import { IDrawable } from "../core/interfaces/IDrawable";
 import { WGAGameContainer } from "../WGA/WGAGameContainer";
 import { MainPage } from "../WGA/views/pages/MainPage";

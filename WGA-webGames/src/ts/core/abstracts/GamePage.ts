@@ -1,5 +1,5 @@
 import { Page } from "./Page";
-import { Data } from "../../app/Setups";
+import { Data } from "../../app/Data";
 
 export abstract class GamePage extends Page {
     constructor() {
