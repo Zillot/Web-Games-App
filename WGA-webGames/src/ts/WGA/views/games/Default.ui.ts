@@ -1,7 +1,7 @@
 import { IUiComponent } from "../../../core/ui/Interfaces/IUiComponent";
 import { Button } from "../../../core/ui/Button";
 import { Vector2 } from "../../../core/engine/Vector2";
-import { Setups } from "../../../app/Setups";
+import { Data } from "../../../app/Setups";
 import { Color4 } from "../../../core/engine/Color4";
 import { Modal } from "../../../core/ui/Modal";
 
@@ -17,9 +17,9 @@ export class DefaultUI {
                 name: "ToMainButton",
                 text: "I am quit",
                 onClick: function () {
-                    Setups.I.Pages.NavigateTo("Main");
+                    Data.I.Pages.NavigateTo("Main");
                 },
-                position: new Vector2(Setups.I.Center.X / 2 - 65, Setups.I.Center.Y / 2 + 200),
+                position: new Vector2(Data.I.Center.X / 2 - 65, Data.I.Center.Y / 2 + 200),
                 size: new Vector2(120, 40),
                 color: Color4.White
             });
@@ -34,7 +34,7 @@ export class DefaultUI {
             this.restartButton = Button.GetButton({
                 name: "RestartButton",
                 text: "One more try",
-                position: new Vector2(Setups.I.Center.X / 2 + 65, Setups.I.Center.Y / 2 + 200),
+                position: new Vector2(Data.I.Center.X / 2 + 65, Data.I.Center.Y / 2 + 200),
                 size: new Vector2(120, 40),
                 color: Color4.White
             });

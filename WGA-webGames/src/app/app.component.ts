@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Setups } from '../ts/app/Setups';
+import { Data } from '../ts/app/Setups';
 
 @Component({
     selector: 'app-root',
@@ -10,7 +10,7 @@ export class AppComponent {
     title = 'TestProject';
 
     constructor() {
-        var setups = new Setups();
-        Setups.I.Core.Run();
+        var setups = new Data();
+        Data.I.Core.Run();
     };
 }

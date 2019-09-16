@@ -1,5 +1,5 @@
 import { WGAEventContainer } from "../../WGA/WGAEventContainer";
-import { Setups } from "../../app/Setups";
+import { Data } from "../../app/Setups";
 import { Vector2 } from "../engine/Vector2";
 import { MouseState } from "../models/MouseState";
 import { EventsTypes } from "../models/EventsTypes";
@@ -20,7 +20,7 @@ export class Input {
 
         this.mouseDown = 0;
 
-        var canvas = document.getElementById(Setups.I.FramesCanvasName);
+        var canvas = document.getElementById(Data.I.FramesCanvasName);
         document.body.onmousedown = () => this.MouseDownFun(this);
         document.body.onmouseup = () => this.MouseUpFun(this);
         canvas.addEventListener('mousemove', evt => this.MouseMoveFun(this, canvas, evt), false);
@@ -104,7 +104,7 @@ export class Input {
         }
     }
     public GetMousePosition(): Vector2 {
-        return this.mousePos.SUB(Setups.I.FrameOffset).MUL(Setups.I.BackFrameScale);
+        return this.mousePos.SUB(Data.I.FrameOffset).MUL(Data.I.BackFrameScale);
     }
     public OnInputEvent(handler: any, name: string, typeId: number, keyCode: number): WGAEventContainer {
         this.RemoveHandler(name, typeId);

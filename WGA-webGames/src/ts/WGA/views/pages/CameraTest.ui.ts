@@ -1,6 +1,6 @@
 import { IUiComponent } from "../../../core/ui/Interfaces/IUiComponent";
 import { Button } from "../../../core/ui/Button";
-import { Setups } from "../../../app/Setups";
+import { Data } from "../../../app/Setups";
 import { Vector2 } from "../../../core/engine/Vector2";
 import { Color4 } from "../../../core/engine/Color4";
 
@@ -24,10 +24,10 @@ export class CameraTestUI {
                 name: "upButton",
                 text: "up",
                 onClick: function () {
-                    var camera = Setups.I.Draw.GetCameraPosition();
-                    Setups.I.Draw.SetCameraPosition(camera.ADD(new Vector2(0, -100)));
+                    var camera = Data.I.Draw.GetCameraPosition();
+                    Data.I.Draw.SetCameraPosition(camera.ADD(new Vector2(0, -100)));
                 },
-                position: new Vector2(Setups.I.WindowWidth - 20, 20),
+                position: new Vector2(Data.I.WindowWidth - 20, 20),
                 size: new Vector2(30, 30),
                 color: Color4.White
             });
@@ -43,10 +43,10 @@ export class CameraTestUI {
                 name: "downButton",
                 text: "down",
                 onClick: function () {
-                    var camera = Setups.I.Draw.GetCameraPosition();
-                    Setups.I.Draw.SetCameraPosition(camera.ADD(new Vector2(0, 100)));
+                    var camera = Data.I.Draw.GetCameraPosition();
+                    Data.I.Draw.SetCameraPosition(camera.ADD(new Vector2(0, 100)));
                 },
-                position: new Vector2(Setups.I.WindowWidth - 20, 60),
+                position: new Vector2(Data.I.WindowWidth - 20, 60),
                 size: new Vector2(30, 30),
                 color: Color4.White
             });
@@ -62,10 +62,10 @@ export class CameraTestUI {
                 name: "rightButton",
                 text: "right",
                 onClick: function () {
-                    var camera = Setups.I.Draw.GetCameraPosition();
-                    Setups.I.Draw.SetCameraPosition(camera.ADD(new Vector2(100, 0)));
+                    var camera = Data.I.Draw.GetCameraPosition();
+                    Data.I.Draw.SetCameraPosition(camera.ADD(new Vector2(100, 0)));
                 },
-                position: new Vector2(Setups.I.WindowWidth - 20, 100),
+                position: new Vector2(Data.I.WindowWidth - 20, 100),
                 size: new Vector2(30, 30),
                 color: Color4.White
             });
@@ -81,10 +81,10 @@ export class CameraTestUI {
                 name: "leftButton",
                 text: "left",
                 onClick: function () {
-                    var camera = Setups.I.Draw.GetCameraPosition();
-                    Setups.I.Draw.SetCameraPosition(camera.ADD(new Vector2(-100, 0)));
+                    var camera = Data.I.Draw.GetCameraPosition();
+                    Data.I.Draw.SetCameraPosition(camera.ADD(new Vector2(-100, 0)));
                 },
-                position: new Vector2(Setups.I.WindowWidth - 20, 140),
+                position: new Vector2(Data.I.WindowWidth - 20, 140),
                 size: new Vector2(30, 30),
                 color: Color4.White
             });
@@ -100,10 +100,10 @@ export class CameraTestUI {
                 name: "zpButton",
                 text: "z+",
                 onClick: function () {
-                    var camera = Setups.I.Draw.GetCameraZoom();
-                    Setups.I.Draw.SetCameraZoom(camera + 0.05);
+                    var camera = Data.I.Draw.GetCameraZoom();
+                    Data.I.Draw.SetCameraZoom(camera + 0.05);
                 },
-                position: new Vector2(Setups.I.WindowWidth - 20, 180),
+                position: new Vector2(Data.I.WindowWidth - 20, 180),
                 size: new Vector2(30, 30),
                 color: Color4.White
             });
@@ -119,10 +119,10 @@ export class CameraTestUI {
                 name: "zmButton",
                 text: "z-",
                 onClick: function () {
-                    var camera = Setups.I.Draw.GetCameraZoom();
-                    Setups.I.Draw.SetCameraZoom(camera - 0.05);
+                    var camera = Data.I.Draw.GetCameraZoom();
+                    Data.I.Draw.SetCameraZoom(camera - 0.05);
                 },
-                position: new Vector2(Setups.I.WindowWidth - 20, 220),
+                position: new Vector2(Data.I.WindowWidth - 20, 220),
                 size: new Vector2(30, 30),
                 color: Color4.White
             });
@@ -138,10 +138,10 @@ export class CameraTestUI {
                 name: "rpButton",
                 text: "r+",
                 onClick: function () {
-                    var camera = Setups.I.Draw.GetCameraAngle();
-                    Setups.I.Draw.SetCameraAngle(camera + 0.05);
+                    var camera = Data.I.Draw.GetCameraAngle();
+                    Data.I.Draw.SetCameraAngle(camera + 0.05);
                 },
-                position: new Vector2(Setups.I.WindowWidth - 20, 260),
+                position: new Vector2(Data.I.WindowWidth - 20, 260),
                 size: new Vector2(30, 30),
                 color: Color4.White
             });
@@ -157,10 +157,10 @@ export class CameraTestUI {
                 name: "rmButton",
                 text: "r-",
                 onClick: function () {
-                    var camera = Setups.I.Draw.GetCameraAngle();
-                    Setups.I.Draw.SetCameraAngle(camera - 0.05);
+                    var camera = Data.I.Draw.GetCameraAngle();
+                    Data.I.Draw.SetCameraAngle(camera - 0.05);
                 },
-                position: new Vector2(Setups.I.WindowWidth - 20, 300),
+                position: new Vector2(Data.I.WindowWidth - 20, 300),
                 size: new Vector2(30, 30),
                 color: Color4.White
             });
@@ -176,9 +176,9 @@ export class CameraTestUI {
                 name: "rstButton",
                 text: "rst",
                 onClick: function () {
-                    Setups.I.Draw.ResetCamera();
+                    Data.I.Draw.ResetCamera();
                 },
-                position: new Vector2(Setups.I.WindowWidth - 20, 340),
+                position: new Vector2(Data.I.WindowWidth - 20, 340),
                 size: new Vector2(30, 30),
                 color: Color4.White
             });

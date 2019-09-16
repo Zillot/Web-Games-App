@@ -1,14 +1,14 @@
-import { WGAGame } from "../../../../core/abstracts/WGAGame";
+import { GamePage } from "../../../../core/abstracts/GamePage";
 import { Vector2 } from "../../../../core/engine/Vector2";
 import { Color4 } from "../../../../core/engine/Color4";
 import { Game } from "../../../../core/services/Game";
 import { Cube } from "./Cube";
 import { CubePrediction } from "./CubePrediction";
 import { FiveInLIneUI } from "./FiveInLine.ui";
-import { Setups } from "../../../../app/Setups";
+import { Data } from "../../../../app/Setups";
 import { TextParams } from "../../../../core/models/TextParams";
 
-export class FiveInLIne extends WGAGame {
+export class FiveInLIne extends GamePage {
     private static INITIAL_CUBES: number = 15;
     private static MOVE_SPEED: number = 1;
 
@@ -86,14 +86,14 @@ export class FiveInLIne extends WGAGame {
     }
 
     public GetNewRandomCube(freePoints: Vector2[], offset: Vector2): Cube {
-        var index = freePoints[Setups.I.Utils.RandI(0, freePoints.length)];
+        var index = freePoints[Data.I.Utils.RandI(0, freePoints.length)];
         var filedPostion = new Vector2(index.X, index.Y);
         var newCube = new Cube(
             FiveInLIne.CUDE_SIZE.MUL(filedPostion),
             filedPostion,
             FiveInLIne.CUDE_SIZE,
             FiveInLIne.MOVE_SPEED,
-            FiveInLIne.COLORS[Setups.I.Utils.RandI(0, FiveInLIne.COLORS.length)]);
+            FiveInLIne.COLORS[Data.I.Utils.RandI(0, FiveInLIne.COLORS.length)]);
 
         return newCube;
     }
@@ -154,7 +154,7 @@ export class FiveInLIne extends WGAGame {
     }
 
     public DrawGameMenu() {
-        Setups.I.Draw.TextFill(<TextParams> {
+        Data.I.Draw.TextFill(<TextParams> {
             str: "score: " + this.score,
             position: new Vector2(10, 29),
             color: Color4.Gray,

@@ -1,4 +1,4 @@
-import { Setups } from "../../app/Setups";
+import { Data } from "../../app/Setups";
 import { StandartParams } from "../models/StandartParams";
 import { ImageParams } from "../models/ImageParams";
 import { StrokeArcParams } from "../models/StrokeArcParams";
@@ -36,9 +36,9 @@ export class Draw {
         this.currentCanvasName = canvasName;
     }
 
-    //camera controll
+    //camera control
     public ResetCamera(): void {
-        this.SetCameraPosition(Setups.I.Center);
+        this.SetCameraPosition(Data.I.Center);
         this.SetCameraZoom(1);
         this.SetCameraAngle(0);
     }
@@ -71,14 +71,14 @@ export class Draw {
             return;
         }
 
-        this.cameraMathPosition = this.cameraPosition.MUL(Setups.I.CameraScale).SUB(Setups.I.Center.MUL(this.cameraZoom * Setups.I.CameraScale));
+        this.cameraMathPosition = this.cameraPosition.MUL(Data.I.CameraScale).SUB(Data.I.Center.MUL(this.cameraZoom * Data.I.CameraScale));
     }
 
     public adjustMenuViewToCamera() {
         this.ctx.save();
 
-        this.ctx.translate(Setups.I.FrameOffset.X, Setups.I.FrameOffset.Y);
-        this.ctx.scale(Setups.I.CameraScale, Setups.I.CameraScale);
+        this.ctx.translate(Data.I.FrameOffset.X, Data.I.FrameOffset.Y);
+        this.ctx.scale(Data.I.CameraScale, Data.I.CameraScale);
     }
 
     public adjustViewToCamera() {
@@ -86,10 +86,10 @@ export class Draw {
 
         //TODO Fix camera rotation
         //this.ctx.translate(-Setups.I.Center.X, -Setups.I.Center.Y);
-        this.ctx.translate(this.cameraMathPosition.X + Setups.I.FrameOffset.X, this.cameraMathPosition.Y + Setups.I.FrameOffset.Y);
+        this.ctx.translate(this.cameraMathPosition.X + Data.I.FrameOffset.X, this.cameraMathPosition.Y + Data.I.FrameOffset.Y);
 
         this.ctx.rotate(this.cameraAngle);
-        this.ctx.scale(this.cameraZoom * Setups.I.CameraScale, this.cameraZoom * Setups.I.CameraScale);
+        this.ctx.scale(this.cameraZoom * Data.I.CameraScale, this.cameraZoom * Data.I.CameraScale);
 
         //var tempCamVector = Vector2.GetRotated(this.cameraPosition, -this.cameraAngle);
         //var tempCenterVector = Vector2.GetRotated(Setups.I.Center, -this.cameraAngle);
@@ -384,8 +384,8 @@ export class Draw {
     public StartToDrawImageResource(width: number, height: number) {
         this.savedCtx = this.ctx;
 
-        this.currentCanvasName = Setups.I.WorkingDrawCanvasName;
-        var canvas: any = document.getElementById(Setups.I.WorkingDrawCanvasName);
+        this.currentCanvasName = Data.I.WorkingDrawCanvasName;
+        var canvas: any = document.getElementById(Data.I.WorkingDrawCanvasName);
             
         canvas.width = width;
         canvas.height = height;
@@ -401,11 +401,11 @@ export class Draw {
         }
     }
     public EndToDrawImageResource() {
-        this.currentCanvasName = Setups.I.FramesCanvasName;
+        this.currentCanvasName = Data.I.FramesCanvasName;
         this.ctx = this.savedCtx;
     }
 
     public MakeScreenShot() {
-        return (<any>document.getElementById(Setups.I.WorkingDrawCanvasName)).toDataURL();
+        return (<any>document.getElementById(Data.I.WorkingDrawCanvasName)).toDataURL();
     }
 }

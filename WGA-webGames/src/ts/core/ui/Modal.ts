@@ -1,7 +1,7 @@
 import { IUiContainer } from "./Interfaces/IUiContainer";
 import { Vector2 } from "../engine/Vector2";
 import { Value } from "../engine/Value";
-import { Setups } from "../../app/Setups";
+import { Data } from "../../app/Setups";
 import { FillRectParams } from "../models/FillRectParams";
 import { Color4 } from "../engine/Color4";
 
@@ -18,7 +18,7 @@ export class Modal extends IUiContainer {
     constructor(modalName: string, header: string, text: string) {
         super();
 
-        this.position = Setups.I.Center.SUB(new Vector2(100, 70));
+        this.position = Data.I.Center.SUB(new Vector2(100, 70));
         this.size = new Vector2(200, 140);
 
         this.modalName = modalName;
@@ -39,7 +39,7 @@ export class Modal extends IUiContainer {
     }
 
     public Draw(): void {
-        Setups.I.Draw.RectFill(<FillRectParams>{ position: this.position, size: this.size, color: new Color4(229, 229, 229, this.showProcess.GetVal()) });
+        Data.I.Draw.RectFill(<FillRectParams>{ position: this.position, size: this.size, color: new Color4(229, 229, 229, this.showProcess.GetVal()) });
 
         super.Draw();
     }

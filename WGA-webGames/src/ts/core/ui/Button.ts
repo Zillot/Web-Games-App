@@ -2,7 +2,7 @@ import { FillRectParams } from "../models/FillRectParams";
 import { IUiComponent } from "./Interfaces/IUiComponent";
 import { Vector2 } from "../engine/Vector2";
 import { Color4 } from "../engine/Color4";
-import { Setups } from "../../app/Setups";
+import { Data } from "../../app/Setups";
 import { EventsTypes } from "../models/EventsTypes";
 import { TextParams } from "../models/TextParams";
 import { KeyCodes } from "../models/KeyCodes";
@@ -22,7 +22,7 @@ export class Button implements IUiComponent {
     }
 
     public Init(): void {
-        Setups.I.Input.OnInputEvent(() => {
+        Data.I.Input.OnInputEvent(() => {
                 this.Click();
             },
             this.Name + '-OnClick',
@@ -31,7 +31,7 @@ export class Button implements IUiComponent {
     }
 
     public Dispose(): void {
-        Setups.I.Input.RemoveHandler(this.Name + '-OnClick', EventsTypes.MouseButtonPressed);
+        Data.I.Input.RemoveHandler(this.Name + '-OnClick', EventsTypes.MouseButtonPressed);
     }
 
     public SetOnClick(onClick: any) {
@@ -43,13 +43,13 @@ export class Button implements IUiComponent {
     }
 
     public Draw(): void {
-        Setups.I.Draw.RectFill(<FillRectParams>{ position: this.position, size: this.size.ADD(new Vector2(3)), color: Color4.Black });
-        Setups.I.Draw.RectFill(<FillRectParams>{ position: this.position, size: this.size, color: this.color });
-        Setups.I.Draw.TextFill(<TextParams>{ str: this.text, position: this.position, color: Color4.Black, fontSize: 14 });
+        Data.I.Draw.RectFill(<FillRectParams>{ position: this.position, size: this.size.ADD(new Vector2(3)), color: Color4.Black });
+        Data.I.Draw.RectFill(<FillRectParams>{ position: this.position, size: this.size, color: this.color });
+        Data.I.Draw.TextFill(<TextParams>{ str: this.text, position: this.position, color: Color4.Black, fontSize: 14 });
     }
     //-------------
     public Click(): void {
-        if (Setups.I.Geometry.IsPointInRect(Setups.I.Input.GetMousePosition(), Rect.FromVectors(this.position.SUB(this.size.DIV(2)), this.size))) {
+        if (Data.I.Geometry.IsPointInRect(Data.I.Input.GetMousePosition(), Rect.FromVectors(this.position.SUB(this.size.DIV(2)), this.size))) {
             if (this.onClick != null) {
                 this.onClick();
             }

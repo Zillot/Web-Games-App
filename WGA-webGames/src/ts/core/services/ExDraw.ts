@@ -1,5 +1,5 @@
 import { FillRectParams } from "../models/FillRectParams";
-import { Setups } from "../../app/Setups";
+import { Data } from "../../app/Setups";
 import { Vector2 } from "../engine/Vector2";
 import { Color4 } from "../engine/Color4";
 import { ImageParams } from "../models/ImageParams";
@@ -28,25 +28,25 @@ export class ExDraw {
                 scale: 1
             };
 
-            Setups.I.Draw.StartToDrawImageResource(500, 650);
-            Setups.I.Draw.RectFill(params);
+            Data.I.Draw.StartToDrawImageResource(500, 650);
+            Data.I.Draw.RectFill(params);
 
             params.position = resPost.ADD((new Vector2(120, 0)));
             params.size = new Vector2(200, 200);
             params.color = color2;
-            Setups.I.Draw.RectFill(params);
+            Data.I.Draw.RectFill(params);
 
             params.size = new Vector2(150, 80);
 
             params.position = resPost.ADD((new Vector2(160, -250)));
-            Setups.I.Draw.RectFill(params);
+            Data.I.Draw.RectFill(params);
 
             params.position = resPost.ADD((new Vector2(160, 250)));
-            Setups.I.Draw.RectFill(params);
+            Data.I.Draw.RectFill(params);
 
             var img = new Image();
-            img.src = Setups.I.Draw.MakeScreenShot();
-            Setups.I.Draw.EndToDrawImageResource();
+            img.src = Data.I.Draw.MakeScreenShot();
+            Data.I.Draw.EndToDrawImageResource();
 
             this.cache[key] = img;
             fromCache = img;
@@ -61,7 +61,7 @@ export class ExDraw {
             scale: scale.MUL(0.1)
         };
 
-        Setups.I.Draw.DrawImage(fromCache, imgParams);
+        Data.I.Draw.DrawImage(fromCache, imgParams);
     }
 
     //TODO make this as zombie
@@ -85,7 +85,7 @@ export class ExDraw {
         var pikeHi = 0.1 * size.Y;
 
         //base tower
-        Setups.I.Draw.RectFill(<FillRectParams>{
+        Data.I.Draw.RectFill(<FillRectParams>{
             position: position,
             size: new Vector2(0.6 * size.X, baseHi + levelHi),
             origin: new Vector2(0, 1),
@@ -93,7 +93,7 @@ export class ExDraw {
         });
 
         //tower cap
-        Setups.I.Draw.RectFill(<FillRectParams>{
+        Data.I.Draw.RectFill(<FillRectParams>{
             position: position.SUB(new Vector2(0, baseHi + levelHi)),
             size: new Vector2(size.X, capHi),
             origin: new Vector2(0, 1),
@@ -103,7 +103,7 @@ export class ExDraw {
         //tower spikes
         var start = position.SUB(new Vector2(size.X * 0.5, baseHi + levelHi + capHi));
         for (var i = 0; i < 3; i++) {
-            Setups.I.Draw.RectFill(<FillRectParams>{
+            Data.I.Draw.RectFill(<FillRectParams>{
                 position: start.ADD(new Vector2(size.X * 0.4 * i, 0)),
                 size: new Vector2(size.X * 0.2, pikeHi),
                 origin: new Vector2(-1, 1),

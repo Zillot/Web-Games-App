@@ -4,7 +4,7 @@ import { Value } from "./engine/Value";
 import { NavigateMode } from "./models/PageState";
 import { Vector2 } from "./engine/Vector2";
 import { FillRectParams } from "./models/FillRectParams";
-import { Setups } from "../app/Setups";
+import { Data } from "../app/Setups";
 import { Color4 } from "./engine/Color4";
 import { CallbackFunction } from "./CallbackFunction";
 
@@ -55,7 +55,7 @@ export class PageTransitionController implements IUpdateable, IDrawable {
         }
 
         if (this.navigateMode == NavigateMode.Entering || this.navigateMode == NavigateMode.Leaving || this.navigateMode == NavigateMode.Still) {
-            Setups.I.Draw.RectFill(<FillRectParams>{ position: new Vector2(0, 0), size: new Vector2(Setups.I.WindowWidth, Setups.I.WindowHeight), origin: new Vector2(-1, -1), color: Color4.Black.GetTransparent(value) });
+            Data.I.Draw.RectFill(<FillRectParams>{ position: new Vector2(0, 0), size: new Vector2(Data.I.WindowWidth, Data.I.WindowHeight), origin: new Vector2(-1, -1), color: Color4.Black.GetTransparent(value) });
         }
     }
 }

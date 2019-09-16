@@ -1,7 +1,7 @@
 import { Unit } from "../../../common/Unit";
 import { Vector2 } from "../../../../core/engine/Vector2";
 import { Color4 } from "../../../../core/engine/Color4";
-import { Setups } from "../../../../app/Setups";
+import { Data } from "../../../../app/Setups";
 
 export class Tower extends Unit {
     public Size: Vector2;
@@ -10,12 +10,12 @@ export class Tower extends Unit {
     public Level: number;
 
     constructor(position: Vector2, hp: number, size: Vector2, level: number) {
-        super(position, Setups.I.Center.SUB(position).Normalize(), hp, 1, 10);
+        super(position, Data.I.Center.SUB(position).Normalize(), hp, 1, 10);
         this.Size = size;
         this.Level = level;
 
-        this.Color1 = Setups.I.Utils.RandColor();
-        this.Color2 = Setups.I.Utils.RandColor();
+        this.Color1 = Data.I.Utils.RandColor();
+        this.Color2 = Data.I.Utils.RandColor();
     }
 
     public Update(timeDelta: number): void {
@@ -23,6 +23,6 @@ export class Tower extends Unit {
     }
 
     public Draw(): void {
-        Setups.I.ExDraw.DrawTower(this.Position, this.Size, this.Level, this.Color1, this.Color2, 1);
+        Data.I.ExDraw.DrawTower(this.Position, this.Size, this.Level, this.Color1, this.Color2, 1);
     }
 }

@@ -3,7 +3,7 @@ import { IUpdateable } from "../../core/interfaces/IUpdateable";
 import { IDrawable } from "../../core/interfaces/IDrawable";
 import { Vector2 } from "../../core/engine/Vector2";
 import { FillCircleParams } from "../../core/models/FillCircleParams";
-import { Setups } from "../../app/Setups";
+import { Data } from "../../app/Setups";
 import { Bullet } from "./Bullet";
 
 export class Unit extends Deleteable implements IUpdateable, IDrawable {
@@ -30,7 +30,7 @@ export class Unit extends Deleteable implements IUpdateable, IDrawable {
         this.Position = this.Position.ADD(this.Direction.MUL(this.Speed * timeDelta));
     }
     public Draw(): void {
-        Setups.I.Draw.CircleFill(<FillCircleParams>{ position: this.Position, radius: 2 });
+        Data.I.Draw.CircleFill(<FillCircleParams>{ position: this.Position, radius: 2 });
     }
     //-------------
     public TryHit(bullet: Bullet): boolean {

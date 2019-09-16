@@ -1,7 +1,7 @@
 import { Color4 } from "../../../../core/engine/Color4";
 import { Unit } from "../../../common/Unit";
 import { Vector2 } from "../../../../core/engine/Vector2";
-import { Setups } from "../../../../app/Setups";
+import { Data } from "../../../../app/Setups";
 import { LineParams } from "../../../../core/models/LineParams";
 import { FillCircleParams } from "../../../../core/models/FillCircleParams";
 
@@ -16,9 +16,9 @@ export class Enemy extends Unit {
     public Radius: number;
 
     constructor(position: Vector2, hp: number, speed: number) {
-        super(position, Setups.I.Center.SUB(position).Normalize(), hp, speed, 10);
+        super(position, Data.I.Center.SUB(position).Normalize(), hp, speed, 10);
 
-        this.Color = Setups.I.Utils.RandColor();
+        this.Color = Data.I.Utils.RandColor();
         this.Power = 20;
         this.Angle = Vector2.AngleAbsBetween(Vector2.Right, this.Direction);
 
@@ -31,7 +31,7 @@ export class Enemy extends Unit {
     public Update(timeDelta: number): void {
         super.Update(timeDelta);
 
-        var toCenter = Vector2.Distance(this.Position, Setups.I.Center);
+        var toCenter = Vector2.Distance(this.Position, Data.I.Center);
         var toProcess = toCenter - this.MinDistance;
 
         if (toProcess > this.MaxDistance) {
@@ -54,16 +54,16 @@ export class Enemy extends Unit {
     }
 
     public Draw(): void {
-        var toCenter = Vector2.Distance(this.Position, Setups.I.Center);
+        var toCenter = Vector2.Distance(this.Position, Data.I.Center);
         var dashCoef = this.DistanceToDash / toCenter;
         dashCoef = dashCoef > 1 ? 1 : dashCoef;
         dashCoef = dashCoef < 0 ? 0 : dashCoef;
 
         if (toCenter > this.DistanceToDash) {
-            Setups.I.Draw.Line(<LineParams>{ pointFrom: this.Direction.MUL(-1000).ADD(Setups.I.Center), pointTo: this.Position, color: this.Color, thickness: this.Radius * 5 * (1 - dashCoef) });
+            Data.I.Draw.Line(<LineParams>{ pointFrom: this.Direction.MUL(-1000).ADD(Data.I.Center), pointTo: this.Position, color: this.Color, thickness: this.Radius * 5 * (1 - dashCoef) });
         }
 
-        Setups.I.Draw.CircleFill(<FillCircleParams>{ position: this.Position, radius: this.Radius * 1.5 + this.Radius * 2 * (1 - dashCoef), color: this.Color });
-        Setups.I.Draw.CircleFill(<FillCircleParams>{ position: this.Position, radius: this.Radius * 1.5 + this.Radius * 2 * (1 - dashCoef), color: Color4.Black.GetTransparent(dashCoef) });
+        Data.I.Draw.CircleFill(<FillCircleParams>{ position: this.Position, radius: this.Radius * 1.5 + this.Radius * 2 * (1 - dashCoef), color: this.Color });
+        Data.I.Draw.CircleFill(<FillCircleParams>{ position: this.Position, radius: this.Radius * 1.5 + this.Radius * 2 * (1 - dashCoef), color: Color4.Black.GetTransparent(dashCoef) });
     }
 }

@@ -1,5 +1,5 @@
 import { FillRectParams } from "../../../../core/models/FillRectParams";
-import { Setups } from "../../../../app/Setups";
+import { Data } from "../../../../app/Setups";
 import { Vector2 } from "../../../../core/engine/Vector2";
 import { Value } from "../../../../core/engine/Value";
 import { Color4 } from "../../../../core/engine/Color4";
@@ -13,7 +13,7 @@ export class Cube extends Unit {
     public FieldPosition: Vector2;
 
     constructor(position: Vector2, fieldPosition: Vector2, size: Vector2, speed: number, color: Color4) {
-        super(position, Setups.I.Center.SUB(position).Normalize(), 1, speed, 10);
+        super(position, Data.I.Center.SUB(position).Normalize(), 1, speed, 10);
 
         this.Transition = new Value(0, 1);
         this.Opacity = new Value(0, 1);
@@ -31,7 +31,7 @@ export class Cube extends Unit {
     }
 
     public Draw(): void {
-        Setups.I.Draw.RectFill(<FillRectParams> {
+        Data.I.Draw.RectFill(<FillRectParams> {
             position: this.Position,
             size: this.Size,
             scale: this.Transition.GetVal(),

@@ -1,14 +1,14 @@
-import { WGAGame } from "../../../../core/abstracts/WGAGame";
+import { GamePage } from "../../../../core/abstracts/GamePage";
 import { Game } from "../../../../core/services/Game";
 import { Castle } from "./Castle";
 import { Tower } from "./Tower";
 import { CastleDefenceUI } from "./CastleDefence.ui";
 import { Vector2 } from "../../../../core/engine/Vector2";
 import { Color4 } from "../../../../core/engine/Color4";
-import { Setups } from "../../../../app/Setups";
+import { Data } from "../../../../app/Setups";
 import { MouseState } from "../../../../core/models/MouseState";
 
-export class CastleDefence extends WGAGame {
+export class CastleDefence extends GamePage {
     private towerDistanceMinimum = 200;
 
     private game: Game;
@@ -32,7 +32,7 @@ export class CastleDefence extends WGAGame {
     }
 
     public RestartGame(): void {
-        this.castle = new Castle(new Vector2(Setups.I.WindowWidth / 2, Setups.I.WindowHeight), 100);
+        this.castle = new Castle(new Vector2(Data.I.WindowWidth / 2, Data.I.WindowHeight), 100);
 
         this.game = new Game(20, 100);
         this.game.NextLevelEvent = this.NextLevelHandler;
@@ -73,7 +73,7 @@ export class CastleDefence extends WGAGame {
     }
 
     public GetTowerToBuildPosition(): Vector2 {
-        var mouse = Setups.I.Input.GetMousePosition();
+        var mouse = Data.I.Input.GetMousePosition();
         mouse.X = Math.round(mouse.X / 5) * 5;
         mouse.Y = 0;
 
@@ -95,7 +95,7 @@ export class CastleDefence extends WGAGame {
     }
 
     public BuildTowerIfMousePressed(allowToBuild: boolean) {
-        if (Setups.I.Input.GetMouseState() == MouseState.Down && allowToBuild) {
+        if (Data.I.Input.GetMouseState() == MouseState.Down && allowToBuild) {
             this.BuildTower(this.towerToBuild);
             this.towerToBuild = null;
         }

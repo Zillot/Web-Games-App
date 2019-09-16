@@ -1,5 +1,5 @@
 import { IUpdateable } from "../core/interfaces/IUpdateable";
-import { Setups } from "./Setups";
+import { Data } from "./Setups";
 import { IDrawable } from "../core/interfaces/IDrawable";
 import { WGAGameContainer } from "../WGA/WGAGameContainer";
 import { MainPage } from "../WGA/views/pages/MainPage";
@@ -16,20 +16,20 @@ export class WGAApp implements IUpdateable, IDrawable {
     constructor() {
         this.pause = true;
 
-        Setups.I.Pages.CreatePage("Main", new MainPage());
-        Setups.I.Pages.CreatePage("CameraTest", new CameraTest());
-        Setups.I.Pages.CreatePage("CollisionTest", new CollisionTest());
+        Data.I.Pages.CreatePage("Main", new MainPage());
+        Data.I.Pages.CreatePage("CameraTest", new CameraTest());
+        Data.I.Pages.CreatePage("CollisionTest", new CollisionTest());
 
-        Setups.I.Pages.CreatePage("ZombieShooter", new ZombieShooter());
-        Setups.I.Pages.CreatePage("CoreDefence", new CoreDefence());
-        Setups.I.Pages.CreatePage("CastleDeffence", new CastleDefence());
+        Data.I.Pages.CreatePage("ZombieShooter", new ZombieShooter());
+        Data.I.Pages.CreatePage("CoreDefence", new CoreDefence());
+        Data.I.Pages.CreatePage("CastleDeffence", new CastleDefence());
 
-        Setups.I.Pages.InstantNavigateTo("Main");
+        Data.I.Pages.InstantNavigateTo("Main");
     }
 
     public Update(timeDelta: number): void {
         if (this.pause == true) {
-            Setups.I.Pages.Update(timeDelta);
+            Data.I.Pages.Update(timeDelta);
         }
 
         if (this.currentGame != null && this.pause == false) {
@@ -39,9 +39,9 @@ export class WGAApp implements IUpdateable, IDrawable {
 
     public Draw(): void {
         if (this.pause == true) {
-            Setups.I.Draw.adjustMenuViewToCamera();
-            Setups.I.Pages.Draw();
-            Setups.I.Draw.removeCameraInfuence();
+            Data.I.Draw.adjustMenuViewToCamera();
+            Data.I.Pages.Draw();
+            Data.I.Draw.removeCameraInfuence();
         }
 
         if (this.currentGame != null && this.pause == false) {

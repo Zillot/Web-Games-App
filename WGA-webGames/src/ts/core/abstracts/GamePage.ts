@@ -1,7 +1,7 @@
-﻿import { Page } from "./Page";
-import { Setups } from "../../app/Setups";
+import { Page } from "./Page";
+import { Data } from "../../app/Setups";
 
-export abstract class WGAGame extends Page {
+export abstract class GamePage extends Page {
     constructor() {
         super();
     }
@@ -23,13 +23,13 @@ export abstract class WGAGame extends Page {
     }
 
     public DrawGame() {
-        Setups.I.Draw.adjustViewToCamera();
+        Data.I.Draw.adjustViewToCamera();
         this.Draw();
-        Setups.I.Draw.removeCameraInfuence();
+        Data.I.Draw.removeCameraInfuence();
 
         //draw buttons upper all game interface
-        Setups.I.Draw.adjustMenuViewToCamera();
+        Data.I.Draw.adjustMenuViewToCamera();
         super.Draw();
-        Setups.I.Draw.removeCameraInfuence();
+        Data.I.Draw.removeCameraInfuence();
     }
 }

@@ -1,7 +1,7 @@
 import { Unit } from "../../../common/Unit";
 import { Color4 } from "../../../../core/engine/Color4";
 import { Vector2 } from "../../../../core/engine/Vector2";
-import { Setups } from "../../../../app/Setups";
+import { Data } from "../../../../app/Setups";
 import { StrokePolygonParams } from "../../../../core/models/StrokePolygonParams";
 
 export class CityWall extends Unit {
@@ -21,8 +21,8 @@ export class CityWall extends Unit {
     }
 
     private createWallPoints(step: number, width: number) {
-        var y = Setups.I.WindowHeight;
-        var yOffset = Setups.I.WindowHeight / 2; 
+        var y = Data.I.WindowHeight;
+        var yOffset = Data.I.WindowHeight / 2; 
 
         while (y > 0) {
             this.points.push(new Vector2(0, y - yOffset));
@@ -33,7 +33,7 @@ export class CityWall extends Unit {
     }
 
     public Draw(): void {
-        Setups.I.Draw.PolygonStroke(<StrokePolygonParams> {
+        Data.I.Draw.PolygonStroke(<StrokePolygonParams> {
             position: this.Position,
             origin: new Vector2(0, 0),
             color: this.Color,

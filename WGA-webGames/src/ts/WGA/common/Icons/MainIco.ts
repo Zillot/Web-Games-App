@@ -5,7 +5,7 @@ import { Vector2 } from "../../../core/engine/Vector2";
 import { Value } from "../../../core/engine/Value";
 import { FillPolygonParams } from "../../../core/models/FillPolygonParams";
 import { Color4 } from "../../../core/engine/Color4";
-import { Setups } from "../../../app/Setups";
+import { Data } from "../../../app/Setups";
 
 export class MainIco implements IUpdateable, IDrawable, IUiComponent {
     public Position: Vector2;
@@ -114,9 +114,9 @@ export class MainIco implements IUpdateable, IDrawable, IUiComponent {
     }
 
     private drawCube(cubePosition: Vector2, scale: number) {
-        Setups.I.Draw.PolygonFill(<FillPolygonParams>{ color: new Color4(102, 153, 255, 1), position: cubePosition, points: this.pointsTop, scale: scale });
-        Setups.I.Draw.PolygonFill(<FillPolygonParams>{ color: new Color4(51, 119, 255, 1), position: cubePosition, points: this.pointsLeft, scale: scale });
-        Setups.I.Draw.PolygonFill(<FillPolygonParams>{ color: new Color4(255, 133, 102, 1), position: cubePosition, points: this.pointsRight, scale: scale });
+        Data.I.Draw.PolygonFill(<FillPolygonParams>{ color: new Color4(102, 153, 255, 1), position: cubePosition, points: this.pointsTop, scale: scale });
+        Data.I.Draw.PolygonFill(<FillPolygonParams>{ color: new Color4(51, 119, 255, 1), position: cubePosition, points: this.pointsLeft, scale: scale });
+        Data.I.Draw.PolygonFill(<FillPolygonParams>{ color: new Color4(255, 133, 102, 1), position: cubePosition, points: this.pointsRight, scale: scale });
     }
 
     private startMoving(those: any) {

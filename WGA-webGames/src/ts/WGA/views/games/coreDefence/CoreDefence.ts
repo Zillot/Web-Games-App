@@ -1,8 +1,8 @@
-import { Setups } from "../../../../app/Setups";
+import { Data } from "../../../../app/Setups";
 import { StrokeCircleParams } from "../../../../core/models/StrokeCircleParams";
 import { Color4 } from "../../../../core/engine/Color4";
 import { FillCircleParams } from "../../../../core/models/FillCircleParams";
-import { WGAGame } from "../../../../core/abstracts/WGAGame";
+import { GamePage } from "../../../../core/abstracts/GamePage";
 import { Enemy } from "./Enemy";
 import { CoreGun } from "./CoreGun";
 import { Game } from "../../../../core/services/Game";
@@ -10,7 +10,7 @@ import { DefaultUI } from "../Default.ui";
 import { CoreDefenceUI } from "./CoreDefence.ui";
 import { Vector2 } from "../../../../core/engine/Vector2";
 
-export class CoreDefence extends WGAGame {
+export class CoreDefence extends GamePage {
     private enemies: Enemy[];
     private guns: CoreGun[];
 
@@ -84,7 +84,7 @@ export class CoreDefence extends WGAGame {
     }
 
     public SpawnEnemy(): void {
-        var pos = Setups.I.Utils.RandVector().MUL(Setups.I.WindowWidth + 150);
+        var pos = Data.I.Utils.RandVector().MUL(Data.I.WindowWidth + 150);
         var hp = 50 * this.game.Level;
         var speed = 200 * (this.game.Level / 2);
 
@@ -115,7 +115,7 @@ export class CoreDefence extends WGAGame {
     }
 
     public CheckEnemyDistance(enemy: Enemy) {
-        var fromEnemyToCenter = Vector2.Distance(enemy.Position, Setups.I.Center);
+        var fromEnemyToCenter = Vector2.Distance(enemy.Position, Data.I.Center);
 
         this.tryToDefendWithGun(fromEnemyToCenter, enemy);
 
@@ -162,13 +162,13 @@ export class CoreDefence extends WGAGame {
 
     public DrawCore() {
         //core area
-        Setups.I.Draw.CircleStroke(<StrokeCircleParams>{ position: Setups.I.Center, radius: this.coreSafeRadius, color: Color4.Gray.GetTransparent(0.1) });
+        Data.I.Draw.CircleStroke(<StrokeCircleParams>{ position: Data.I.Center, radius: this.coreSafeRadius, color: Color4.Gray.GetTransparent(0.1) });
 
         //gloving area or shield
         var color1 = Color4.ColorFromHex('#7777FF');
-        Setups.I.Draw.CircleFill(<FillCircleParams>{ position: Setups.I.Center, radius: 30, color: color1.GetTransparent(0.2) });
-        Setups.I.Draw.CircleFill(<FillCircleParams>{ position: Setups.I.Center, radius: 10, color: color1.GetTransparent(0.5) });
-        Setups.I.Draw.CircleFill(<FillCircleParams>{ position: Setups.I.Center, radius: 6, color: color1.GetTransparent(0.5) });
+        Data.I.Draw.CircleFill(<FillCircleParams>{ position: Data.I.Center, radius: 30, color: color1.GetTransparent(0.2) });
+        Data.I.Draw.CircleFill(<FillCircleParams>{ position: Data.I.Center, radius: 10, color: color1.GetTransparent(0.5) });
+        Data.I.Draw.CircleFill(<FillCircleParams>{ position: Data.I.Center, radius: 6, color: color1.GetTransparent(0.5) });
     }
 
     public DrawEnemy(): void {

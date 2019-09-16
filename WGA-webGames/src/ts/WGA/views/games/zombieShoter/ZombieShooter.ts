@@ -1,5 +1,5 @@
 import { TextParams } from "../../../../core/models/TextParams";
-import { Setups } from "../../../../app/Setups";
+import { Data } from "../../../../app/Setups";
 import { Vector2 } from "../../../../core/engine/Vector2";
 import { Color4 } from "../../../../core/engine/Color4";
 import { Zombie } from "./Zombie";
@@ -9,10 +9,10 @@ import { ZombieShooterUI } from "./ZombieShooter.ui";
 import { Game } from "../../../../core/services/Game";
 import { CityWall } from "./CityWall";
 import { DefaultUI } from "../Default.ui";
-import { WGAGame } from "../../../../core/abstracts/WGAGame";
+import { GamePage } from "../../../../core/abstracts/GamePage";
 import { bound } from "../../../../core/Bound";
 
-export class ZombieShooter extends WGAGame {
+export class ZombieShooter extends GamePage {
     private zombies: Zombie[];
     private guns: Gun[];
 
@@ -46,13 +46,13 @@ export class ZombieShooter extends WGAGame {
         this.maxZombies = 4;
         this.zombieSpawnPause = 0;
 
-        this.cityWall = new CityWall(new Vector2(Setups.I.WindowWidth - 20, Setups.I.WindowHeight / 2), 1);
+        this.cityWall = new CityWall(new Vector2(Data.I.WindowWidth - 20, Data.I.WindowHeight / 2), 1);
 
         this.game = new Game(20, 100);
         this.game.NextLevelEvent = this.NextLevelHandler;
         this.game.GameOverEvent = this.GameOverHandler;
 
-        this.guns.push(new Gun(new Vector2(Setups.I.WindowWidth - 50, Setups.I.WindowHeight / 2), 0.5));
+        this.guns.push(new Gun(new Vector2(Data.I.WindowWidth - 50, Data.I.WindowHeight / 2), 0.5));
     }
 
     public NextLevelHandler() {
@@ -93,7 +93,7 @@ export class ZombieShooter extends WGAGame {
     }
 
     public SpawnZombie(): void {
-        var pos = new Vector2(-40, Setups.I.Utils.RandI(100, Setups.I.WindowHeight - 100));
+        var pos = new Vector2(-40, Data.I.Utils.RandI(100, Data.I.WindowHeight - 100));
         var hp = 50 * this.game.Level;
         var speed = 50 * (this.game.Level / 2);
 
@@ -161,7 +161,7 @@ export class ZombieShooter extends WGAGame {
     }
 
     public DrawGameMenu() {
-        Setups.I.Draw.TextFill(<TextParams>{ str: "Killed: " + this.killed, position: new Vector2(10, 29), color: Color4.Gray, fontName: "serif", fontSize: 18, origin: new Vector2(-1, 0) });
+        Data.I.Draw.TextFill(<TextParams>{ str: "Killed: " + this.killed, position: new Vector2(10, 29), color: Color4.Gray, fontName: "serif", fontSize: 18, origin: new Vector2(-1, 0) });
     }
 
     @bound
