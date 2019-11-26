@@ -3,7 +3,6 @@ import { Color4 } from "../../../../core/engine/Color4";
 import { Vector2 } from "../../../../core/engine/Vector2";
 import { Data } from "../../../../app/Data";
 import { StrokePolygonParams } from "../../../../core/models/StrokePolygonParams";
-import { ExDraw } from 'src/ts/WGA/services/ExDraw';
 import { Draw } from 'src/ts/core/services/Draw';
 
 export class CityWall extends Unit {
@@ -34,7 +33,7 @@ export class CityWall extends Unit {
         }
     }
 
-    public Draw(exDraw: ExDraw): void {
+    public Draw(): void {
         Draw.I.PolygonStroke(<StrokePolygonParams> {
             position: this.Position,
             origin: new Vector2(0, 0),

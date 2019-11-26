@@ -7,7 +7,6 @@ import { CubePrediction } from "./CubePrediction";
 import { FiveInLIneUI } from "./FiveInLine.ui";
 import { Data } from "../../../../app/Data";
 import { TextParams } from "../../../../core/models/TextParams";
-import { ExDraw } from 'src/ts/WGA/services/ExDraw';
 import { Utils } from 'src/ts/core/services/Utils';
 import { Draw } from 'src/ts/core/services/Draw';
 
@@ -25,8 +24,6 @@ export class FiveInLIne extends GamePage {
     private static PREDICTION_SIZE: Vector2 = new Vector2(3, 2);
     private static PREDICTION_OFFSET: Vector2 = new Vector2(10, 10);
 
-    private _exDraw: ExDraw;
-
     private game: Game;
 
     private cubes: Cube[];
@@ -37,8 +34,6 @@ export class FiveInLIne extends GamePage {
 
     constructor() {
         super();
-
-        this._exDraw = new ExDraw();
     }
 
     public Init(): void {
@@ -173,13 +168,13 @@ export class FiveInLIne extends GamePage {
 
     public DrawField(): void {
         for (var cubeKey in this.cubes) {
-            this.cubes[cubeKey].Draw(this._exDraw);
+            this.cubes[cubeKey].Draw();
         }
     }
 
     public DrawPredictin(): void {
         for (var cubesPredictionKey in this.cubesPrediction) {
-            this.cubesPrediction[cubesPredictionKey].Draw(this._exDraw);
+            this.cubesPrediction[cubesPredictionKey].Draw();
         }
     }
 }

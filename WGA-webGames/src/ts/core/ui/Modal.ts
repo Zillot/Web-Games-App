@@ -19,8 +19,8 @@ export class Modal extends IUiContainer {
     constructor(modalName: string, header: string, text: string) {
         super();
 
-        this.position = Data.I.Center.SUB(new Vector2(100, 70));
-        this.size = new Vector2(200, 140);
+        this.position = Data.I.Center;
+        this.size = Data.I.WindowSize;
 
         this.modalName = modalName;
         this.header = header;

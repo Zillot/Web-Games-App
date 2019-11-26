@@ -4,7 +4,6 @@ import { Vector2 } from "../../../../core/engine/Vector2";
 import { Data } from "../../../../app/Data";
 import { LineParams } from "../../../../core/models/LineParams";
 import { FillCircleParams } from "../../../../core/models/FillCircleParams";
-import { ExDraw } from 'src/ts/WGA/services/ExDraw';
 import { Utils } from 'src/ts/core/services/Utils';
 import { Draw } from 'src/ts/core/services/Draw';
 
@@ -56,7 +55,7 @@ export class Enemy extends Unit {
         }
     }
 
-    public Draw(exDraw: ExDraw): void {
+    public Draw(): void {
         var toCenter = Vector2.Distance(this.Position, Data.I.Center);
         var dashCoef = this.DistanceToDash / toCenter;
         dashCoef = dashCoef > 1 ? 1 : dashCoef;

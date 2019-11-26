@@ -134,8 +134,9 @@ export class Input {
             var event = this.eventsHandlers[i];
 
             if (event.Name == name && event.Type == typeId) {
-                this.eventsHandlers.splice(1, i);
+                this.eventsHandlers.splice(i, 1);
                 status = true;
+                break;
             }
         }
 

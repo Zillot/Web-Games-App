@@ -68,8 +68,6 @@ export class Button implements IUiComponent {
         newButton.color = buttonBody.color;
         newButton.fontSize = buttonBody.fontSize;
 
-        newButton.Init();
-
         return newButton;
     }
 }

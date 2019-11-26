@@ -7,12 +7,9 @@ import { Vector2 } from "../../../../core/engine/Vector2";
 import { Color4 } from "../../../../core/engine/Color4";
 import { Data } from "../../../../app/Data";
 import { MouseState } from "../../../../core/models/MouseState";
-import { ExDraw } from 'src/ts/WGA/services/ExDraw';
 import { Input } from 'src/ts/core/services/Input';
 
 export class CastleDefence extends GamePage {
-    private _exDraw: ExDraw;
-
     private towerDistanceMinimum = 200;
 
     private game: Game;
@@ -24,8 +21,6 @@ export class CastleDefence extends GamePage {
 
     constructor() {
         super();
-
-        this._exDraw = new ExDraw();
     }
 
     public Init(): void {
@@ -118,6 +113,6 @@ export class CastleDefence extends GamePage {
     //============ DRAW ============
     public Draw(): void {
         this.game.Draw();
-        this.castle.Draw(this._exDraw);
+        this.castle.Draw();
     }
 }

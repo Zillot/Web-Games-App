@@ -10,14 +10,10 @@ import { Game } from "../../../../core/services/Game";
 import { CityWall } from "./CityWall";
 import { DefaultUI } from "../Default.ui";
 import { GamePage } from "../../../../core/abstracts/GamePage";
-import { bound } from "../../../../core/Bound";
-import { ExDraw } from 'src/ts/WGA/services/ExDraw';
 import { Utils } from 'src/ts/core/services/Utils';
 import { Draw } from 'src/ts/core/services/Draw';
 
 export class ZombieShooter extends GamePage {
-    private _exDraw: ExDraw;
-
     private zombies: Zombie[];
     private guns: Gun[];
 
@@ -32,8 +28,6 @@ export class ZombieShooter extends GamePage {
 
     constructor() {
         super();
-
-        this._exDraw = new ExDraw();
     }
 
     public Init(): void {
@@ -56,8 +50,8 @@ export class ZombieShooter extends GamePage {
         this.cityWall = new CityWall(new Vector2(Data.I.WindowSize.X - 20, Data.I.WindowSize.Y / 2), 1);
 
         this.game = new Game(20, 100);
-        this.game.NextLevelEvent = this.NextLevelHandler;
-        this.game.GameOverEvent = this.GameOverHandler;
+        this.game.NextLevelEvent = () => { this.NextLevelHandler(); };
+        this.game.GameOverEvent = () => { this.GameOverHandler(); };
 
         this.guns.push(new Gun(new Vector2(Data.I.WindowSize.X - 50, Data.I.WindowSize.Y / 2), 0.5));
     }
@@ -67,7 +61,7 @@ export class ZombieShooter extends GamePage {
     }
 
     public GameOverHandler() {
-        this.ShowModal(ZombieShooterUI.GameOverModal);
+        super.ShowModal(ZombieShooterUI.GameOverModal);
 
         for (var gunKey in this.guns) {
             var gun = this.guns[gunKey];
@@ -102,7 +96,7 @@ export class ZombieShooter extends GamePage {
     public SpawnZombie(): void {
         var pos = new Vector2(-40, Utils.RandI(100, Data.I.WindowSize.Y - 100));
         var hp = 50 * this.game.Level;
-        var speed = 50 * (this.game.Level / 2);
+        var speed = 5000 * (this.game.Level / 2);
 
         this.zombies.push(new Zombie(pos, hp, speed));
     }
@@ -111,7 +105,7 @@ export class ZombieShooter extends GamePage {
         for (var gunKey in this.guns) {
             var gun = this.guns[gunKey];
 
-            gun.Update(timeDelta, this.TryToHitEveryZombieWithBullet);
+            gun.Update(timeDelta, (bullet) => { this.TryToHitEveryZombieWithBullet(bullet); });
         }
     }
 
@@ -140,7 +134,7 @@ export class ZombieShooter extends GamePage {
             if (zombie.NotOnTheGameField()) {
                 zombie.MarkToBeRemoved();
                 this.game.SubScore(5);
-                this.game.Hit(zombie.Power);
+                this.game.Hit(zombie.Power * 5);
             }
 
             this.RemoveDeadZombie(zombie);
@@ -156,7 +150,7 @@ export class ZombieShooter extends GamePage {
 
     //============ DRAW ============
     public Draw(): void {
-        this.cityWall.Draw(this._exDraw);
+        this.cityWall.Draw();
 
         this.DrawZombies();
         this.DrawGuns();
@@ -171,21 +165,15 @@ export class ZombieShooter extends GamePage {
         Draw.I.TextFill(<TextParams>{ str: "Killed: " + this.killed, position: new Vector2(10, 29), color: Color4.Gray, fontName: "serif", fontSize: 18, origin: new Vector2(-1, 0) });
     }
 
-    @bound
-    public test() {
-
-    }
-
-
     public DrawZombies(): void {
         for (var zombiesKey in this.zombies) {
-            this.zombies[zombiesKey].Draw(this._exDraw);
+            this.zombies[zombiesKey].Draw();
         }
     }
 
     public DrawGuns(): void {
         for (var gundsKey in this.guns) {
-            this.guns[gundsKey].Draw(this._exDraw);
+            this.guns[gundsKey].Draw();
         }
     }
 }

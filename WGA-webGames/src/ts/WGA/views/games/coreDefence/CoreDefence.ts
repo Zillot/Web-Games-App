@@ -9,13 +9,10 @@ import { Game } from "../../../../core/services/Game";
 import { DefaultUI } from "../Default.ui";
 import { CoreDefenceUI } from "./CoreDefence.ui";
 import { Vector2 } from "../../../../core/engine/Vector2";
-import { ExDraw } from 'src/ts/WGA/services/ExDraw';
 import { Utils } from 'src/ts/core/services/Utils';
 import { Draw } from 'src/ts/core/services/Draw';
 
 export class CoreDefence extends GamePage {
-    private _exDraw: ExDraw;
-
     private enemies: Enemy[];
     private guns: CoreGun[];
 
@@ -27,8 +24,6 @@ export class CoreDefence extends GamePage {
 
     constructor() {
         super();
-
-        this._exDraw = new ExDraw();
     }
 
     public Init(): void {
@@ -180,13 +175,13 @@ export class CoreDefence extends GamePage {
 
     public DrawEnemy(): void {
         for (var enemyKey in this.enemies) {
-            this.enemies[enemyKey].Draw(this._exDraw);
+            this.enemies[enemyKey].Draw();
         }
     }
 
     public DrawGuns(): void {
         for (var gunsKey in this.guns) {
-            this.guns[gunsKey].Draw(this._exDraw);
+            this.guns[gunsKey].Draw();
         }
     }
 }

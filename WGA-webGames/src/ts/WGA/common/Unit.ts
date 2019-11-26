@@ -3,7 +3,6 @@ import { IUpdateable } from "../../core/interfaces/IUpdateable";
 import { Vector2 } from "../../core/engine/Vector2";
 import { FillCircleParams } from "../../core/models/FillCircleParams";
 import { Bullet } from "./Bullet";
-import { ExDraw } from '../services/ExDraw';
 import { IWGADrawable } from '../Interface/IWGADrawable';
 import { Draw } from 'src/ts/core/services/Draw';
 
@@ -30,7 +29,7 @@ export class Unit extends Deleteable implements IUpdateable, IWGADrawable {
     public Update(timeDelta: number): void {
         this.Position = this.Position.ADD(this.Direction.MUL(this.Speed * timeDelta));
     }
-    public Draw(exdraw: ExDraw): void {
+    public Draw(): void {
         Draw.I.CircleFill(<FillCircleParams>{ position: this.Position, radius: 2 });
     }
     //-------------

@@ -70,6 +70,10 @@ export class Pages {
         }
         else {
             this.pageTransition.NavigateToStart(() => {
+                if (this.currentPage != null) {
+                    this.currentPage.Dispose();
+                }
+
                 this.currentPage = page;
                 this.currentPage.Init();
                 this.pageTransition.NavigateFromStart(() => { });

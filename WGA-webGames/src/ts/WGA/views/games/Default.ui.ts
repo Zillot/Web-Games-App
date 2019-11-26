@@ -20,7 +20,7 @@ export class DefaultUI {
                 onClick: function () {
                     Pages.I.NavigateTo("Main");
                 },
-                position: new Vector2(Data.I.Center.X / 2 - 65, Data.I.Center.Y / 2 + 200),
+                position: new Vector2(Data.I.Center.X - 65, Data.I.Center.Y + 200),
                 size: new Vector2(120, 40),
                 color: Color4.White
             });
@@ -35,7 +35,7 @@ export class DefaultUI {
             this.restartButton = Button.GetButton({
                 name: "RestartButton",
                 text: "One more try",
-                position: new Vector2(Data.I.Center.X / 2 + 65, Data.I.Center.Y / 2 + 200),
+                position: new Vector2(Data.I.Center.X + 65, Data.I.Center.Y + 200),
                 size: new Vector2(120, 40),
                 color: Color4.White
             });

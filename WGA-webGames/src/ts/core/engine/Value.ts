@@ -59,6 +59,12 @@ export class Value {
         this.pause = 0;
     }
 
+    public GoToDeltaWithGoal(delta: number, speed?: number, callback?: CallbackFunction): number {
+        this.GoTo(this.valueGoal + delta, speed, callback);
+
+        return this.valueGoal;
+    }
+
     public GoToDelta(delta: number, speed?: number, callback?: CallbackFunction): number {
         this.GoTo(this.value + delta, speed, callback);
 

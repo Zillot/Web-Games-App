@@ -2,8 +2,8 @@ import { Unit } from "../../../common/Unit";
 import { Color4 } from "../../../../core/engine/Color4";
 import { Vector2 } from "../../../../core/engine/Vector2";
 import { Data } from "../../../../app/Data";
-import { ExDraw } from 'src/ts/WGA/services/ExDraw';
 import { Utils } from 'src/ts/core/services/Utils';
+import { ExDraw } from 'src/ts/WGA/services/ExDraw';
 
 export class Zombie extends Unit {
     public Angle: number
@@ -18,9 +18,9 @@ export class Zombie extends Unit {
         this.Angle = Vector2.AngleAbsBetween(Vector2.Right, this.Direction);
     }
 
-    public Draw(exDraw: ExDraw): void {
+    public Draw(): void {
         var scale = 0.8 + (this.Hp / this.MaxHp) * 0.2;
-        exDraw.DrawZombie(this.Position, this.Angle, this.Color, this.Color.GetInvertColor(), scale);
+        ExDraw.I.DrawZombie(this.Position, this.Angle, this.Color, this.Color.GetInvertColor(), scale);
     }
 
     public NotOnTheGameField() {

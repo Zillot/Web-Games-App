@@ -6,7 +6,6 @@ import { FillCircleParams } from "../../core/models/FillCircleParams";
 import { Color4 } from "../../core/engine/Color4";
 import { FillRectParams } from "../../core/models/FillRectParams";
 import { MouseState } from "../../core/models/MouseState";
-import { ExDraw } from '../services/ExDraw';
 import { Utils } from 'src/ts/core/services/Utils';
 import { Draw } from 'src/ts/core/services/Draw';
 import { Input } from 'src/ts/core/services/Input';
@@ -104,19 +103,19 @@ export class Gun {
     }
 
     //============ DRAW ============
-    public Draw(exDraw: ExDraw): void {
-        this.DrawBullets(exDraw);
-        this.DrawBackground(exDraw);
-        this.DrawGun(exDraw);
+    public Draw(): void {
+        this.DrawBullets();
+        this.DrawBackground();
+        this.DrawGun();
     }
 
-    public DrawBullets(exDraw: ExDraw): void {
+    public DrawBullets(): void {
         for (var item in this.Bullets) {
-            this.Bullets[item].Draw(exDraw);
+            this.Bullets[item].Draw();
         }
     }
 
-    public DrawBackground(exDraw: ExDraw): void {
+    public DrawBackground(): void {
         Draw.I.CircleFill(<FillCircleParams> {
             position: this.Position,
             radius: 20,
@@ -126,7 +125,7 @@ export class Gun {
         });
     }
 
-    public DrawGun(exDraw: ExDraw): void {
+    public DrawGun(): void {
         Draw.I.RectFill(<FillRectParams> {
             position: this.Position,
             size: new Vector2(50, 10),

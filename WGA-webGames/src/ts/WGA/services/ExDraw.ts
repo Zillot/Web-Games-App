@@ -7,6 +7,11 @@ import { Draw } from 'src/ts/core/services/Draw';
 export class ExDraw {
     private cache: any = [];
 
+    public static I: ExDraw;
+    public static _initialize = (() => {
+        ExDraw.I = new ExDraw();
+    })();
+
     public DrawZombie(position: Vector2, angle: number, color1: Color4, color2: Color4, scale: Vector2 | number): void {
         var key: string = "zombie_" + color1.GetRgba() + "_" + color2.GetRgba();
         var fromCache = this.cache[key];

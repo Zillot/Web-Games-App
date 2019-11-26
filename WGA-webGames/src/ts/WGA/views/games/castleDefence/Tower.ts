@@ -24,7 +24,7 @@ export class Tower extends Unit {
         super.Update(timeDelta);
     }
 
-    public Draw(exDraw: ExDraw): void {
-        exDraw.DrawTower(this.Position, this.Size, this.Level, this.Color1, this.Color2, 1);
+    public Draw(): void {
+        ExDraw.I.DrawTower(this.Position, this.Size, this.Level, this.Color1, this.Color2, 1);
     }
 }
