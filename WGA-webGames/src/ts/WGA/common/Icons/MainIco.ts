@@ -1,36 +1,28 @@
-import { IUpdateable } from "../../../core/interfaces/IUpdateable";
-import { IDrawable } from "../../../core/interfaces/IDrawable";
-import { IUiComponent } from "../../../core/ui/Interfaces/IUiComponent";
 import { Vector2 } from "../../../core/engine/Vector2";
-import { Value } from "../../../core/engine/Value";
 import { FillPolygonParams } from "../../../core/models/FillPolygonParams";
 import { Color4 } from "../../../core/engine/Color4";
-import { Data } from "../../../app/Data";
 import { Draw } from 'src/ts/core/services/Draw';
+import { BaseIco } from './BaseIco';
 
-export class MainIco implements IUpdateable, IDrawable, IUiComponent {
+export class MainIco extends BaseIco {
     public Position: Vector2;
 
     public Name: string;
 
     private moveDistance: number;
-    private speed: number;
     private cubes: number;
     private size: number;
     private leftRigthDir: Vector2;
 
-    private proccess: Value;
     private pointsTop: Vector2[];
     private pointsLeft: Vector2[];
     private pointsRight: Vector2[];
 
     constructor(position: Vector2, size: number, cubes: number, speed: number) {
+        super(speed);
+
         this.leftRigthDir = new Vector2(1, 0);
         this.Position = position;
-        this.speed = speed;
-
-        this.proccess = new Value(0, speed);
-        this.startMoving(this);
 
         this.SetCubeData(size, cubes);
     }
@@ -41,14 +33,6 @@ export class MainIco implements IUpdateable, IDrawable, IUiComponent {
 
     public Dispose(): void {
 
-    }
-
-    public Pause() {
-        this.proccess.Pause();
-    }
-
-    public Play() {
-        this.proccess.Play();
     }
 
     public SetCubeData(size: number, cubes: number) {
@@ -75,10 +59,6 @@ export class MainIco implements IUpdateable, IDrawable, IUiComponent {
             new Vector2(oneCubeSize / 2, oneCubeSize / 2),
             new Vector2(0, oneCubeSize / 2),
         ];
-    }
-
-    public Update(timeDelta: number): void {
-        this.proccess.Update(timeDelta);
     }
 
     public Draw(): void {
@@ -118,17 +98,5 @@ export class MainIco implements IUpdateable, IDrawable, IUiComponent {
         Draw.I.PolygonFill(<FillPolygonParams>{ color: new Color4(102, 153, 255, 1), position: cubePosition, points: this.pointsTop, scale: scale });
         Draw.I.PolygonFill(<FillPolygonParams>{ color: new Color4(51, 119, 255, 1), position: cubePosition, points: this.pointsLeft, scale: scale });
         Draw.I.PolygonFill(<FillPolygonParams>{ color: new Color4(255, 133, 102, 1), position: cubePosition, points: this.pointsRight, scale: scale });
-    }
-
-    private startMoving(those: any) {
-        those.proccess.GoTo(1, those.speed, () => {
-            those.endMoving(those);
-        });
-    }
-
-    private endMoving(those: any) {
-        those.proccess.GoTo(0, those.speed, () => {
-            those.startMoving(those);
-        });
     }
 }

@@ -37,6 +37,7 @@ export class FiveInLIne extends GamePage {
     }
 
     public Init(): void {
+        FiveInLIneUI.CreateGameOverModal(() => this.RestartGame());
         FiveInLIneUI.SetupUI(this.UiComponents);
 
         this.cubes = [];
@@ -66,7 +67,7 @@ export class FiveInLIne extends GamePage {
     }
 
     public GameOverHandler() {
-        this.ShowModal(FiveInLIneUI.GameOverModal);
+        super.ShowModal(FiveInLIneUI.GameOverModal);
     }
 
     public SetRandomCubesTo(): void {

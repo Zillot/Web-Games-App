@@ -27,7 +27,7 @@ export class CoreDefence extends GamePage {
     }
 
     public Init(): void {
-        DefaultUI.RestartButton.SetOnClick(this.RestartGame);
+        CoreDefenceUI.CreateGameOverModal(() => this.RestartGame());
         CoreDefenceUI.SetupUI(this.UiComponents);
 
         this.RestartGame();
@@ -55,7 +55,7 @@ export class CoreDefence extends GamePage {
     }
 
     public GameOverHandler() {
-        this.ShowModal(CoreDefenceUI.GameOverModal);
+        super.ShowModal(CoreDefenceUI.GameOverModal);
 
         for (var gunKey in this.guns) {
             var gun = this.guns[gunKey];

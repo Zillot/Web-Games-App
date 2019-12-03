@@ -8,7 +8,6 @@ import { Gun } from "../../../common/Gun";
 import { ZombieShooterUI } from "./ZombieShooter.ui";
 import { Game } from "../../../../core/services/Game";
 import { CityWall } from "./CityWall";
-import { DefaultUI } from "../Default.ui";
 import { GamePage } from "../../../../core/abstracts/GamePage";
 import { Utils } from 'src/ts/core/services/Utils';
 import { Draw } from 'src/ts/core/services/Draw';
@@ -26,12 +25,16 @@ export class ZombieShooter extends GamePage {
 
     private killed: number;
 
+    private GetZombieHp: any;
+    private GetZombieSpeed: any;
+    private GetZombiePosition: any;
+
     constructor() {
         super();
     }
 
     public Init(): void {
-        DefaultUI.RestartButton.SetOnClick(this.RestartGame);
+        ZombieShooterUI.CreateGameOverModal(() => this.RestartGame());
         ZombieShooterUI.SetupUI(this.UiComponents);
 
         this.RestartGame();
@@ -54,6 +57,13 @@ export class ZombieShooter extends GamePage {
         this.game.GameOverEvent = () => { this.GameOverHandler(); };
 
         this.guns.push(new Gun(new Vector2(Data.I.WindowSize.X - 50, Data.I.WindowSize.Y / 2), 0.5));
+
+        //value formulas
+        this.GetZombieHp = () => { return 500 * this.game.Level; }
+        this.GetZombieSpeed = () => { return 50 * (this.game.Level / 2); }
+        this.GetZombiePosition = () => { return new Vector2(-40, Utils.RandI(100, Data.I.WindowSize.Y - 100)); }
+
+        super.HideAllModals(false);
     }
 
     public NextLevelHandler() {
@@ -94,9 +104,9 @@ export class ZombieShooter extends GamePage {
     }
 
     public SpawnZombie(): void {
-        var pos = new Vector2(-40, Utils.RandI(100, Data.I.WindowSize.Y - 100));
-        var hp = 50 * this.game.Level;
-        var speed = 5000 * (this.game.Level / 2);
+        var pos = this.GetZombiePosition();
+        var hp = this.GetZombieHp();
+        var speed = this.GetZombieSpeed();
 
         this.zombies.push(new Zombie(pos, hp, speed));
     }

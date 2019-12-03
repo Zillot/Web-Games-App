@@ -3,9 +3,16 @@ import { Button } from "../../../../core/ui/Button";
 import { Vector2 } from "../../../../core/engine/Vector2";
 import { Color4 } from "../../../../core/engine/Color4";
 import { DefaultUI } from "../Default.ui";
+import { Modal } from 'src/ts/core/ui/Modal';
 
 export class CastleDefenceUI {
     public static SetupUI(uiComponents: IUiComponent[]) {
+        if (this.gameOverModal == null) {
+            throw new Error('gameOverModal is not initialized in ' + this.constructor.name);
+        }
+
+        uiComponents.push(this.gameOverModal);
+
         uiComponents.push(CastleDefenceUI.BuildTower);
     }
 
@@ -24,7 +31,18 @@ export class CastleDefenceUI {
         return this.buildTower;
     }
 
-    public static get GameOverModal() {
-        return DefaultUI.GameOverModal("Game over", "So many servant give their lives, just so you can have fun. Hope you happy now");
+    public static gameOverModal: Modal;
+    public static get GameOverModal(): Modal {
+        return this.gameOverModal;
+    }
+    public static CreateGameOverModal(restartButtonHandler: any): Modal {
+        if (this.gameOverModal == null) {
+            this.gameOverModal = DefaultUI.GameOverModal(
+                "Game over",
+                "So many servant has given their lives, just so you can have fun and screw everything up. Hope you happy now",
+                restartButtonHandler);
+        }
+
+        return this.gameOverModal;
     }
 }

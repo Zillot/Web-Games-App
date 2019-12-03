@@ -9,18 +9,19 @@ import { Rect } from "../engine/Rect";
 import { Geometry } from '../services/Geometry';
 import { Draw } from '../services/Draw';
 import { Input } from '../services/Input';
+import { BaseUIComponent } from './BaseUIComponent';
 
-export class Button implements IUiComponent {
+export class Button extends BaseUIComponent {
     public Name: string;
 
     private text: string;
     private onClick: any;
-    private position: Vector2;
     private size: Vector2;
     private color: Color4;
     private fontSize: number;
 
-    constructor() {
+    constructor(position: Vector2) {
+        super(position);
     }
 
     public Init(): void {
@@ -41,13 +42,13 @@ export class Button implements IUiComponent {
     }
 
     public Update(timeDelta: number): void {
-
+        super.Update(timeDelta);
     }
 
     public Draw(): void {
-        Draw.I.RectFill(<FillRectParams>{ position: this.position, size: this.size.ADD(new Vector2(3)), color: Color4.Black });
-        Draw.I.RectFill(<FillRectParams>{ position: this.position, size: this.size, color: this.color });
-        Draw.I.TextFill(<TextParams>{ str: this.text, position: this.position, color: Color4.Black, fontSize: 14 });
+        Draw.I.RectFill(<FillRectParams>{ position: this.position, size: this.size.ADD(new Vector2(3)), color: Color4.Black.GetTransparent(this.opacity.GetVal()), });
+        Draw.I.RectFill(<FillRectParams>{ position: this.position, size: this.size, color: this.color.GetTransparent(this.opacity.GetVal()) });
+        Draw.I.TextFill(<TextParams>{ str: this.text, position: this.position, color: Color4.Black.GetTransparent(this.opacity.GetVal()), fontSize: 14 });
     }
     //-------------
     public Click(): void {
@@ -59,7 +60,7 @@ export class Button implements IUiComponent {
     }
 
     public static GetButton(buttonBody: any): Button {
-        var newButton = new Button();
+        var newButton = new Button(null);
         newButton.Name = buttonBody.name;
         newButton.text = buttonBody.text;
         newButton.onClick = buttonBody.onClick;

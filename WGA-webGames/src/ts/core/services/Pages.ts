@@ -71,6 +71,7 @@ export class Pages {
         else {
             this.pageTransition.NavigateToStart(() => {
                 if (this.currentPage != null) {
+                    this.currentPage.HideAllModals(true);
                     this.currentPage.Dispose();
                 }
 

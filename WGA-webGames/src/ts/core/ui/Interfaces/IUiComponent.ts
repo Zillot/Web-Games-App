@@ -1,3 +1,5 @@
+import { Value } from '../../engine/Value';
+
 export interface IUiComponent {
     Name: string;
 

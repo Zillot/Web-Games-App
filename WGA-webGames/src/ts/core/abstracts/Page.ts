@@ -1,43 +1,45 @@
-﻿import { IDrawable } from "../interfaces/IDrawable";
+import { IDrawable } from "../interfaces/IDrawable";
 import { IUpdateable } from "../interfaces/IUpdateable";
 import { Modal } from "../ui/Modal";
-import { IUiComponent } from "../ui/Interfaces/IUiComponent";
+import { BaseUIContainer } from '../ui/BaseUIContainer';
 
-export class Page implements IUpdateable, IDrawable {
-    public Modals: Modal[];
-    public UiComponents: IUiComponent[];
+export class Page extends BaseUIContainer implements IUpdateable, IDrawable {
 
     public constructor() {
-        this.UiComponents = [];
+        super();
     }
 
     public Init(): void {
-        for (var uiComponent in this.UiComponents) {
-            this.UiComponents[uiComponent].Init();
-        }
+        super.Init();
     }
 
     public Dispose(): void {
-        for (var uiComponent in this.UiComponents) {
-            this.UiComponents[uiComponent].Dispose();
-        }
+        super.Dispose();
     }
         
     public Update(timeDelta: number): void {
-        for (var uiComponent in this.UiComponents) {
-            this.UiComponents[uiComponent].Update(timeDelta);
-        }
+        super.Update(timeDelta);
     }
 
     public Draw(): void {
-        for (var uiComponent in this.UiComponents) {
-            this.UiComponents[uiComponent].Draw();
-        }
+        super.Draw();
     }
 
     public ShowModal(modal: Modal) {
-        modal.Init();
-        this.UiComponents.push(modal);
+        modal.InitModal();
         modal.Show();
+    }
+
+    public HideAllModals(forced: boolean) {
+        for (var uiComponent in this.UiComponents) {
+            var component = this.UiComponents[uiComponent];
+
+            if (component instanceof Modal) {
+                var modal = component as Modal;
+
+                modal.Hide(forced);
+                modal.Dispose();
+            }
+        }
     }
 }

@@ -24,7 +24,9 @@ export class CastleDefence extends GamePage {
     }
 
     public Init(): void {
+        CastleDefenceUI.CreateGameOverModal(() => this.RestartGame());
         CastleDefenceUI.SetupUI(this.UiComponents);
+
         CastleDefenceUI.BuildTower.SetOnClick(function () {
             this.GoToBuildMode();
         });
@@ -47,7 +49,7 @@ export class CastleDefence extends GamePage {
     }
 
     public GameOverHandler() {
-        this.ShowModal(CastleDefenceUI.GameOverModal);
+        super.ShowModal(CastleDefenceUI.GetGameOverModal(() => { this.RestartGame(); }));
     }
 
     //============ UPDATE ============
