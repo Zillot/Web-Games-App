@@ -6,7 +6,6 @@ import { GamePage } from "../../../../core/abstracts/GamePage";
 import { Enemy } from "./Enemy";
 import { CoreGun } from "./CoreGun";
 import { Game } from "../../../../core/services/Game";
-import { DefaultUI } from "../Default.ui";
 import { CoreDefenceUI } from "./CoreDefence.ui";
 import { Vector2 } from "../../../../core/engine/Vector2";
 import { Utils } from 'src/ts/core/services/Utils';

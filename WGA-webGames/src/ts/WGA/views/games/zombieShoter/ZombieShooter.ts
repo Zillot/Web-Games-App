@@ -11,6 +11,7 @@ import { CityWall } from "./CityWall";
 import { GamePage } from "../../../../core/abstracts/GamePage";
 import { Utils } from 'src/ts/core/services/Utils';
 import { Draw } from 'src/ts/core/services/Draw';
+import { Leveling } from 'src/ts/core/services/Leveling';
 
 export class ZombieShooter extends GamePage {
     private zombies: Zombie[];
@@ -18,8 +19,8 @@ export class ZombieShooter extends GamePage {
 
     private maxZombies: number;
     private zombieSpawnPause: number;
-    private coreSafeRadius: number;
 
+    private levelUp: Leveling;
     private game: Game;
     private cityWall: CityWall;
 

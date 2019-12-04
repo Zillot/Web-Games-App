@@ -57,4 +57,9 @@ export class SpinnerIco extends BaseIco {
             direction = direction.RotateTo(rotateStep);
         }
     }
+
+    protected endMoving() {
+        this.proccess.SetValue(0);
+        this.startMoving();
+    }
 }

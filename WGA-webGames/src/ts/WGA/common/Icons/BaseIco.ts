@@ -30,13 +30,13 @@ export abstract class BaseIco extends BaseUIComponent implements IUpdateable, ID
         this.proccess.Update(timeDelta);
     }
 
-    private startMoving() {
+    protected startMoving() {
         this.proccess.GoTo(1, this.speed, () => {
             this.endMoving();
         });
     }
 
-    private endMoving() {
+    protected endMoving() {
         this.proccess.GoTo(0, this.speed, () => {
             this.startMoving();
         });
