@@ -1,4 +1,5 @@
 import { Vector2 } from "./Vector2";
+import { Circle } from './Circle';
 
 export class Rect {
     public Left: number;
@@ -39,21 +40,12 @@ export class Rect {
         this.Bottom = this.Top + height;
     }
 
-    public static FromVectors(position: Vector2, size: Vector2): Rect {
-        return new Rect(
-            position.X,
-            position.Y,
-            position.X + size.X,
-            position.Y + size.Y
-        );
-    }
-
-    public static FromCircle(position: Vector2, radius: number): Rect {
-        return new Rect(
-            position.X - radius,
-            position.Y - radius,
-            position.X + radius,
-            position.Y + radius
-        );
+    public GetPoints(): Vector2[] {
+        return [
+            new Vector2(this.Left, this.Top),
+            new Vector2(this.Right, this.Top),
+            new Vector2(this.Right, this.Bottom),
+            new Vector2(this.Left, this.Bottom)
+        ]
     }
 }
