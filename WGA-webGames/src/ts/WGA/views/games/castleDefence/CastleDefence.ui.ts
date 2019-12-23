@@ -24,7 +24,7 @@ export class CastleDefenceUI {
                 text: "B",
                 position: new Vector2(20, 20),
                 size: new Vector2(40, 40),
-                color: Color4.White
+                backgroundcolor: Color4.White
             });
         }
 

@@ -49,7 +49,7 @@ export class CastleDefence extends GamePage {
     }
 
     public GameOverHandler() {
-        super.ShowModal(CastleDefenceUI.GetGameOverModal(() => { this.RestartGame(); }));
+        super.ShowModal(CastleDefenceUI.GameOverModal);
     }
 
     //============ UPDATE ============

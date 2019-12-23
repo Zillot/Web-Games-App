@@ -1,8 +1,27 @@
+import { Value } from './Value';
+import { CallbackFunction } from '../CallbackFunction';
+
 export class Vector2 {
-    public X: number;
-    public Y: number;
+    private x: Value;
+    private y: Value;
+
+    public get X(): number {
+        return this.x.GetVal();
+    }
+    public get Y(): number {
+        return this.y.GetVal();
+    }
+    public set X(value: number) {
+        this.x.SetValue(value);
+    }
+    public set Y(value: number) {
+        this.y.SetValue(value);
+    }
 
     constructor(x?: Vector2 | number, y?: number) {
+        this.x = new Value(0, 1);
+        this.y = new Value(0, 1);
+
         var xOrVec: any = x;
 
         if (y == null && x == null) {
@@ -16,6 +35,26 @@ export class Vector2 {
             this.X = xOrVec;
             this.Y = y;
         }
+    }
+
+    public GoToDeltaWithGoal(delta: Vector2, speed?: number, callback?: CallbackFunction): void {
+        this.x.GoToDeltaWithGoal(delta.X, speed, callback);
+        this.y.GoToDeltaWithGoal(delta.Y, speed, callback);
+    }
+
+    public GoToDelta(delta: Vector2, speed?: number, callback?: CallbackFunction): void {
+        this.x.GoToDelta(delta.X, speed, callback);
+        this.y.GoToDelta(delta.Y, speed, callback);
+    }
+
+    public GoTo(value: Vector2, speed?: number, callback?: CallbackFunction): void {
+        this.x.GoTo(value.X, speed, callback);
+        this.y.GoTo(value.Y, speed, callback);
+    }
+
+    public Update(timeDelta: number): void {
+        this.x.Update(timeDelta);
+        this.y.Update(timeDelta);
     }
 
     public GetCopy(): Vector2 {

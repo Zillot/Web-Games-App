@@ -11,8 +11,8 @@ export abstract class BaseIco extends BaseUIComponent implements IUpdateable, ID
 
     protected proccess: Value;
 
-    constructor(speed: number) {
-        super(Vector2.Zero);
+    constructor(speed: number, position: Vector2) {
+        super(position);
 
         this.proccess = new Value(0, speed);
         this.startMoving();

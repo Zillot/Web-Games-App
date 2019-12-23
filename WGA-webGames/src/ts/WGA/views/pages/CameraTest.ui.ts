@@ -30,7 +30,7 @@ export class CameraTestUI {
                 },
                 position: new Vector2(Data.I.WindowSize.X - 20, 20),
                 size: new Vector2(30, 30),
-                color: Color4.White
+                backgroundcolor: Color4.White
             });
         }
 
@@ -49,7 +49,7 @@ export class CameraTestUI {
                 },
                 position: new Vector2(Data.I.WindowSize.X - 20, 60),
                 size: new Vector2(30, 30),
-                color: Color4.White
+                backgroundcolor: Color4.White
             });
         }
 
@@ -68,7 +68,7 @@ export class CameraTestUI {
                 },
                 position: new Vector2(Data.I.WindowSize.X - 20, 100),
                 size: new Vector2(30, 30),
-                color: Color4.White
+                backgroundcolor: Color4.White
             });
         }
 
@@ -87,7 +87,7 @@ export class CameraTestUI {
                 },
                 position: new Vector2(Data.I.WindowSize.X - 20, 140),
                 size: new Vector2(30, 30),
-                color: Color4.White
+                backgroundcolor: Color4.White
             });
         }
 
@@ -106,7 +106,7 @@ export class CameraTestUI {
                 },
                 position: new Vector2(Data.I.WindowSize.X - 20, 180),
                 size: new Vector2(30, 30),
-                color: Color4.White
+                backgroundcolor: Color4.White
             });
         }
 
@@ -125,7 +125,7 @@ export class CameraTestUI {
                 },
                 position: new Vector2(Data.I.WindowSize.X - 20, 220),
                 size: new Vector2(30, 30),
-                color: Color4.White
+                backgroundcolor: Color4.White
             });
         }
 
@@ -144,7 +144,7 @@ export class CameraTestUI {
                 },
                 position: new Vector2(Data.I.WindowSize.X - 20, 260),
                 size: new Vector2(30, 30),
-                color: Color4.White
+                backgroundcolor: Color4.White
             });
         }
 
@@ -163,7 +163,7 @@ export class CameraTestUI {
                 },
                 position: new Vector2(Data.I.WindowSize.X - 20, 300),
                 size: new Vector2(30, 30),
-                color: Color4.White
+                backgroundcolor: Color4.White
             });
         }
 
@@ -181,7 +181,7 @@ export class CameraTestUI {
                 },
                 position: new Vector2(Data.I.WindowSize.X - 20, 340),
                 size: new Vector2(30, 30),
-                color: Color4.White
+                backgroundcolor: Color4.White
             });
         }
 

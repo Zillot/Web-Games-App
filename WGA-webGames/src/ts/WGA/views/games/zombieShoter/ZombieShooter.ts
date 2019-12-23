@@ -11,7 +11,6 @@ import { CityWall } from "./CityWall";
 import { GamePage } from "../../../../core/abstracts/GamePage";
 import { Utils } from 'src/ts/core/services/Utils';
 import { Draw } from 'src/ts/core/services/Draw';
-import { Leveling } from 'src/ts/core/services/Leveling';
 
 export class ZombieShooter extends GamePage {
     private zombies: Zombie[];
@@ -20,7 +19,6 @@ export class ZombieShooter extends GamePage {
     private maxZombies: number;
     private zombieSpawnPause: number;
 
-    private levelUp: Leveling;
     private game: Game;
     private cityWall: CityWall;
 
@@ -37,6 +35,10 @@ export class ZombieShooter extends GamePage {
     public Init(): void {
         ZombieShooterUI.CreateGameOverModal(() => this.RestartGame());
         ZombieShooterUI.SetupUI(this.UiComponents);
+        ZombieShooterUI.BuyNextLevelBtn.SetOnClick(() => {
+            this.game.BuyNextLevel();
+            this.NextLevelBecomeAvailableChangedEvent(this.game.NextLevelAvailable);
+        });
 
         this.RestartGame();
 
@@ -54,10 +56,13 @@ export class ZombieShooter extends GamePage {
         this.cityWall = new CityWall(new Vector2(Data.I.WindowSize.X - 20, Data.I.WindowSize.Y / 2), 1);
 
         this.game = new Game(20, 100);
+        this.game.NextLevelBecomeAvailableChangedEvent = (state) => { this.NextLevelBecomeAvailableChangedEvent(state); };
         this.game.NextLevelEvent = () => { this.NextLevelHandler(); };
         this.game.GameOverEvent = () => { this.GameOverHandler(); };
 
         this.guns.push(new Gun(new Vector2(Data.I.WindowSize.X - 50, Data.I.WindowSize.Y / 2), 0.5));
+
+        this.NextLevelBecomeAvailableChangedEvent(this.game.NextLevelAvailable);
 
         //value formulas
         this.GetZombieHp = () => { return 500 * this.game.Level; }
@@ -65,6 +70,16 @@ export class ZombieShooter extends GamePage {
         this.GetZombiePosition = () => { return new Vector2(-40, Utils.RandI(100, Data.I.WindowSize.Y - 100)); }
 
         super.HideAllModals(false);
+    }
+
+    public NextLevelBecomeAvailableChangedEvent(state: boolean) {
+        var pos = ZombieShooterUI.BuyNextLevelBtn.Position;
+        if (state) {
+            ZombieShooterUI.BuyNextLevelBtn.MoveTo(new Vector2(pos.X, 40), 300);
+        }
+        else {
+            ZombieShooterUI.BuyNextLevelBtn.MoveTo(new Vector2(pos.X, -50), 300);
+        }
     }
 
     public NextLevelHandler() {
@@ -128,7 +143,7 @@ export class ZombieShooter extends GamePage {
                 bullet.MarkToBeRemoved();
             }
 
-            if (zombie.Hp <= 0) {
+            if (zombie.Hp <= 0 && !zombie.ShouldBeRemoved()) {
                 this.killed++;
                 this.game.AddScore(10);
                 zombie.MarkToBeRemoved();

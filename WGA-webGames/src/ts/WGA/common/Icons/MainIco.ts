@@ -5,8 +5,6 @@ import { Draw } from 'src/ts/core/services/Draw';
 import { BaseIco } from './BaseIco';
 
 export class MainIco extends BaseIco {
-    public Position: Vector2;
-
     public Name: string;
 
     private moveDistance: number;
@@ -19,10 +17,9 @@ export class MainIco extends BaseIco {
     private pointsRight: Vector2[];
 
     constructor(position: Vector2, size: number, cubes: number, speed: number) {
-        super(speed);
+        super(speed, position);
 
         this.leftRigthDir = new Vector2(1, 0);
-        this.Position = position;
 
         this.SetCubeData(size, cubes);
     }

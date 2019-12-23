@@ -31,7 +31,7 @@ export class MainPageUI {
                 },
                 position: new Vector2(Data.I.Center.X, 300),
                 size: new Vector2(200, 40),
-                color: Color4.White
+                backgroundcolor: Color4.White
             });
         }
 
@@ -49,7 +49,7 @@ export class MainPageUI {
                 },
                 position: new Vector2(Data.I.Center.X, 350),
                 size: new Vector2(200, 40),
-                color: Color4.White
+                backgroundcolor: Color4.White
             });
         }
 
@@ -67,7 +67,7 @@ export class MainPageUI {
                 },
                 position: new Vector2(Data.I.Center.X, 400),
                 size: new Vector2(200, 40),
-                color: Color4.White
+                backgroundcolor: Color4.White
             });
         }
 
@@ -83,7 +83,7 @@ export class MainPageUI {
                 onClick: function () { },
                 position: new Vector2(Data.I.Center.X, 450),
                 size: new Vector2(200, 40),
-                color: Color4.White
+                backgroundcolor: Color4.White
             });
         }
 
@@ -101,8 +101,8 @@ export class MainPageUI {
                 },
                 position: new Vector2(Data.I.WindowSize.X - 60, 30),
                 size: new Vector2(100, 40),
-                color: Color4.Cyan
-            })
+                backgroundcolor: Color4.Cyan
+            });
         }
 
 
@@ -120,8 +120,8 @@ export class MainPageUI {
                 },
                 position: new Vector2(Data.I.WindowSize.X - 60, 80),
                 size: new Vector2(100, 40),
-                color: Color4.Cyan
-            })
+                backgroundcolor: Color4.Cyan
+            });
         }
 
         return this.collisionTestBtn;

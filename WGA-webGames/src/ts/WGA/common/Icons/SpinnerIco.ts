@@ -5,17 +5,14 @@ import { Draw } from 'src/ts/core/services/Draw';
 import { BaseIco } from './BaseIco';
 
 export class SpinnerIco extends BaseIco {
-    public Position: Vector2;
-
     public Name: string;
 
     private circles: number;
     private radius: number;
 
     constructor(position: Vector2, radius: number, circles: number, speed: number) {
-        super(speed);
-
-        this.Position = position;
+        super(speed, position);
+        
         this.radius = radius;
         this.circles = circles;
     }

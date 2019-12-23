@@ -20,7 +20,7 @@ export class DefaultUI {
             text: "One more try",
             position: new Vector2(Data.I.Center.X + 65, Data.I.Center.Y + 200),
             size: new Vector2(120, 40),
-            color: Color4.White
+            backgroundcolor: Color4.White
         });
 
         var toMainButton = Button.GetButton({
@@ -31,7 +31,7 @@ export class DefaultUI {
             },
             position: new Vector2(Data.I.Center.X - 65, Data.I.Center.Y + 200),
             size: new Vector2(120, 40),
-            color: Color4.White
+            backgroundcolor: Color4.White
         });
 
         restartButton.SetOnClick(restartButtonHandler);

@@ -17,7 +17,8 @@ export class Button extends BaseUIComponent {
     private text: string;
     private onClick: any;
     private size: Vector2;
-    private color: Color4;
+    private backgroundcolor: Color4;
+    private fontColor: Color4;
     private fontSize: number;
 
     constructor(position: Vector2) {
@@ -47,8 +48,8 @@ export class Button extends BaseUIComponent {
 
     public Draw(): void {
         Draw.I.RectFill(<FillRectParams>{ position: this.position, size: this.size.ADD(new Vector2(3)), color: Color4.Black.GetTransparent(this.opacity.GetVal()), });
-        Draw.I.RectFill(<FillRectParams>{ position: this.position, size: this.size, color: this.color.GetTransparent(this.opacity.GetVal()) });
-        Draw.I.TextFill(<TextParams>{ str: this.text, position: this.position, color: Color4.Black.GetTransparent(this.opacity.GetVal()), fontSize: 14 });
+        Draw.I.RectFill(<FillRectParams>{ position: this.position, size: this.size, color: this.backgroundcolor.GetTransparent(this.opacity.GetVal()) });
+        Draw.I.TextFill(<TextParams>{ str: this.text, position: this.position, color: this.fontColor.GetTransparent(this.opacity.GetVal()), fontSize: this.fontSize });
     }
     //-------------
     public Click(): void {
@@ -60,13 +61,19 @@ export class Button extends BaseUIComponent {
     }
 
     public static GetButton(buttonBody: any): Button {
+        if (!buttonBody.backgroundcolor) { buttonBody.backgroundcolor = Color4.White; }
+        if (!buttonBody.fontColor) { buttonBody.fontColor = Color4.Black; }
+        if (!buttonBody.fontSize) { buttonBody.fontSize = 14; }
+
         var newButton = new Button(null);
         newButton.Name = buttonBody.name;
         newButton.text = buttonBody.text;
         newButton.onClick = buttonBody.onClick;
         newButton.position = buttonBody.position;
         newButton.size = buttonBody.size;
-        newButton.color = buttonBody.color;
+        newButton.backgroundcolor = buttonBody.backgroundcolor;
+        newButton.fontColor = buttonBody.fontColor;
+
         newButton.fontSize = buttonBody.fontSize;
 
         return newButton;
