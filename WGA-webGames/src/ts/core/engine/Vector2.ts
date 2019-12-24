@@ -268,7 +268,7 @@ export class Vector2 {
     private static zero: Vector2;
     public static get Zero(): Vector2 {
         if (!Vector2.zero) {
-            Vector2.zero = new Vector2(0, 0).Normalize();
+            Vector2.zero = new Vector2(0, 0);
         }
         return Vector2.zero.GetCopy();
     }
