@@ -43,6 +43,7 @@ export class BaseUIContainer extends BaseUIComponent {
         for (var uiComponentKey in this.UiComponents) {
             var uiComponent = this.UiComponents[uiComponentKey];
 
+            uiComponent.SetOffset(this.position.ADD(this.offset));
             uiComponent.Draw();
         }
     }

@@ -15,7 +15,7 @@ export class Modal extends BaseUIContainer {
     constructor(modalName: string, header: string, text: string) {
         super();
 
-        this.position = Data.I.Center;
+        this.position = Vector2.Zero;
         this.size = Data.I.WindowSize;
 
         this.modalName = modalName;
@@ -55,7 +55,7 @@ export class Modal extends BaseUIContainer {
     }
 
     public Draw(): void {
-        Draw.I.RectFill(<FillRectParams>{ position: this.position, size: this.size, color: new Color4(229, 229, 229, this.opacity.GetVal()) });
+        Draw.I.RectFill(<FillRectParams>{ position: this.position, size: this.size, color: new Color4(229, 229, 229, this.opacity.GetVal()), origin: new Vector2(-1) });
 
         super.Draw();
     }

@@ -1,8 +1,8 @@
-import { IUpdateable } from "../../../core/interfaces/IUpdateable";
-import { IDrawable } from "../../../core/interfaces/IDrawable";
-import { Vector2 } from "../../../core/engine/Vector2";
-import { Value } from "../../../core/engine/Value";
 import { BaseUIComponent } from 'src/ts/core/ui/BaseUIComponent';
+import { Value } from '../engine/Value';
+import { Vector2 } from '../engine/Vector2';
+import { IUpdateable } from '../interfaces/IUpdateable';
+import { IDrawable } from '../interfaces/IDrawable';
 
 export abstract class BaseIco extends BaseUIComponent implements IUpdateable, IDrawable {
     public Name: string;

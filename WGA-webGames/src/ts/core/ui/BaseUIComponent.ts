@@ -5,6 +5,9 @@ import { Value } from '../engine/Value';
 export abstract class BaseUIComponent implements IUiComponent {
     public Name: string;
 
+    protected onClick: any;
+
+    protected offset: Vector2;
     protected position: Vector2;
     protected opacity: Value;
 
@@ -15,6 +18,7 @@ export abstract class BaseUIComponent implements IUiComponent {
     constructor(position: Vector2) {
         this.position = position;
         this.opacity = new Value(1, 1);
+        this.offset = new Vector2(0);
     }
 
     public abstract Init(): void;
@@ -25,8 +29,17 @@ export abstract class BaseUIComponent implements IUiComponent {
         this.position.GoTo(newPosition, speed);
     }
 
+    //TODO more events
+    public SetOnClick(onClick: any) {
+        this.onClick = onClick;
+    }
+
     public SetOpacity(value: number): void {
         this.opacity.SetValue(value);
+    }
+
+    public SetOffset(value: Vector2): void {
+        this.offset = value;
     }
 
     public Update(timeDelta: number): void {
