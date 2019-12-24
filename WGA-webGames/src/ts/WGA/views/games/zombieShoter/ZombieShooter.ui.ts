@@ -1,10 +1,13 @@
 import { IUiComponent } from "../../../../core/ui/Interfaces/IUiComponent";
 import { DefaultUI } from "../Default.ui";
 import { Modal } from 'src/ts/core/ui/Modal';
-import { Button } from 'src/ts/core/ui/Button';
 import { Vector2 } from 'src/ts/core/engine/Vector2';
 import { Data } from 'src/ts/app/Data';
 import { Color4 } from 'src/ts/core/engine/Color4';
+import { ButtonWithIco } from 'src/ts/core/ui/ButtonWithIco';
+import { MainIco } from 'src/ts/WGA/common/Icons/MainIco';
+import { SpinnerIco } from 'src/ts/WGA/common/Icons/SpinnerIco';
+import { LevelUpIco } from 'src/ts/WGA/common/Icons/LevelUpIco';
 
 export class ZombieShooterUI {
     public static SetupUI(uiComponents: IUiComponent[]) {
@@ -28,15 +31,16 @@ export class ZombieShooterUI {
         return this.gameOverModal;
     }
 
-    private static buyNextLevelBtn: Button;
+    private static buyNextLevelBtn: ButtonWithIco;
     public static get BuyNextLevelBtn() {
         if (this.buyNextLevelBtn == null) {
-            this.buyNextLevelBtn = Button.GetButton({
+            this.buyNextLevelBtn = ButtonWithIco.GetButton({
                 name: "BuyNextLevelBtn",
-                text: "Level+",
+                text: "",
                 position: new Vector2(Data.I.Center.X - 100, -50),
                 size: new Vector2(40, 40),
-                backgroundcolor: Color4.Red
+                backgroundcolor: Color4.Red,
+                icon: new LevelUpIco(Vector2.Zero, 40, 4)
             });
         }
 

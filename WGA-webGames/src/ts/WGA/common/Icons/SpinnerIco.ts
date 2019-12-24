@@ -2,7 +2,7 @@ import { Vector2 } from "../../../core/engine/Vector2";
 import { FillCircleParams } from "../../../core/models/FillCircleParams";
 import { Color4 } from "../../../core/engine/Color4";
 import { Draw } from 'src/ts/core/services/Draw';
-import { BaseIco } from './BaseIco';
+import { BaseIco } from 'src/ts/core/ui/BaseIco';
 
 export class SpinnerIco extends BaseIco {
     public Name: string;
@@ -10,10 +10,16 @@ export class SpinnerIco extends BaseIco {
     private circles: number;
     private radius: number;
 
-    constructor(position: Vector2, radius: number, circles: number, speed: number) {
+    constructor(position: Vector2, diameter: number, circles: number, speed: number) {
         super(speed, position);
-        
-        this.radius = radius;
+
+        if (circles < 6) {
+            throw "SpinnerIco.cs: circles count cannot be less then 6";
+        }
+
+        var percent = ((100 / circles) * 0.01) * 2;
+        var radius = diameter / 2;
+        this.radius = (radius - radius * percent) * 0.97;
         this.circles = circles;
     }
 
@@ -50,7 +56,7 @@ export class SpinnerIco extends BaseIco {
             }
 
             scale = scale < 0.3 ? 0.3 : scale;
-            Draw.I.CircleFill(<FillCircleParams>{ color: Color4.Blue, radius: this.radius / (this.circles / 3), scale: scale, position: cubePosition });
+            Draw.I.CircleFill(<FillCircleParams>{ color: Color4.Blue, radius: this.radius / (this.circles / 3), scale: scale, position: cubePosition.ADD(this.offset) });
             direction = direction.RotateTo(rotateStep);
         }
     }

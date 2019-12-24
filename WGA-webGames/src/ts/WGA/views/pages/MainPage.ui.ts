@@ -6,6 +6,7 @@ import { Button } from "../../../core/ui/Button";
 import { Data } from "../../../app/Data";
 import { Color4 } from "../../../core/engine/Color4";
 import { Pages } from 'src/ts/core/services/Pages';
+import { LevelUpIco } from '../../common/Icons/LevelUpIco';
 
 export class MainPageUI {
     public static SetupUI(uiComponents: IUiComponent[]) {
@@ -15,9 +16,23 @@ export class MainPageUI {
         uiComponents.push(MainPageUI.EsternEqq1Btn);
         uiComponents.push(MainPageUI.CamTestBtn);
         uiComponents.push(MainPageUI.CollisionTestBtn);
-            
-        uiComponents.push(new MainIco(new Vector2(100, 100), 30, 3, 1));
-        uiComponents.push(new SpinnerIco(new Vector2(100, 100), 20, 10, 2));
+
+        uiComponents.push(MainPageUI.GetB(100));
+        uiComponents.push(new MainIco(new Vector2(100, 100), 40, 3, 1));
+        uiComponents.push(MainPageUI.GetB(150));
+        uiComponents.push(new SpinnerIco(new Vector2(100, 150), 40, 10, 2));
+        uiComponents.push(MainPageUI.GetB(200));
+        uiComponents.push(new LevelUpIco(new Vector2(100, 200), 40, 4));
+    }
+
+    public static GetB(x: number) {
+        return Button.GetButton({
+            name: "btn" + x,
+            text: "",
+            position: new Vector2(100, x),
+            size: new Vector2(40, 40),
+            backgroundcolor: Color4.White
+        });
     }
 
     public static selectGame1Btn: Button;
