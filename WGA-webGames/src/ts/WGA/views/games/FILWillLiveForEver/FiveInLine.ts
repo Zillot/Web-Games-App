@@ -40,11 +40,18 @@ export class FiveInLIne extends GamePage {
         FiveInLIneUI.CreateGameOverModal(() => this.RestartGame());
         FiveInLIneUI.SetupUI(this.UiComponents);
 
+        this.game = new Game();
+
+        this.RestartGame();
+        super.Init();
+    }
+
+    public RestartGame(): void {
         this.cubes = [];
         this.cubesPrediction = [];
         this.cuberPerAppear = 1;
 
-        this.game = new Game(800, 1);
+        this.game.RestartGame(800, 1);
         this.game.NextLevelEvent = () => {
             this.cuberPerAppear++;
         };
@@ -55,11 +62,7 @@ export class FiveInLIne extends GamePage {
         this.SetRandomCubesTo();
         this.SetRandomCubePredictionsTo();
 
-        super.Init();
-    }
-
-    public RestartGame(): void {
-
+        super.HideAllModals(false);
     }
 
     public NextLevelHandler() {

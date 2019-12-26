@@ -30,6 +30,9 @@ export class CastleDefence extends GamePage {
         CastleDefenceUI.BuildTower.SetOnClick(function () {
             this.GoToBuildMode();
         });
+        this.game = new Game();
+        this.game.NextLevelEvent = this.NextLevelHandler;
+        this.game.GameOverEvent = this.GameOverHandler;
 
         super.Init();
     }
@@ -37,11 +40,11 @@ export class CastleDefence extends GamePage {
     public RestartGame(): void {
         this.castle = new Castle(new Vector2(Data.I.WindowSize.X / 2, Data.I.WindowSize.Y), 100);
 
-        this.game = new Game(20, 100);
-        this.game.NextLevelEvent = this.NextLevelHandler;
-        this.game.GameOverEvent = this.GameOverHandler;
+        this.game.RestartGame(20, 100);
 
         this.towers = [];
+
+        super.HideAllModals(false);
     }
 
     public NextLevelHandler() {

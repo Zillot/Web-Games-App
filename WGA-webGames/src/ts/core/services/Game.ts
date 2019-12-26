@@ -19,7 +19,13 @@ export class Game {
     public NextLevelBecomeAvailableChangedEvent: any;
     public GameOverEvent: any;
 
-    constructor(scoreGoal: number, health: number) {
+    constructor() {
+        if (this.NextLevelBecomeAvailableChangedEvent) {
+            this.NextLevelBecomeAvailableChangedEvent(this.NextLevelAvailable);
+        }
+    }
+
+    public RestartGame(scoreGoal: number, health: number): void {
         this.level = 1;
         this.scoreGoal = scoreGoal;
 
@@ -28,10 +34,6 @@ export class Game {
         this.health = new Value(health, 50);
 
         this.nextLevelCost = 0;
-
-        if (this.NextLevelBecomeAvailableChangedEvent) {
-            this.NextLevelBecomeAvailableChangedEvent(this.NextLevelAvailable);
-        }
     }
 
     //start getters

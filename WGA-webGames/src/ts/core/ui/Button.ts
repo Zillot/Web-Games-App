@@ -40,7 +40,8 @@ export class Button extends BaseUIComponent {
     }
 
     public Draw(): void {
-        Draw.I.RectFill(<FillRectParams>{ position: this.position.ADD(this.offset), size: this.size, color: this.backgroundcolor.GetTransparent(this.opacity.GetVal()) });
+        Draw.I.RectFill(<FillRectParams>{ position: this.position.ADD(this.offset), size: this.size, color: Color4.Black.GetTransparent(this.opacity.GetVal()) });
+        Draw.I.RectFill(<FillRectParams>{ position: this.position.ADD(this.offset), size: this.size.SUB(2), color: this.backgroundcolor.GetTransparent(this.opacity.GetVal()) });
         Draw.I.TextFill(<TextParams>{ str: this.text, position: this.position.ADD(this.offset), color: this.fontColor.GetTransparent(this.opacity.GetVal()), fontSize: this.fontSize });
     }
     //-------------

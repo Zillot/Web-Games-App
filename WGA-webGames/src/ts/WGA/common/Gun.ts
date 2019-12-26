@@ -12,7 +12,7 @@ import { Input } from 'src/ts/core/services/Input';
 
 export class Gun {
     static RELOADINGPAUSE: number = 0.3;
-    static DEMMAGEPOWER: number = 1000;
+    static DEMMAGEPOWER: number = 50;
         
     public Position: Vector2;
     public Direction: Vector2;

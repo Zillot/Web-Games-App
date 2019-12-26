@@ -29,8 +29,11 @@ export class CoreDefence extends GamePage {
         CoreDefenceUI.CreateGameOverModal(() => this.RestartGame());
         CoreDefenceUI.SetupUI(this.UiComponents);
 
-        this.RestartGame();
+        this.game = new Game();
+        this.game.NextLevelEvent = this.NextLevelHandler;
+        this.game.GameOverEvent = this.GameOverHandler;
 
+        this.RestartGame();
         super.Init();
     }
 
@@ -42,11 +45,11 @@ export class CoreDefence extends GamePage {
         this.enemieSpawnPause = 1;
         this.coreSafeRadius = 50;
 
-        this.game = new Game(20, 100);
-        this.game.NextLevelEvent = this.NextLevelHandler;
-        this.game.GameOverEvent = this.GameOverHandler;
+        this.game.RestartGame(20, 100);
 
         this.guns.push(new CoreGun(5));
+
+        super.HideAllModals(false);
     }
 
     public NextLevelHandler() {
