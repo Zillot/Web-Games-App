@@ -15,6 +15,7 @@
             Setups.I.Pages.CreatePage("ZombieShooter", new ZombieShooter());
             Setups.I.Pages.CreatePage("CoreDefence", new CoreDefence());
             Setups.I.Pages.CreatePage("CastleDeffence", new CastleDefence());
+            Setups.I.Pages.CreatePage("Playground", new Playground());
 
             Setups.I.Pages.InstantNavigateTo("Main");
         }

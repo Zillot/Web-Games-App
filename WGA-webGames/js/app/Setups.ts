@@ -35,8 +35,8 @@
         constructor() {
             Setups.I = this;
 
-            Setups.I.WindowWidth = 800;
-            Setups.I.WindowHeight = 600;
+            Setups.I.WindowWidth = 1650;
+            Setups.I.WindowHeight = 1080;
 
             this.RecalculateWindowsSize();
 

@@ -11,6 +11,7 @@ module WGAAppModule {
             uiComponents.push(MainPageUI.SelectGame1Btn);
             uiComponents.push(MainPageUI.SelectGame2Btn);
             uiComponents.push(MainPageUI.SelectGame3Btn);
+            uiComponents.push(MainPageUI.SelectGame4Btn);
             uiComponents.push(MainPageUI.EsternEqq1Btn);
             uiComponents.push(MainPageUI.CamTestBtn);
             uiComponents.push(MainPageUI.CollisionTestBtn);
@@ -73,6 +74,24 @@ module WGAAppModule {
             return this.selectGame3Btn;
         }
 
+        public static selectGame4Btn: Button;
+        public static get SelectGame4Btn() {
+            if (this.selectGame4Btn == null) {
+                this.selectGame4Btn = Button.GetButton({
+                    name: "SelectGame4Btn",
+                    text: "Go to playground",
+                    onClick: function () {
+                        Setups.I.Pages.NavigateTo("Playground");
+                    },
+                    position: new Vector2(Setups.I.Center.X, 450),
+                    size: new Vector2(200, 40),
+                    color: Color4.White
+                });
+            }
+
+            return this.selectGame4Btn;
+        }
+
         public static esternEqq1Btn: Button;
         public static get EsternEqq1Btn() {
             if (this.esternEqq1Btn == null) {
@@ -80,7 +99,7 @@ module WGAAppModule {
                     name: "EsternEqq1Btn",
                     text: "Blow up a nuclear bomb",
                     onClick: function () { },
-                    position: new Vector2(Setups.I.Center.X, 450),
+                    position: new Vector2(Setups.I.Center.X, 550),
                     size: new Vector2(200, 40),
                     color: Color4.White
                 });
