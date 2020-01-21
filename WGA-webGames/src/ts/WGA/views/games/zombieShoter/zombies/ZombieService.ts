@@ -7,6 +7,7 @@ import { ZombieBasic } from './models/ZombieBasic';
 import { ZombieHeavy } from './models/ZombieHeavy';
 import { ZombieSwat } from './models/ZombieSwat';
 import { ZombieDog } from './models/ZombieDog';
+import { Draw } from 'src/ts/core/services/Draw';
 
 export class ZombieService {
     public Zombies: Zombie[];
@@ -117,9 +118,9 @@ export class ZombieService {
     }
 
     //============ DRAW ============
-    public Draw(): void {
+    public Draw(draw: Draw): void {
         for (var zombiesKey in this.Zombies) {
-            this.Zombies[zombiesKey].Draw();
+            this.Zombies[zombiesKey].Draw(draw);
         }
     }
 }

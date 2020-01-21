@@ -1,7 +1,7 @@
 import { Vector2 } from "../../../core/engine/Vector2";
 import { BaseIco } from 'src/ts/core/ui/BaseIco';
 import { Draw } from 'src/ts/core/services/Draw';
-import { FillRectParams } from 'src/ts/core/models/FillRectParams';
+import { FillRectParams } from 'src/ts/core/models/drawModels/FillRectParams';
 import { Color4 } from 'src/ts/core/engine/Color4';
 
 export class LevelUpIco extends BaseIco {
@@ -21,7 +21,7 @@ export class LevelUpIco extends BaseIco {
 
     }
 
-    public Draw(): void {
+    public Draw(draw: Draw): void {
         var lines = 5;
         var period = 2 / lines;
         var step = (this.proccess.GetVal() * period);
@@ -39,8 +39,8 @@ export class LevelUpIco extends BaseIco {
                 opacity = 2 - opacity;
             }
 
-            Draw.I.RectFill(<FillRectParams>{ position: positionDelta.ADD(this.offset), angle: -0.38, size: new Vector2(this.size * (0.4), this.size * (0.07)), color: Color4.Green.GetTransparent(opacity), origin: new Vector2(1, -1), });
-            Draw.I.RectFill(<FillRectParams>{ position: positionDelta.ADD(this.offset), angle: 0.38, size: new Vector2(this.size * (0.4), this.size * (0.07)), color: Color4.Green.GetTransparent(opacity), origin: new Vector2(-1, -1), });
+            draw.RectFill(<FillRectParams>{ position: positionDelta.ADD(this.offset), angle: -0.38, size: new Vector2(this.size * (0.4), this.size * (0.07)), color: Color4.Green.GetTransparent(opacity), origin: new Vector2(1, -1), });
+            draw.RectFill(<FillRectParams>{ position: positionDelta.ADD(this.offset), angle: 0.38, size: new Vector2(this.size * (0.4), this.size * (0.07)), color: Color4.Green.GetTransparent(opacity), origin: new Vector2(-1, -1), });
 
             positionDelta.ADDE(moveStep);
         }

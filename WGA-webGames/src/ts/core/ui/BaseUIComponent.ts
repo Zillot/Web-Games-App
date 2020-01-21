@@ -1,6 +1,7 @@
 import { IUiComponent } from './Interfaces/IUiComponent';
 import { Vector2 } from '../engine/Vector2';
-import { Value } from '../engine/Value';
+import { TransitionValue } from '../engine/Value';
+import { Draw } from '../services/Draw';
 
 export abstract class BaseUIComponent implements IUiComponent {
     public Name: string;
@@ -9,7 +10,7 @@ export abstract class BaseUIComponent implements IUiComponent {
 
     protected offset: Vector2;
     protected position: Vector2;
-    protected opacity: Value;
+    protected opacity: TransitionValue;
 
     public get Position(): Vector2 {
         return this.position;
@@ -17,7 +18,7 @@ export abstract class BaseUIComponent implements IUiComponent {
 
     constructor(position: Vector2) {
         this.position = position;
-        this.opacity = new Value(1, 1);
+        this.opacity = new TransitionValue(1, 1);
         this.offset = new Vector2(0);
     }
 
@@ -47,5 +48,5 @@ export abstract class BaseUIComponent implements IUiComponent {
         this.opacity.Update(timeDelta);
     }
 
-    public abstract Draw(): void;
+    public abstract Draw(draw: Draw): void;
 }

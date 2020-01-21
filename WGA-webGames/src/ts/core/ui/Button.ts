@@ -1,8 +1,8 @@
-import { FillRectParams } from "../models/FillRectParams";
+import { FillRectParams } from "../models/drawModels/FillRectParams";
 import { Vector2 } from "../engine/Vector2";
 import { Color4 } from "../engine/Color4";
 import { EventsTypes } from "../models/EventsTypes";
-import { TextParams } from "../models/TextParams";
+import { TextParams } from "../models/drawModels/TextParams";
 import { KeyCodes } from "../models/KeyCodes";
 import { Geometry } from '../services/Geometry';
 import { Draw } from '../services/Draw';
@@ -39,10 +39,10 @@ export class Button extends BaseUIComponent {
         super.Update(timeDelta);
     }
 
-    public Draw(): void {
-        Draw.I.RectFill(<FillRectParams>{ position: this.position.ADD(this.offset), size: this.size, color: Color4.Black.GetTransparent(this.opacity.GetVal()) });
-        Draw.I.RectFill(<FillRectParams>{ position: this.position.ADD(this.offset), size: this.size.SUB(2), color: this.backgroundcolor.GetTransparent(this.opacity.GetVal()) });
-        Draw.I.TextFill(<TextParams>{ str: this.text, position: this.position.ADD(this.offset), color: this.fontColor.GetTransparent(this.opacity.GetVal()), fontSize: this.fontSize });
+    public Draw(draw: Draw): void {
+        draw.RectFill(<FillRectParams>{ position: this.position.ADD(this.offset), size: this.size, color: Color4.Black.GetTransparent(this.opacity.GetVal()) });
+        draw.RectFill(<FillRectParams>{ position: this.position.ADD(this.offset), size: this.size.SUB(2), color: this.backgroundcolor.GetTransparent(this.opacity.GetVal()) });
+        draw.TextFill(<TextParams>{ str: this.text, position: this.position.ADD(this.offset), color: this.fontColor.GetTransparent(this.opacity.GetVal()), fontSize: this.fontSize });
     }
     //-------------
     public Click(): void {

@@ -1,3 +1,5 @@
+import { Draw } from 'src/ts/core/services/Draw';
+
 export interface IWGADrawable {
-    Draw(): void;
+    Draw(draw: Draw): void;
 }

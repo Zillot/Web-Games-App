@@ -1,4 +1,5 @@
-import { Value } from '../../engine/Value';
+import { TransitionValue } from '../../engine/Value';
+import { Draw } from '../../services/Draw';
 
 export interface IUiComponent {
     Name: string;
@@ -6,5 +7,5 @@ export interface IUiComponent {
     Init(): void;
     Dispose(): void;
     Update(timeDelta: number): void;
-    Draw(): void;
+    Draw(draw: Draw): void;
 }

@@ -1,5 +1,6 @@
 import { Vector2 } from '../engine/Vector2';
 import { BaseUIComponent } from './BaseUIComponent';
+import { Draw } from '../services/Draw';
 
 export class BaseUIContainer extends BaseUIComponent {
     public UiComponents: BaseUIComponent[];
@@ -38,13 +39,13 @@ export class BaseUIContainer extends BaseUIComponent {
         }
     }
 
-    public Draw(): void {
+    public Draw(draw: Draw): void {
         //TODO: camera for relative ui components
         for (var uiComponentKey in this.UiComponents) {
             var uiComponent = this.UiComponents[uiComponentKey];
 
             uiComponent.SetOffset(this.position.ADD(this.offset));
-            uiComponent.Draw();
+            uiComponent.Draw(draw);
         }
     }
 }

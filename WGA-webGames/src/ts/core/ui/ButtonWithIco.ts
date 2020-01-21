@@ -1,6 +1,7 @@
 import { Vector2 } from "../engine/Vector2";
 import { BaseIco } from './BaseIco';
 import { Button } from './Button';
+import { Draw } from '../services/Draw';
 
 export class ButtonWithIco extends Button {
     private icon: BaseIco;
@@ -33,12 +34,12 @@ export class ButtonWithIco extends Button {
         }
     }
 
-    public Draw(): void {
-        super.Draw();
+    public Draw(draw: Draw): void {
+        super.Draw(draw);
 
         if (this.icon) {
             this.icon.SetOffset(this.position.ADD(this.offset))
-            this.icon.Draw();
+            this.icon.Draw(draw);
         }
     }
 

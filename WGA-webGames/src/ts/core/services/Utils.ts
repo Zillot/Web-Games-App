@@ -1,6 +1,8 @@
+import { Injectable } from '@angular/core';
 import { Color4 } from "../engine/Color4";
 import { Vector2 } from "../engine/Vector2";
 
+@Injectable()
 export class Utils {
     public static PI2() { return 6.283185307179586476925286766559; }
     public static PI() { return 3.1415926535897932384626433832795; }

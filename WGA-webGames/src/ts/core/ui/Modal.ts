@@ -1,6 +1,6 @@
 import { Vector2 } from "../engine/Vector2";
 import { Data } from "../../app/Data";
-import { FillRectParams } from "../models/FillRectParams";
+import { FillRectParams } from "../models/drawModels/FillRectParams";
 import { Color4 } from "../engine/Color4";
 import { Draw } from '../services/Draw';
 import { BaseUIContainer } from './BaseUIContainer';
@@ -54,9 +54,9 @@ export class Modal extends BaseUIContainer {
         }
     }
 
-    public Draw(): void {
-        Draw.I.RectFill(<FillRectParams>{ position: this.position, size: this.size, color: new Color4(229, 229, 229, this.opacity.GetVal()), origin: new Vector2(-1) });
+    public Draw(draw: Draw): void {
+        draw.RectFill(<FillRectParams>{ position: this.position, size: this.size, color: new Color4(229, 229, 229, this.opacity.GetVal()), origin: new Vector2(-1) });
 
-        super.Draw();
+        super.Draw(draw);
     }
 }

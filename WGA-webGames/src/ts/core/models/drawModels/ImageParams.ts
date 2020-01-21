@@ -1,5 +1,5 @@
 import { StandartParams } from "./StandartParams";
-import { Vector2 } from "../engine/Vector2";
+import { Vector2 } from "../../engine/Vector2";
 
 export class ImageParams extends StandartParams {
     public size: Vector2;

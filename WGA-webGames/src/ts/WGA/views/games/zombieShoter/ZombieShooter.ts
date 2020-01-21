@@ -1,4 +1,4 @@
-import { TextParams } from "../../../../core/models/TextParams";
+import { TextParams } from "../../../../core/models/drawModels/TextParams";
 import { Data } from "../../../../app/Data";
 import { Vector2 } from "../../../../core/engine/Vector2";
 import { Color4 } from "../../../../core/engine/Color4";
@@ -21,8 +21,8 @@ export class ZombieShooter extends GamePage {
 
     private killed: number;
 
-    constructor() {
-        super();
+    constructor(_draw: Draw) {
+        super(_draw);
     }
 
     public Init(): void {
@@ -33,7 +33,7 @@ export class ZombieShooter extends GamePage {
             this.NextLevelBecomeAvailableChangedEvent(this.game.NextLevelAvailable);
         });
 
-        this.game = new Game();
+        this.game = new Game(this._draw);
         this.zombieService = new ZombieService(this.game);
         this.game.NextLevelEvent = () => { this.zombieService.NextLevelHandler(); };
         this.game.NextLevelBecomeAvailableChangedEvent = (state) => { this.NextLevelBecomeAvailableChangedEvent(state); };
@@ -112,9 +112,9 @@ export class ZombieShooter extends GamePage {
 
     //============ DRAW ============
     public Draw(): void {
-        this.cityWall.Draw();
+        this.cityWall.Draw(this._draw);
 
-        this.zombieService.Draw();
+        this.zombieService.Draw(this._draw);
         this.DrawGuns();
 
         this.game.Draw(() => {
@@ -124,12 +124,12 @@ export class ZombieShooter extends GamePage {
     }
 
     public DrawGameMenu() {
-        Draw.I.TextFill(<TextParams>{ str: "Killed: " + this.killed, position: new Vector2(10, 29), color: Color4.Gray, fontName: "serif", fontSize: 18, origin: new Vector2(-1, 0) });
+        this._draw.TextFill(<TextParams>{ str: "Killed: " + this.killed, position: new Vector2(10, 29), color: Color4.Gray, fontName: "serif", fontSize: 18, origin: new Vector2(-1, 0) });
     }
 
     public DrawGuns(): void {
         for (var gundsKey in this.guns) {
-            this.guns[gundsKey].Draw();
+            this.guns[gundsKey].Draw(this._draw);
         }
     }
 }

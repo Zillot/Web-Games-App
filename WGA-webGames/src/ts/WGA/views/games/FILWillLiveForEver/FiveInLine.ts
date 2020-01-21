@@ -5,8 +5,7 @@ import { Game } from "../../../../core/services/Game";
 import { Cube } from "./Cube";
 import { CubePrediction } from "./CubePrediction";
 import { FiveInLIneUI } from "./FiveInLine.ui";
-import { Data } from "../../../../app/Data";
-import { TextParams } from "../../../../core/models/TextParams";
+import { TextParams } from "../../../../core/models/drawModels/TextParams";
 import { Utils } from 'src/ts/core/services/Utils';
 import { Draw } from 'src/ts/core/services/Draw';
 
@@ -32,15 +31,15 @@ export class FiveInLIne extends GamePage {
     private cuberPerAppear: number;
     private score: number;
 
-    constructor() {
-        super();
+    constructor(_draw: Draw) {
+        super(_draw);
     }
 
     public Init(): void {
         FiveInLIneUI.CreateGameOverModal(() => this.RestartGame());
         FiveInLIneUI.SetupUI(this.UiComponents);
 
-        this.game = new Game();
+        this.game = new Game(this._draw);
 
         this.RestartGame();
         super.Init();
@@ -160,7 +159,7 @@ export class FiveInLIne extends GamePage {
     }
 
     public DrawGameMenu() {
-        Draw.I.TextFill(<TextParams> {
+        this._draw.TextFill(<TextParams> {
             str: "score: " + this.score,
             position: new Vector2(10, 29),
             color: Color4.Gray,
@@ -172,13 +171,13 @@ export class FiveInLIne extends GamePage {
 
     public DrawField(): void {
         for (var cubeKey in this.cubes) {
-            this.cubes[cubeKey].Draw();
+            this.cubes[cubeKey].Draw(this._draw);
         }
     }
 
     public DrawPredictin(): void {
         for (var cubesPredictionKey in this.cubesPrediction) {
-            this.cubesPrediction[cubesPredictionKey].Draw();
+            this.cubesPrediction[cubesPredictionKey].Draw(this._draw);
         }
     }
 }

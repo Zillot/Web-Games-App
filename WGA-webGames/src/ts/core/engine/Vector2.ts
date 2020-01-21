@@ -1,9 +1,9 @@
-import { Value } from './Value';
+import { TransitionValue } from './Value';
 import { CallbackFunction } from '../CallbackFunction';
 
 export class Vector2 {
-    private x: Value;
-    private y: Value;
+    private x: TransitionValue;
+    private y: TransitionValue;
 
     public get X(): number {
         return this.x.GetVal();
@@ -19,8 +19,8 @@ export class Vector2 {
     }
 
     constructor(x?: Vector2 | number, y?: number) {
-        this.x = new Value(0, 1);
-        this.y = new Value(0, 1);
+        this.x = new TransitionValue(0, 1);
+        this.y = new TransitionValue(0, 1);
 
         var xOrVec: any = x;
 

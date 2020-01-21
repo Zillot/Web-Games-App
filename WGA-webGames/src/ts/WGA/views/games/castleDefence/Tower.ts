@@ -4,6 +4,7 @@ import { Color4 } from "../../../../core/engine/Color4";
 import { Data } from "../../../../app/Data";
 import { ExDraw } from 'src/ts/WGA/services/ExDraw';
 import { Utils } from 'src/ts/core/services/Utils';
+import { Draw } from 'src/ts/core/services/Draw';
 
 export class Tower extends Unit {
     public Size: Vector2;
@@ -24,7 +25,7 @@ export class Tower extends Unit {
         super.Update(timeDelta);
     }
 
-    public Draw(): void {
+    public Draw(draw: Draw): void {
         ExDraw.I.DrawTower(this.Position, this.Size, this.Level, this.Color1, this.Color2, 1);
     }
 }

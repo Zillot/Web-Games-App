@@ -1,32 +1,36 @@
+import { Injectable } from '@angular/core';
 import { WGAEventContainer } from "../../WGA/WGAEventContainer";
 import { Data } from "../../app/Data";
 import { Vector2 } from "../engine/Vector2";
 import { MouseState } from "../models/MouseState";
 import { EventsTypes } from "../models/EventsTypes";
 import { KeyCodes } from "../models/KeyCodes";
-
-import * as $ from 'jquery';
 import { Draw } from './Draw';
 
+import * as $ from 'jquery';
+
+@Injectable()
 export class Input {
     public static I: Input;
     public static _initialize = (() => {
-        Input.I = new Input();
+        Input.I = new Input(null);
     })();
 
-    private mousePos: Vector2;
+    private static mousePos: Vector2 = new Vector2();
+    private static eventsHandlers: WGAEventContainer[] = [];
+
     private mouseDown: number;
 
-    private eventsHandlers: WGAEventContainer[];
     private enableEvent: boolean;
 
-    public Initialize() {
-        this.mousePos = new Vector2();
-        this.eventsHandlers = [];
+    public constructor(private _draw: Draw) {
 
+    }
+
+    public Initialize() {
         this.mouseDown = 0;
 
-        var canvas = document.getElementById(Draw.I.MainCanvasName);
+        var canvas = document.getElementById(Data.I.Camera.CanvasName);
         document.body.onmousedown = () => this.MouseDownFun(this);
         document.body.onmouseup = () => this.MouseUpFun(this);
         canvas.addEventListener('mousemove', evt => this.MouseMoveFun(this, canvas, evt), false);
@@ -73,7 +77,7 @@ export class Input {
     }
     public MouseMoveFun(those: Input, canvas: any, evt: any): void {
         var rect = canvas.getBoundingClientRect();
-        those.mousePos = new Vector2(evt.clientX - rect.left, evt.clientY - rect.top);
+        Input.mousePos = new Vector2(evt.clientX - rect.left, evt.clientY - rect.top);
     }
 
     public GetMouseState(): number {
@@ -93,8 +97,8 @@ export class Input {
     public EventThrow(typeId: number, keyCode: number, keyChar: string): void {
         this.enableEvent = true;
 
-        for (var eventKey in this.eventsHandlers) {
-            var event = this.eventsHandlers[eventKey];
+        for (var eventKey in Input.eventsHandlers) {
+            var event = Input.eventsHandlers[eventKey];
 
             try {
                 if (this.enableEvent && event.Type == typeId && (event.KeyCode == null || event.KeyCode == keyCode)) {
@@ -110,19 +114,19 @@ export class Input {
         }
     }
     public GetMousePosition(): Vector2 {
-        return this.mousePos.SUB(Data.I.FrameOffset).MUL(Data.I.BackFrameScale);
+        return Input.mousePos.SUB(Data.I.FrameOffset).MUL(Data.I.BackFrameScale);
     }
     public OnInputEvent(handler: any, name: string, typeId: number, keyCode: number): WGAEventContainer {
         this.RemoveHandler(name, typeId);
 
-        this.eventsHandlers.push(<WGAEventContainer>{
+        Input.eventsHandlers.push(<WGAEventContainer>{
             Handler: handler,
             Name: name,
             Type: typeId,
             KeyCode: keyCode
         });
 
-        return this.eventsHandlers[this.eventsHandlers.length - 1];
+        return Input.eventsHandlers[Input.eventsHandlers.length - 1];
     }
     public RemoveHandlerByObj(handler: any): boolean {
         return this.RemoveHandler(handler.name, handler.type);
@@ -130,11 +134,11 @@ export class Input {
     public RemoveHandler(name: string, typeId: number): boolean {
         var status = false;
 
-        for (var i = 0; i < this.eventsHandlers.length; i++) {
-            var event = this.eventsHandlers[i];
+        for (var i = 0; i < Input.eventsHandlers.length; i++) {
+            var event = Input.eventsHandlers[i];
 
             if (event.Name == name && event.Type == typeId) {
-                this.eventsHandlers.splice(i, 1);
+                Input.eventsHandlers.splice(i, 1);
                 status = true;
                 break;
             }

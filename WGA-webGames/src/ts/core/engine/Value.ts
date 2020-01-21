@@ -1,6 +1,6 @@
 import { CallbackFunction } from "../CallbackFunction";
 
-export class Value {
+export class TransitionValue {
     private value: number;
     private valueGoal: number;
     private speed: number;

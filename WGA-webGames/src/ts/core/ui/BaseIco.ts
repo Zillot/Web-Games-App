@@ -1,5 +1,5 @@
 import { BaseUIComponent } from 'src/ts/core/ui/BaseUIComponent';
-import { Value } from '../engine/Value';
+import { TransitionValue } from '../engine/Value';
 import { Vector2 } from '../engine/Vector2';
 import { IUpdateable } from '../interfaces/IUpdateable';
 import { IDrawable } from '../interfaces/IDrawable';
@@ -9,12 +9,12 @@ export abstract class BaseIco extends BaseUIComponent implements IUpdateable, ID
 
     protected speed: number;
 
-    protected proccess: Value;
+    protected proccess: TransitionValue;
 
     constructor(speed: number, position: Vector2) {
         super(position);
 
-        this.proccess = new Value(0, speed);
+        this.proccess = new TransitionValue(0, speed);
         this.startMoving();
     }
 

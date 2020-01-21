@@ -1,7 +1,8 @@
 import { StandartParams } from "./StandartParams";
-import { Vector2 } from "../engine/Vector2";
+import { Vector2 } from "../../engine/Vector2";
+import { FillRectParams } from "./FillRectParams";
 
-export class FillRectParams extends StandartParams {
+export class FillTriangleParams extends StandartParams {
     public size: Vector2;
 
     constructor(params: StandartParams, size: Vector2) {

@@ -1,6 +1,9 @@
+import { Injectable } from '@angular/core';
 import { Page } from "../abstracts/Page";
 import { PageTransitionController } from "../PageTransitionController";
+import { Draw } from './Draw';
 
+@Injectable()
 export class Pages {
     public static I: Pages;
     public static _initialize = (() => {
@@ -33,11 +36,11 @@ export class Pages {
         this.pageTransition.Update(timeDelta);
     }
 
-    public Draw() {
+    public Draw(draw: Draw) {
         if (this.currentPage) {
             this.currentPage.Draw();
         }
-        this.pageTransition.Draw();
+        this.pageTransition.Draw(draw);
     }
 
     public CreatePage(pageName: string, page: Page) {

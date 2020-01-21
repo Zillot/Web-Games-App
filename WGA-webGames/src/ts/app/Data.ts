@@ -1,4 +1,5 @@
 import { Vector2 } from "../core/engine/Vector2";
+import { Camera } from '../core/models/Camera';
 
 export class Data {
     public static I: Data;
@@ -19,4 +20,6 @@ export class Data {
 
     public FrameRealOffset: Vector2;
     public FrameOffset: Vector2;
+
+    public Camera: Camera;
 }

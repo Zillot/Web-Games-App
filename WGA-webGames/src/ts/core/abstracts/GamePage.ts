@@ -3,8 +3,8 @@ import { Data } from "../../app/Data";
 import { Draw } from '../services/Draw';
 
 export abstract class GamePage extends Page {
-    constructor() {
-        super();
+    constructor(draw: Draw) {
+        super(draw);
     }
 
     public Init(): void {
@@ -24,13 +24,13 @@ export abstract class GamePage extends Page {
     }
 
     public DrawGame() {
-        Draw.I.adjustViewToCamera();
+        Data.I.Camera.AdjustViewToCamera();
         this.Draw();
-        Draw.I.removeCameraInfuence();
+        Data.I.Camera.RemoveCameraInfuence();
 
         //draw buttons upper all game interface
-        Draw.I.adjustMenuViewToCamera();
+        Data.I.Camera.AdjustMenuViewToCamera();
         super.Draw();
-        Draw.I.removeCameraInfuence();
+        Data.I.Camera.RemoveCameraInfuence();
     }
 }

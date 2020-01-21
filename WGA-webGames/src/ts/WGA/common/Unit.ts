@@ -1,7 +1,7 @@
 import { Deleteable } from "../../core/abstracts/Deleteable";
 import { IUpdateable } from "../../core/interfaces/IUpdateable";
 import { Vector2 } from "../../core/engine/Vector2";
-import { FillCircleParams } from "../../core/models/FillCircleParams";
+import { FillCircleParams } from "../../core/models/drawModels/FillCircleParams";
 import { Bullet } from "./Bullet";
 import { IWGADrawable } from '../Interface/IWGADrawable';
 import { Draw } from 'src/ts/core/services/Draw';
@@ -29,8 +29,8 @@ export class Unit extends Deleteable implements IUpdateable, IWGADrawable {
     public Update(timeDelta: number): void {
         this.Position = this.Position.ADD(this.Direction.MUL(this.Speed * timeDelta));
     }
-    public Draw(): void {
-        Draw.I.CircleFill(<FillCircleParams>{ position: this.Position, radius: 2 });
+    public Draw(draw: Draw): void {
+        draw.CircleFill(<FillCircleParams>{ position: this.Position, radius: 2 });
     }
     //-------------
     public TryHit(bullet: Bullet): boolean {

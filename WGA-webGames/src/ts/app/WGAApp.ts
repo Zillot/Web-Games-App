@@ -8,13 +8,13 @@ import { ZombieShooter } from "../WGA/views/games/zombieShoter/ZombieShooter";
 import { CoreDefence } from "../WGA/views/games/coreDefence/CoreDefence";
 import { CastleDefence } from "../WGA/views/games/castleDefence/CastleDefence";
 import { Pages } from '../core/services/Pages';
+import { Data } from './Data';
 import { Draw } from '../core/services/Draw';
 
 export class WGAApp implements IUpdateable, IDrawable {
-    public static I: WGAApp;
-    public static _initialize = (() => {
-        WGAApp.I = new WGAApp();
-    })();
+    public constructor(private _draw: Draw) {
+
+    }
 
     private pause: boolean;
     private currentGame: WGAGameContainer;
@@ -24,13 +24,13 @@ export class WGAApp implements IUpdateable, IDrawable {
 
         Pages.I.Reset();
 
-        Pages.I.CreatePage("Main", new MainPage());
-        Pages.I.CreatePage("CameraTest", new CameraTest());
-        Pages.I.CreatePage("CollisionTest", new CollisionTest());
+        Pages.I.CreatePage("Main", new MainPage(this._draw));
+        Pages.I.CreatePage("CameraTest", new CameraTest(this._draw));
+        Pages.I.CreatePage("CollisionTest", new CollisionTest(this._draw));
 
-        Pages.I.CreatePage("ZombieShooter", new ZombieShooter());
-        Pages.I.CreatePage("CoreDefence", new CoreDefence());
-        Pages.I.CreatePage("CastleDeffence", new CastleDefence());
+        Pages.I.CreatePage("ZombieShooter", new ZombieShooter(this._draw));
+        Pages.I.CreatePage("CoreDefence", new CoreDefence(this._draw));
+        Pages.I.CreatePage("CastleDeffence", new CastleDefence(this._draw));
 
         Pages.I.InstantNavigateTo("Main");
     }
@@ -47,9 +47,9 @@ export class WGAApp implements IUpdateable, IDrawable {
 
     public Draw(): void {
         if (this.pause == true) {
-            Draw.I.adjustMenuViewToCamera();
-            Pages.I.Draw();
-            Draw.I.removeCameraInfuence();
+            Data.I.Camera.AdjustMenuViewToCamera();
+            Pages.I.Draw(this._draw);
+            Data.I.Camera.RemoveCameraInfuence();
         }
 
         if (this.currentGame != null && this.pause == false) {

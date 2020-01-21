@@ -1,107 +1,34 @@
-import { Data } from "../../app/Data";
-import { StandartParams } from "../models/StandartParams";
-import { ImageParams } from "../models/ImageParams";
-import { StrokeArcParams } from "../models/StrokeArcParams";
+import { Injectable } from '@angular/core';
 import { Vector2 } from "../engine/Vector2";
-import { TextParams } from "../models/TextParams";
-import { StrokeRectParams } from "../models/StrokeRectParams";
-import { StrokePolygonParams } from "../models/StrokePolygonParams";
-import { StrokeTriangleParams } from "../models/StrokeTriangleParams";
-import { LineParams } from "../models/LineParams";
-import { FillArcParams } from "../models/FillArcParams";
-import { FillCircleParams } from "../models/FillCircleParams";
-import { FillRectParams } from "../models/FillRectParams";
-import { StrokeCircleParams } from "../models/StrokeCircleParams";
-import { FillTriangleParams } from "../models/FillTriangleParams";
-import { FillPolygonParams } from "../models/FillPolygonParams";
+import { StandartParams } from "../models/drawModels/StandartParams";
+import { ImageParams } from "../models/drawModels/ImageParams";
+import { StrokeArcParams } from "../models/drawModels/StrokeArcParams";
+import { TextParams } from "../models/drawModels/TextParams";
+import { StrokeRectParams } from "../models/drawModels/StrokeRectParams";
+import { StrokePolygonParams } from "../models/drawModels/StrokePolygonParams";
+import { StrokeTriangleParams } from "../models/drawModels/StrokeTriangleParams";
+import { LineParams } from "../models/drawModels/LineParams";
+import { FillArcParams } from "../models/drawModels/FillArcParams";
+import { FillCircleParams } from "../models/drawmodels/FillCircleParams";
+import { FillRectParams } from "../models/drawModels/FillRectParams";
+import { StrokeCircleParams } from "../models/drawModels/StrokeCircleParams";
+import { FillTriangleParams } from "../models/drawModels/FillTriangleParams";
+import { FillPolygonParams } from "../models/drawModels/FillPolygonParams";
+import { Data } from 'src/ts/app/Data';
 
 declare var $: any;
 
+@Injectable()
 export class Draw {
     public static I: Draw;
     public static _initialize = (() => {
         Draw.I = new Draw();
     })();
 
-    private ctx: any;
-    private cameraMathPosition: Vector2;
-    private cameraPosition: Vector2;
-    private cameraZoom: number;
-    private cameraAngle: number;
+    private get ctx() { return Data.I.Camera.Ctx; }
 
-    public MainCanvasName: string;
+    public constructor() {
 
-    public SetCtx(ctx: any, canvasName: string): void {
-        this.ctx = ctx;
-        this.currentCanvasName = canvasName;
-    }
-
-    public SetMainCanvas(canvasName: string) {
-        Draw.I.MainCanvasName = canvasName;
-    }
-
-    //camera control
-    public ResetCamera(): void {
-        this.SetCameraPosition(Data.I.Center);
-        this.SetCameraZoom(1);
-        this.SetCameraAngle(0);
-    }
-
-    public GetCameraPosition(): Vector2 {
-        return this.cameraPosition;
-    }
-    public SetCameraPosition(position: Vector2) {
-        this.cameraPosition = position;
-        this.UpdateCamera();
-    }
-
-    public GetCameraZoom(): number {
-        return this.cameraZoom;
-    }
-    public SetCameraZoom(zoom: number) {
-        this.cameraZoom = zoom;
-        this.UpdateCamera();
-    }
-
-    public GetCameraAngle(): number {
-        return this.cameraAngle;
-    }
-    public SetCameraAngle(angle: number) {
-        this.cameraAngle = angle;
-    }
-
-    private UpdateCamera() {
-        if (!this.cameraZoom || !this.cameraPosition) {
-            return;
-        }
-
-        this.cameraMathPosition = this.cameraPosition.MUL(Data.I.CameraScale).SUB(Data.I.Center.MUL(this.cameraZoom * Data.I.CameraScale));
-    }
-
-    public adjustMenuViewToCamera() {
-        this.ctx.save();
-
-        this.ctx.translate(Data.I.FrameOffset.X, Data.I.FrameOffset.Y);
-        this.ctx.scale(Data.I.CameraScale, Data.I.CameraScale);
-    }
-
-    public adjustViewToCamera() {
-        this.ctx.save();
-
-        //TODO Fix camera rotation
-        //this.ctx.translate(-Data.I.Center.X, -Data.I.Center.Y);
-        this.ctx.translate(this.cameraMathPosition.X + Data.I.FrameOffset.X, this.cameraMathPosition.Y + Data.I.FrameOffset.Y);
-
-        this.ctx.rotate(this.cameraAngle);
-        this.ctx.scale(this.cameraZoom * Data.I.CameraScale, this.cameraZoom * Data.I.CameraScale);
-
-        //var tempCamVector = Vector2.GetRotated(this.cameraPosition, -this.cameraAngle);
-        //var tempCenterVector = Vector2.GetRotated(Data.I.Center, -this.cameraAngle);
-        // this.ctx.translate(tempCamVector.X + tempCenterVector.X, tempCamVector.Y + tempCenterVector.Y);
-    }
-
-    public removeCameraInfuence() {
-        this.ctx.restore();
     }
 
     //base figures
@@ -148,24 +75,22 @@ export class Draw {
     private line(params: LineParams): void {
         LineParams.Normilize(params);
 
-        this.ctx.save();
-        this.ctx.strokeStyle = params.color.GetRgba();
+       this.ctx.save();
+       this.ctx.strokeStyle = params.color.GetRgba();
 
-        this.ctx.lineWidth = params.thickness;
+       this.ctx.lineWidth = params.thickness;
 
-        this.ctx.beginPath();
-        this.ctx.moveTo(params.pointFrom.X, params.pointFrom.Y);
-        this.ctx.lineTo(params.pointTo.X, params.pointTo.Y);
-        this.ctx.stroke();
+       this.ctx.beginPath();
+       this.ctx.moveTo(params.pointFrom.X, params.pointFrom.Y);
+       this.ctx.lineTo(params.pointTo.X, params.pointTo.Y);
+       this.ctx.stroke();
 
-        this.ctx.restore();
+       this.ctx.restore();
     }
 
     private triangle(params: StrokeTriangleParams, type: string): void {
         StrokeRectParams.Normilize(params);
         params.origin = params.origin.MUL(new Vector2(-1, -1));
-
-        var startPoint = params.position.X + params.size.X * 0.5 * params.origin.X;
 
         this.ctx.save();
 
@@ -224,8 +149,6 @@ export class Draw {
 
         var size = rightBottom.SUB(leftTop);
         size = new Vector2(Math.abs(size.X), Math.abs(size.Y));
-
-        var startPoint = params.position.X + size.X * 0.5 * params.origin.X;
 
         this.ctx.save();
 
@@ -388,8 +311,8 @@ export class Draw {
     public StartToDrawImageResource(width: number, height: number) {
         this.savedCtx = this.ctx;
 
-        this.currentCanvasName = Draw.I.MainCanvasName + "_working";
-        var canvas: any = document.getElementById(Draw.I.MainCanvasName + "_working");
+        this.currentCanvasName = Data.I.Camera.CanvasName + "_working";
+        var canvas: any = document.getElementById(Data.I.Camera.CanvasName + "_working");
             
         canvas.width = width;
         canvas.height = height;
@@ -397,7 +320,7 @@ export class Draw {
         canvas.style.height = height + 'px';
 
         if (canvas.getContext) {
-            this.ctx = canvas.getContext('2d');
+            Data.I.Camera.Ctx = canvas.getContext('2d');
         }
         else {
             this.EndToDrawImageResource();
@@ -405,11 +328,11 @@ export class Draw {
         }
     }
     public EndToDrawImageResource() {
-        this.currentCanvasName = Draw.I.MainCanvasName;
-        this.ctx = this.savedCtx;
+        this.currentCanvasName = Data.I.Camera.CanvasName;
+        Data.I.Camera.Ctx = this.savedCtx;
     }
 
     public MakeScreenShot() {
-        return (<any>document.getElementById(Draw.I.MainCanvasName + "_working")).toDataURL();
+        return (<any>document.getElementById(Data.I.Camera.CanvasName + "_working")).toDataURL();
     }
 }

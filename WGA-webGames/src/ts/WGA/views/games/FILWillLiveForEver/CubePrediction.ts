@@ -1,7 +1,7 @@
 import { Cube } from "./Cube";
 import { Vector2 } from "../../../../core/engine/Vector2";
 import { Color4 } from "../../../../core/engine/Color4";
-import { FillRectParams } from "../../../../core/models/FillRectParams";
+import { FillRectParams } from "../../../../core/models/drawModels/FillRectParams";
 import { Draw } from 'src/ts/core/services/Draw';
 
 export class CubePrediction extends Cube {
@@ -9,12 +9,12 @@ export class CubePrediction extends Cube {
         super(position, fieldPosition, size, speed, color);
     }
 
-    public DrawPrediction(fieldOffset: Vector2, cubeSize: Vector2): void {
-        super.Draw();
+    public DrawPrediction(draw: Draw, fieldOffset: Vector2, cubeSize: Vector2): void {
+        super.Draw(draw);
 
         var position = fieldOffset.ADD(cubeSize.MUL(this.FieldPosition));
 
-        Draw.I.RectFill(<FillRectParams>{
+        draw.RectFill(<FillRectParams>{
             position: position,
             size: this.Size,
             scale: this.Transition.GetVal() * 0.2,

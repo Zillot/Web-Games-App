@@ -1,10 +1,10 @@
 import { Vector2 } from "../../core/engine/Vector2";
 import { Bullet } from "./Bullet";
-import { Value } from "../../core/engine/Value";
+import { TransitionValue } from "../../core/engine/Value";
 import { Data } from "../../app/Data";
-import { FillCircleParams } from "../../core/models/FillCircleParams";
+import { FillCircleParams } from "../../core/models/drawModels/FillCircleParams";
 import { Color4 } from "../../core/engine/Color4";
-import { FillRectParams } from "../../core/models/FillRectParams";
+import { FillRectParams } from "../../core/models/drawModels/FillRectParams";
 import { MouseState } from "../../core/models/MouseState";
 import { Utils } from 'src/ts/core/services/Utils';
 import { Draw } from 'src/ts/core/services/Draw';
@@ -17,7 +17,7 @@ export class Gun {
     public Position: Vector2;
     public Direction: Vector2;
     public Power: number;
-    public AngleControll: Value;
+    public AngleControll: TransitionValue;
 
     public Reload: number;
     public Angle: number;
@@ -35,7 +35,7 @@ export class Gun {
         this.Reload = 0;
         this.Health = 100;
 
-        this.AngleControll = new Value(0, rotationSpeed);
+        this.AngleControll = new TransitionValue(0, rotationSpeed);
     }
 
     //============ UPDATE ============
@@ -103,20 +103,20 @@ export class Gun {
     }
 
     //============ DRAW ============
-    public Draw(): void {
-        this.DrawBullets();
-        this.DrawBackground();
-        this.DrawGun();
+    public Draw(draw: Draw): void {
+        this.DrawBullets(draw);
+        this.DrawBackground(draw);
+        this.DrawGun(draw);
     }
 
-    public DrawBullets(): void {
+    public DrawBullets(draw: Draw): void {
         for (var item in this.Bullets) {
-            this.Bullets[item].Draw();
+            this.Bullets[item].Draw(draw);
         }
     }
 
-    public DrawBackground(): void {
-        Draw.I.CircleFill(<FillCircleParams> {
+    public DrawBackground(draw: Draw): void {
+        draw.CircleFill(<FillCircleParams> {
             position: this.Position,
             radius: 20,
             origin: new Vector2(0, 0),
@@ -125,8 +125,8 @@ export class Gun {
         });
     }
 
-    public DrawGun(): void {
-        Draw.I.RectFill(<FillRectParams> {
+    public DrawGun(draw: Draw): void {
+        draw.RectFill(<FillRectParams> {
             position: this.Position,
             size: new Vector2(50, 10),
             origin: new Vector2(1, 0),
@@ -134,7 +134,7 @@ export class Gun {
             angle: this.AngleControll.GetVal()
         });
 
-        Draw.I.RectFill(<FillRectParams> {
+        draw.RectFill(<FillRectParams> {
             position: this.Position,
             size: new Vector2(5, 5),
             origin: new Vector2(0, 0),
