@@ -10,59 +10,58 @@ export class Pages {
         Pages.I = new Pages();
     })();
 
-    private pages: Page[];
-    private history: Page[];
+    private static pages: Page[];
+    private static history: Page[];
 
-    private currentPage: Page;
+    private static currentPage: Page;
 
-    private pageTransition: PageTransitionController;
-
+    private static pageTransition: PageTransitionController;
 
     constructor() {
         this.Reset();
     }
 
     public Reset() {
-        this.pages = [];
-        this.history = [];
+        Pages.pages = [];
+        Pages.history = [];
 
-        this.pageTransition = new PageTransitionController();
+        Pages.pageTransition = new PageTransitionController();
     }
 
     public Update(timeDelta: number) {
-        if (this.currentPage) {
-            this.currentPage.Update(timeDelta);
+        if (Pages.currentPage) {
+            Pages.currentPage.Update(timeDelta);
         }
-        this.pageTransition.Update(timeDelta);
+        Pages.pageTransition.Update(timeDelta);
     }
 
     public Draw(draw: Draw) {
-        if (this.currentPage) {
-            this.currentPage.Draw();
+        if (Pages.currentPage) {
+            Pages.currentPage.Draw();
         }
-        this.pageTransition.Draw(draw);
+        Pages.pageTransition.Draw(draw);
     }
 
     public CreatePage(pageName: string, page: Page) {
-        this.pages[pageName] = page;
+        Pages.pages[pageName] = page;
     }
 
     public InstantNavigateTo(pageName: string) {
-        this.pageTransition.PrepareToInstantNavigating();
-        this.navigateToPage(this.pages[pageName], true);
+        Pages.pageTransition.PrepareToInstantNavigating();
+        this.navigateToPage(Pages.pages[pageName], true);
     }
 
     public NavigateTo(pageName: string) {
-        this.navigateToPage(this.pages[pageName], true);
+        this.navigateToPage(Pages.pages[pageName], true);
     }
 
     public GoBack() {
-        if (this.history.length == 0) {
+        if (Pages.history.length == 0) {
             console.error("history empty");
             return;
         }
             
-        var lastPage = this.history.pop();
+        var lastPage = Pages.history.pop();
         this.navigateToPage(lastPage, false);
     }
 
@@ -72,19 +71,19 @@ export class Pages {
             console.error("page with that name not found");
         }
         else {
-            this.pageTransition.NavigateToStart(() => {
-                if (this.currentPage != null) {
-                    this.currentPage.HideAllModals(true);
-                    this.currentPage.Dispose();
+            Pages.pageTransition.NavigateToStart(() => {
+                if (Pages.currentPage != null) {
+                    Pages.currentPage.HideAllModals(true);
+                    Pages.currentPage.Dispose();
                 }
 
-                this.currentPage = page;
-                this.currentPage.Init();
-                this.pageTransition.NavigateFromStart(() => { });
+                Pages.currentPage = page;
+                Pages.currentPage.Init();
+                Pages.pageTransition.NavigateFromStart(() => { });
             });
 
             if (history) {
-                this.history.push(page);
+                Pages.history.push(page);
             }
         }
     }

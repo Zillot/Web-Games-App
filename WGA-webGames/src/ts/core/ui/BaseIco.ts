@@ -18,6 +18,10 @@ export abstract class BaseIco extends BaseUIComponent implements IUpdateable, ID
         this.startMoving();
     }
 
+    public Dispose() {
+
+    }
+
     public Pause() {
         this.proccess.Pause();
     }

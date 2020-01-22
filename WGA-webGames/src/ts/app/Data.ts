@@ -1,5 +1,7 @@
 import { Vector2 } from "../core/engine/Vector2";
 import { Camera } from '../core/models/Camera';
+import { MouseInput } from '../core/services/MouseInput';
+import { KeyboardInput } from '../core/services/KeyboardInput';
 
 export class Data {
     public static I: Data;
@@ -22,4 +24,6 @@ export class Data {
     public FrameOffset: Vector2;
 
     public Camera: Camera;
+    public MouseInput: MouseInput;
+    public KeyboardInput: KeyboardInput;
 }

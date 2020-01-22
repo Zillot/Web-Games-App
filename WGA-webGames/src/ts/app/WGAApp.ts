@@ -12,8 +12,9 @@ import { Data } from './Data';
 import { Draw } from '../core/services/Draw';
 
 export class WGAApp implements IUpdateable, IDrawable {
-    public constructor(private _draw: Draw) {
-
+    public constructor(
+        private _draw: Draw,
+        private _pages: Pages) {
     }
 
     private pause: boolean;
@@ -22,22 +23,22 @@ export class WGAApp implements IUpdateable, IDrawable {
     public Initialize(): void {
         this.pause = true;
 
-        Pages.I.Reset();
+        this._pages.Reset();
 
-        Pages.I.CreatePage("Main", new MainPage(this._draw));
-        Pages.I.CreatePage("CameraTest", new CameraTest(this._draw));
-        Pages.I.CreatePage("CollisionTest", new CollisionTest(this._draw));
+        this._pages.CreatePage("Main", new MainPage(this._draw));
+        this._pages.CreatePage("CameraTest", new CameraTest(this._draw));
+        this._pages.CreatePage("CollisionTest", new CollisionTest(this._draw));
 
-        Pages.I.CreatePage("ZombieShooter", new ZombieShooter(this._draw));
-        Pages.I.CreatePage("CoreDefence", new CoreDefence(this._draw));
-        Pages.I.CreatePage("CastleDeffence", new CastleDefence(this._draw));
+        this._pages.CreatePage("ZombieShooter", new ZombieShooter(this._draw));
+        this._pages.CreatePage("CoreDefence", new CoreDefence(this._draw));
+        this._pages.CreatePage("CastleDeffence", new CastleDefence(this._draw));
 
-        Pages.I.InstantNavigateTo("Main");
+        this._pages.InstantNavigateTo("Main");
     }
 
     public Update(timeDelta: number): void {
         if (this.pause == true) {
-            Pages.I.Update(timeDelta);
+            this._pages.Update(timeDelta);
         }
 
         if (this.currentGame != null && this.pause == false) {
@@ -48,7 +49,7 @@ export class WGAApp implements IUpdateable, IDrawable {
     public Draw(): void {
         if (this.pause == true) {
             Data.I.Camera.AdjustMenuViewToCamera();
-            Pages.I.Draw(this._draw);
+            this._pages.Draw(this._draw);
             Data.I.Camera.RemoveCameraInfuence();
         }
 

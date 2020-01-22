@@ -24,6 +24,10 @@ export class ReloadableGun extends Gun {
 
         this.ReloadingTimeBase = 3;
         this.ReloadingControll = new TransitionValue(0, 1);
+
+        this.OnShootEvent = () => {
+            this.ClipCapacityLeft--;
+        }
     }
 
     //============ UPDATE ============
@@ -38,23 +42,23 @@ export class ReloadableGun extends Gun {
     public Draw(draw: Draw): void {
         super.Draw(draw);
 
-        if (!this.ReloadingControll.IsStill()) {
-            draw.RectFill(<FillRectParams>{
-                position: this.Position.ADD(new Vector2(0, 30)),
-                origin: new Vector2(0, 0),
-                size: new Vector2(40 * this.ReloadingControll.GetVal(), 5),
-                color: Color4.Green
-            });
-        }
-
         draw.TextFill(<TextParams>{
             str: this.ClipCapacityLeft + "/" + this.ClipCapacityBase,
-            position: this.Position.ADD(new Vector2(0, 30)),
+            position: this.Position.ADD(new Vector2(0, 25)),
             color: Color4.Gray,
             fontName: "serif",
             fontSize: 6,
             origin: new Vector2(0, -1)
         });
+
+        if (!this.ReloadingControll.IsStill()) {
+            draw.RectFill(<FillRectParams>{
+                position: this.Position.ADD(new Vector2(0, 35)),
+                origin: new Vector2(0, 0),
+                size: new Vector2(40 * (this.ReloadingControll.GetVal() / this.ReloadingTimeBase), 2),
+                color: Color4.Red
+            });
+        }
     }
 
     public Reload(): void {
@@ -68,12 +72,13 @@ export class ReloadableGun extends Gun {
     }
 
     public Shoot(point: Vector2): void {
-        if (this.ClipCapacityLeft > 0) {
-            this.ClipCapacityLeft--;
+        if (this.ClipCapacityLeft > 0 && this.ReloadingControll.IsStill()) {
             super.Shoot(point);
         }
-        else {
+    }
 
-        }
+    public SetClipCapacity(capacity: number) {
+        this.ClipCapacityBase = capacity;
+        this.ClipCapacityLeft = this.ClipCapacityBase;
     }
 }

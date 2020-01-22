@@ -13,14 +13,6 @@ export class LevelUpIco extends BaseIco {
         this.size = size;
     }
 
-    public Init(): void {
-
-    }
-
-    public Dispose(): void {
-
-    }
-
     public Draw(draw: Draw): void {
         var lines = 5;
         var period = 2 / lines;

@@ -8,7 +8,7 @@ import { TextParams } from 'src/ts/core/models/drawModels/TextParams';
 export class ZombieHeavy extends Zombie {
     constructor(position: Vector2, hp: number, speed: number) {
         speed /= 2;
-        hp *= 4;
+        hp *= 3;
 
         super(position, hp, speed);
     }

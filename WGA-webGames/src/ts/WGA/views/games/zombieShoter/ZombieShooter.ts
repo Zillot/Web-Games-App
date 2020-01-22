@@ -11,6 +11,7 @@ import { Draw } from 'src/ts/core/services/Draw';
 import { ZombieService } from './zombies/ZombieService';
 import { Gun } from 'src/ts/WGA/common/guns/Gun';
 import { ReloadableGun } from 'src/ts/WGA/common/guns/ReloadableGun';
+import { MachineGun } from './Weapon/MachineGun';
 
 export class ZombieShooter extends GamePage {
     private guns: Gun[];
@@ -51,9 +52,10 @@ export class ZombieShooter extends GamePage {
         this.guns = [];
         this.killed = 0;
         this.cityWall = new CityWall(new Vector2(Data.I.WindowSize.X - 20, Data.I.WindowSize.Y / 2), 1);
-        this.guns.push(new Gun(new Vector2(Data.I.WindowSize.X - 50, Data.I.WindowSize.Y / 2), 0.5));
+        this.guns.push(new MachineGun(new Vector2(Data.I.WindowSize.X - 50, Data.I.WindowSize.Y / 2)));
 
         this.game.RestartGame(20, 100);
+        this.zombieService.RestartGame();
 
         this.NextLevelBecomeAvailableChangedEvent(this.game.NextLevelAvailable);
 
@@ -109,9 +111,9 @@ export class ZombieShooter extends GamePage {
         var showReloadButton = false;
         for (var gunKey in this.guns) {
             var gun = this.guns[gunKey];
-            var reloadableGun = gun as ReloadableGun;
 
-            if (reloadableGun) {
+            if (gun instanceof ReloadableGun) {
+                var reloadableGun = gun as ReloadableGun;
                 showReloadButton = showReloadButton || reloadableGun.NeedsToBeReload();
             }
         }

@@ -17,6 +17,8 @@ export class BaseUIContainer extends BaseUIComponent {
     }
 
     public Init(): void {
+        super.Init();
+
         for (var uiComponentKey in this.UiComponents) {
             this.UiComponents[uiComponentKey].Init();
         }

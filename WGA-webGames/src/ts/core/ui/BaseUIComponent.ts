@@ -2,6 +2,9 @@ import { IUiComponent } from './Interfaces/IUiComponent';
 import { Vector2 } from '../engine/Vector2';
 import { TransitionValue } from '../engine/TransitionValue';
 import { Draw } from '../services/Draw';
+import { MouseInput } from '../services/MouseInput';
+import { KeyboardInput } from '../services/KeyboardInput';
+import { Data } from 'src/ts/app/Data';
 
 export abstract class BaseUIComponent implements IUiComponent {
     public Name: string;
@@ -12,6 +15,9 @@ export abstract class BaseUIComponent implements IUiComponent {
     protected position: Vector2;
     protected opacity: TransitionValue;
 
+    protected _mouseInput: MouseInput;
+    protected _keyboardInput: KeyboardInput;
+
     public get Position(): Vector2 {
         return this.position;
     }
@@ -20,9 +26,13 @@ export abstract class BaseUIComponent implements IUiComponent {
         this.position = position;
         this.opacity = new TransitionValue(1, 1);
         this.offset = new Vector2(0);
+
+        this._mouseInput = Data.I.MouseInput;
+        this._keyboardInput = Data.I.KeyboardInput;
     }
 
-    public abstract Init(): void;
+    public Init() {
+    }
 
     public abstract Dispose(): void;
 

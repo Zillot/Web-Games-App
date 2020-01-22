@@ -53,12 +53,12 @@ export class ZombieShooterUI {
             this.reloadGunBtn = Button.GetButton({
                 name: "ReloadGunBtn",
                 text: "Reload gun",
-                position: new Vector2(Data.I.Center.X, Data.I.WindowSize.Y - 50),
+                position: new Vector2(Data.I.Center.X, Data.I.WindowSize.Y + 100),
                 size: new Vector2(100, 40),
                 backgroundcolor: Color4.Red,
             });
         }
 
-        return this.buyNextLevelBtn;
+        return this.reloadGunBtn;
     }
 }

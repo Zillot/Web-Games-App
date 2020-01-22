@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { WGAEventContainer } from "../../WGA/WGAEventContainer";
+import { WGAEventContainer } from 'src/ts/WGA/WGAEventContainer';
+import { ConditionCheckFunction } from '../CallbackFunction';
 
 @Injectable()
 export class Events {
@@ -10,6 +11,8 @@ export class Events {
 
     private static eventsHandlers: WGAEventContainer[] = [];
 
+    private preventNextEvent: boolean;
+
     public constructor() {
 
     }
@@ -18,31 +21,39 @@ export class Events {
 
     }
 
-    public EventThrow(typeId: number, keyCode: number, keyChar: string): void {
+    public PreventNextEvent() {
+        this.preventNextEvent = true;
+    }
+
+    public EventThrow(typeId: string, eventId: string): boolean {
+        this.preventNextEvent = false;
+
         for (var eventKey in Events.eventsHandlers) {
             var event = Events.eventsHandlers[eventKey];
 
             try {
-                if (event.Type == typeId && (event.KeyCode == null || event.KeyCode == keyCode)) {
-                    event.Handler(keyCode, keyChar);
-                }
-                else {
-                    break;
-                }
-            }
-            catch (ex) {
+                if (event.Type == typeId && event.EventId == eventId && (event.ConditionCheck == null || event.ConditionCheck())) {
+                    event.Handler(eventId);
 
+                    if (this.preventNextEvent) {
+                        return true;
+                    }
+                }
             }
+            catch { }
         }
+
+        return false;
     }
-    public OnEvent(handler: any, name: string, typeId: number, keyCode: number): WGAEventContainer {
+    public OnEvent(handler: any, name: string, conditionCheck: ConditionCheckFunction, typeId: string, eventId: string): WGAEventContainer {
         this.RemoveHandler(name, typeId);
 
-        Events.eventsHandlers.push(<WGAEventContainer>{
+        Events.eventsHandlers.push(<WGAEventContainer> {
             Handler: handler,
+            ConditionCheck: conditionCheck,
             Name: name,
             Type: typeId,
-            KeyCode: keyCode
+            EventId: eventId
         });
 
         return Events.eventsHandlers[Events.eventsHandlers.length - 1];
@@ -50,7 +61,7 @@ export class Events {
     public RemoveHandlerByObj(handler: any): boolean {
         return this.RemoveHandler(handler.name, handler.type);
     }
-    public RemoveHandler(name: string, typeId: number): boolean {
+    public RemoveHandler(name: string, typeId: string): boolean {
         var status = false;
 
         for (var i = 0; i < Events.eventsHandlers.length; i++) {

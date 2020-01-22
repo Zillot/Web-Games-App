@@ -2,6 +2,8 @@ import { Vector2 } from "../engine/Vector2";
 import { BaseIco } from './BaseIco';
 import { Button } from './Button';
 import { Draw } from '../services/Draw';
+import { MouseInput } from '../services/MouseInput';
+import { KeyboardInput } from '../services/KeyboardInput';
 
 export class ButtonWithIco extends Button {
     private icon: BaseIco;

@@ -25,14 +25,6 @@ export class MainIco extends BaseIco {
         this.SetCubeData(size, cubes);
     }
 
-    public Init(): void {
-
-    }
-
-    public Dispose(): void {
-
-    }
-
     public SetCubeData(size: number, cubes: number) {
         this.cubes = cubes;
         this.size = size;

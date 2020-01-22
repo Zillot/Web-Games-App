@@ -5,6 +5,8 @@ import { Vector2 } from '../core/engine/Vector2';
 import { Camera } from '../core/models/Camera';
 import { InjectorHelper } from './InjectorHelper';
 import { Events } from '../core/services/Events';
+import { MouseInput } from '../core/services/MouseInput';
+import { KeyboardInput } from '../core/services/KeyboardInput';
 
 export class Initializer {
     public Initialize(): void {
@@ -16,9 +18,17 @@ export class Initializer {
         camera.Reset();
 
         Data.I.Camera = camera;
-
+        
         var events = InjectorHelper.Injector.get(Events);
         events.Initialize();
+
+        var mouseInput = InjectorHelper.Injector.get(MouseInput);
+        mouseInput.Initialize();
+        Data.I.MouseInput = mouseInput;
+
+        var keyboardInput = InjectorHelper.Injector.get(KeyboardInput);
+        keyboardInput.Initialize();
+        Data.I.KeyboardInput = keyboardInput;
 
         var core = InjectorHelper.Injector.get(Core);
         core.Initialize();

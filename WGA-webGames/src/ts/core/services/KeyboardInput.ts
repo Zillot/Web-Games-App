@@ -1,29 +1,29 @@
 import { Injectable } from '@angular/core';
 import { EventsTypes } from "../models/EventsTypes";
 import { Events } from './Events';
-
-import * as $ from 'jquery';
+import { ConditionCheckFunction } from '../CallbackFunction';
 
 @Injectable()
 export class KeyboardInput {
-    public static I: KeyboardInput;
-    public static _initialize = (() => {
-        KeyboardInput.I = new KeyboardInput(null);
-    })();
-
     private _events: Events;
 
     public constructor(events: Events) {
         this._events = events;
     }
 
-    public Initialize() {
-        $(document).keydown((e: any) => {
-            this._events.EventThrow(EventsTypes.KeyboardKeyPressed, e.key, e.char);
+    public Initialize(): void {
+        document.body.addEventListener("keydown", (e: KeyboardEvent) => {
+            this._events.EventThrow(EventsTypes.KeyboardKeys, e.key);
+        });
+        document.body.addEventListener("keypress", (e: KeyboardEvent) => {
+            this._events.EventThrow(EventsTypes.KeyboardKeys, e.key);
+        });
+        document.body.addEventListener("keyup", (e: KeyboardEvent) => {
+            this._events.EventThrow(EventsTypes.KeyboardKeys, e.key);
         });
     }
 
-    public GetKeyCodeOfChar(char: string) {
+    public GetKeyCodeOfChar(char: string): number {
         if (char.length != 1) {
             throw "KeyboardInput service error, length of char should only be 1 char";
         }
@@ -39,5 +39,13 @@ export class KeyboardInput {
         }
 
         return -1;
+    }
+
+    public OnKeyboardEvent(handler: any, eventName: string, conditionCheck: ConditionCheckFunction, keyCodeOrChar: string): void {
+        this._events.OnEvent(handler, eventName, conditionCheck, EventsTypes.KeyboardKeys, keyCodeOrChar);
+    }
+
+    public RemoveHandler(name: string): boolean {
+        return this._events.RemoveHandler(name, EventsTypes.KeyboardKeys)
     }
 }

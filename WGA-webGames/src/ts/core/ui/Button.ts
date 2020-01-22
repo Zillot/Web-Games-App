@@ -1,14 +1,13 @@
 import { FillRectParams } from "../models/drawModels/FillRectParams";
 import { Vector2 } from "../engine/Vector2";
 import { Color4 } from "../engine/Color4";
-import { EventsTypes } from "../models/EventsTypes";
 import { TextParams } from "../models/drawModels/TextParams";
-import { KeyCodes } from "../models/KeyCodes";
 import { Geometry } from '../services/Geometry';
 import { Draw } from '../services/Draw';
 import { BaseUIComponent } from './BaseUIComponent';
-import { Events } from '../services/Events';
 import { MouseInput } from '../services/MouseInput';
+import { MouseButtonsOperations } from '../models/MouseButtonsOperations';
+import { MouseButtons } from '../models/MouseButtons';
 
 export class Button extends BaseUIComponent {
     public name: string;
@@ -24,16 +23,44 @@ export class Button extends BaseUIComponent {
     }
 
     public Init(): void {
-        Events.I.OnEvent(() => {
+        super.Init();
+
+        this.signForRelatedMouseEVents();
+    }
+
+    private signForRelatedMouseEVents() {
+        var conditionCheck = () => {
+            return Geometry.IsPointInRect(MouseInput.GetMousePosition(), Geometry.RectFromVectors(this.position.SUB(this.size.DIV(2)), this.size));
+        };
+
+        this._mouseInput.OnMouseEvent(() => {
+                this._mouseInput.PreventNextEvent();
                 this.Click();
             },
             this.Name + '-OnClick',
-            EventsTypes.MouseButtonPressed,
-            KeyCodes.LeftMouseClick);
+            conditionCheck,
+            MouseButtons.Left,
+            MouseButtonsOperations.Click);
+
+        var defaultBlockedEvents = [MouseButtonsOperations.DoubleClick, MouseButtonsOperations.Down, MouseButtonsOperations.Up];
+
+        for (var mouseButtonKey in MouseButtons) {
+            for (var eventToBlockKey in defaultBlockedEvents) {
+                var eventToBlock = defaultBlockedEvents[eventToBlockKey];
+
+                this._mouseInput.OnMouseEvent(() => {
+                        this._mouseInput.PreventNextEvent();
+                    },
+                    this.Name + "-" + mouseButtonKey + '-' + eventToBlockKey,
+                    conditionCheck,
+                    <MouseButtons>mouseButtonKey,
+                    eventToBlock);
+            }
+        }
     }
 
     public Dispose(): void {
-        Events.I.RemoveHandler(this.Name + '-OnClick', EventsTypes.MouseButtonPressed);
+        this._mouseInput.RemoveHandler(this.Name + '-OnClick');
     }
 
     public Update(timeDelta: number): void {
@@ -47,10 +74,8 @@ export class Button extends BaseUIComponent {
     }
     //-------------
     public Click(): void {
-        if (Geometry.IsPointInRect(MouseInput.GetMousePosition(), Geometry.RectFromVectors(this.position.SUB(this.size.DIV(2)), this.size))) {
-            if (this.onClick != null) {
-                this.onClick();
-            }
+        if (this.onClick != null) {
+            this.onClick();
         }
     }
 

@@ -23,14 +23,6 @@ export class SpinnerIco extends BaseIco {
         this.circles = circles;
     }
 
-    public Init(): void {
-
-    }
-
-    public Dispose(): void {
-
-    }
-
     public Draw(draw: Draw): void {
         var count = Math.floor(this.circles / 3);
         var min = 0.75 / count;

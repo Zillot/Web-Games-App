@@ -43,7 +43,7 @@ export class ZombieService {
         this.Zombies = [];
 
         this.maxZombies = 4;
-        this.zombieSpawnPause = 0;
+        this.zombieSpawnPause = 2;
     }
 
     //============ UPDATE ============

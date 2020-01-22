@@ -3,8 +3,11 @@ import { Vector2 } from 'src/ts/core/engine/Vector2';
 import { ReloadableGun } from 'src/ts/WGA/common/guns/ReloadableGun';
 
 export class MachineGun extends ReloadableGun {
-    constructor(position: Vector2, rotationSpeed: number) {
-        super(position, rotationSpeed);
+    constructor(position: Vector2) {
+        super(position, 0.5);
+
+        this.ShootPauseBase = 0.1;
+        this.SetClipCapacity(10);
     }
 
     //============ UPDATE ============

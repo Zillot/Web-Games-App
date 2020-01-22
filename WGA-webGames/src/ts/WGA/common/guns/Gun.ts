@@ -8,6 +8,7 @@ import { MouseState } from "../../../core/models/MouseState";
 import { Utils } from 'src/ts/core/services/Utils';
 import { Draw } from 'src/ts/core/services/Draw';
 import { MouseInput } from 'src/ts/core/services/MouseInput';
+import { CallbackFunction } from 'src/ts/core/CallbackFunction';
 
 export class Gun {
     public Position: Vector2;
@@ -22,6 +23,8 @@ export class Gun {
     public Health: number;
 
     public Bullets: Bullet[];
+
+    public OnShootEvent: CallbackFunction;
 
     constructor(position: Vector2, rotationSpeed: number) {
         this.Power = 50;
@@ -149,6 +152,10 @@ export class Gun {
             var speed = 1000 + Utils.RandF(-1, 1);
 
             this.Bullets.push(new Bullet(this.Position.ADD(this.Direction.MUL(40)), this.Direction, this.Power, speed));
+
+            if (this.OnShootEvent != null) {
+                this.OnShootEvent();
+            }
         }
     }
 }
