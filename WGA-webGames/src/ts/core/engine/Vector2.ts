@@ -1,5 +1,5 @@
-import { TransitionValue } from './Value';
 import { CallbackFunction } from '../CallbackFunction';
+import { TransitionValue } from './TransitionValue';
 
 export class Vector2 {
     private x: TransitionValue;

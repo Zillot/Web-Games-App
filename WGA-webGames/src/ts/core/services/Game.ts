@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Vector2 } from "../engine/Vector2";
 import { Data } from "../../app/Data";
 import { Color4 } from "../engine/Color4";
-import { TransitionValue } from "../engine/Value";
+import { TransitionValue } from "../engine/TransitionValue";
 import { Draw } from './Draw';
 import { FillRectParams } from '../models/drawModels/FillRectParams';
 import { TextParams } from '../models/drawModels/TextParams';

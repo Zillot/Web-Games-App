@@ -1,6 +1,6 @@
 import { IUiComponent } from './Interfaces/IUiComponent';
 import { Vector2 } from '../engine/Vector2';
-import { TransitionValue } from '../engine/Value';
+import { TransitionValue } from '../engine/TransitionValue';
 import { Draw } from '../services/Draw';
 
 export abstract class BaseUIComponent implements IUiComponent {

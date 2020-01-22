@@ -7,9 +7,11 @@ import { Core } from 'src/ts/core/services/Core';
 import { Draw } from 'src/ts/core/services/Draw';
 import { Game } from 'src/ts/core/services/Game';
 import { Geometry } from 'src/ts/core/services/Geometry';
-import { Input } from 'src/ts/core/services/Input';
 import { Pages } from 'src/ts/core/services/Pages';
 import { Utils } from 'src/ts/core/services/Utils';
+import { MouseInput } from 'src/ts/core/services/MouseInput';
+import { KeyboardInput } from 'src/ts/core/services/KeyboardInput';
+import { Events } from 'src/ts/core/services/Events';
 
 @NgModule({
     declarations: [
@@ -23,7 +25,9 @@ import { Utils } from 'src/ts/core/services/Utils';
         Draw,
         Game,
         Geometry,
-        Input,
+        Events,
+        KeyboardInput,
+        MouseInput,
         Pages,
         Utils
     ],

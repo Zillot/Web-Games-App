@@ -1,5 +1,5 @@
 import { Page } from "../../../core/abstracts/Page";
-import { TransitionValue } from "../../../core/engine/Value";
+import { TransitionValue } from "../../../core/engine/TransitionValue";
 import { Data } from "../../../app/Data";
 import { FillRectParams } from "../../../core/models/drawModels/FillRectParams";
 import { Vector2 } from "../../../core/engine/Vector2";
@@ -8,7 +8,7 @@ import { Color4 } from "../../../core/engine/Color4";
 import { FillCircleParams } from "../../../core/models/drawModels/FillCircleParams";
 import { CameraTestUI } from "./CameraTest.ui";
 import { Draw } from 'src/ts/core/services/Draw';
-import { Input } from 'src/ts/core/services/Input';
+import { MouseInput } from 'src/ts/core/services/MouseInput';
 
 export class CameraTest extends Page {
     public angleCon: TransitionValue;
@@ -74,6 +74,6 @@ export class CameraTest extends Page {
     }
 
     public DrawMousePosition() {
-        this._draw.RectFill(<FillRectParams>{ position: Input.I.GetMousePosition(), size: new Vector2(10, 10), color: Color4.Blue });
+        this._draw.RectFill(<FillRectParams>{ position: MouseInput.GetMousePosition(), size: new Vector2(10, 10), color: Color4.Blue });
     }
 }

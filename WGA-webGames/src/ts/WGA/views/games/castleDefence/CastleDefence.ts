@@ -7,8 +7,8 @@ import { Vector2 } from "../../../../core/engine/Vector2";
 import { Color4 } from "../../../../core/engine/Color4";
 import { Data } from "../../../../app/Data";
 import { MouseState } from "../../../../core/models/MouseState";
-import { Input } from 'src/ts/core/services/Input';
 import { Draw } from 'src/ts/core/services/Draw';
+import { MouseInput } from 'src/ts/core/services/MouseInput';
 
 export class CastleDefence extends GamePage {
     private towerDistanceMinimum = 200;
@@ -80,7 +80,7 @@ export class CastleDefence extends GamePage {
     }
 
     public GetTowerToBuildPosition(): Vector2 {
-        var mouse = Input.I.GetMousePosition();
+        var mouse = MouseInput.GetMousePosition();
         mouse.X = Math.round(mouse.X / 5) * 5;
         mouse.Y = 0;
 
@@ -102,7 +102,7 @@ export class CastleDefence extends GamePage {
     }
 
     public BuildTowerIfMousePressed(allowToBuild: boolean) {
-        if (Input.I.GetMouseState() == MouseState.Down && allowToBuild) {
+        if (MouseInput.GetMouseState() == MouseState.Down && allowToBuild) {
             this.BuildTower(this.towerToBuild);
             this.towerToBuild = null;
         }

@@ -29,6 +29,10 @@ export class TransitionValue {
         this.callbacks = [];
     }
 
+    public IsStill(): boolean {
+        return this.valueGoal == this.value;
+    }
+
     public Stop(cancelCallback: CallbackFunction): void {
         this.value = this.valueGoal;
 
@@ -69,6 +73,11 @@ export class TransitionValue {
         this.GoTo(this.value + delta, speed, callback);
 
         return this.valueGoal;
+    }
+
+    public GoToFrom(value: number, startingValue: number, callback?: CallbackFunction): void {
+        this.SetValue(startingValue);
+        this.GoTo(value, this.speed, callback);
     }
 
     public GoTo(value: number, speed?: number, callback?: CallbackFunction): void {

@@ -1,4 +1,4 @@
-import { TransitionValue } from '../../engine/Value';
+import { TransitionValue } from '../../engine/TransitionValue';
 import { Draw } from '../../services/Draw';
 
 export interface IUiComponent {

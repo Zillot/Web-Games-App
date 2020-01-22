@@ -1,5 +1,5 @@
 import { BaseUIComponent } from 'src/ts/core/ui/BaseUIComponent';
-import { TransitionValue } from '../engine/Value';
+import { TransitionValue } from '../engine/TransitionValue';
 import { Vector2 } from '../engine/Vector2';
 import { IUpdateable } from '../interfaces/IUpdateable';
 import { IDrawable } from '../interfaces/IDrawable';

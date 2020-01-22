@@ -7,7 +7,7 @@ import { CollisionTestUI } from "./CollisionTest.ui";
 import { Utils } from 'src/ts/core/services/Utils';
 import { Geometry } from 'src/ts/core/services/Geometry';
 import { Draw } from 'src/ts/core/services/Draw';
-import { Input } from 'src/ts/core/services/Input';
+import { MouseInput } from 'src/ts/core/services/MouseInput';
 
 export class CollisionTest extends Page {
     public Rects: Rect[];
@@ -37,7 +37,7 @@ export class CollisionTest extends Page {
     public Update(timeDelta: number): void {
         super.Update(timeDelta);
 
-        this.Rects[0].SetPositionFromCenter(Input.I.GetMousePosition());
+        this.Rects[0].SetPositionFromCenter(MouseInput.GetMousePosition());
 
         this.checkRectsIntersections();
     }

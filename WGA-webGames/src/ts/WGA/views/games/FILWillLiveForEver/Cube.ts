@@ -1,7 +1,7 @@
 import { FillRectParams } from "../../../../core/models/drawModels/FillRectParams";
 import { Data } from "../../../../app/Data";
 import { Vector2 } from "../../../../core/engine/Vector2";
-import { TransitionValue } from "../../../../core/engine/Value";
+import { TransitionValue } from "../../../../core/engine/TransitionValue";
 import { Color4 } from "../../../../core/engine/Color4";
 import { Unit } from "../../../common/Unit";
 import { Draw } from 'src/ts/core/services/Draw';

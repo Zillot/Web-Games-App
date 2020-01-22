@@ -1,6 +1,6 @@
 import { IUpdateable } from "./interfaces/IUpdateable";
 import { IDrawable } from "./interfaces/IDrawable";
-import { TransitionValue } from "./engine/Value";
+import { TransitionValue } from "./engine/TransitionValue";
 import { NavigateMode } from "./models/PageState";
 import { Vector2 } from "./engine/Vector2";
 import { FillRectParams } from "./models/drawModels/FillRectParams";

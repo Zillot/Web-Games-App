@@ -1,11 +1,10 @@
 import { Data } from "./Data";
 import { Core } from "../core/services/Core";
-import { Input } from "../core/services/Input";
 import { WGAApp } from "./WGAApp";
 import { Vector2 } from '../core/engine/Vector2';
 import { Camera } from '../core/models/Camera';
-import { Draw } from '../core/services/Draw';
 import { InjectorHelper } from './InjectorHelper';
+import { Events } from '../core/services/Events';
 
 export class Initializer {
     public Initialize(): void {
@@ -18,8 +17,8 @@ export class Initializer {
 
         Data.I.Camera = camera;
 
-        var input = InjectorHelper.Injector.get(Input);
-        input.Initialize();
+        var events = InjectorHelper.Injector.get(Events);
+        events.Initialize();
 
         var core = InjectorHelper.Injector.get(Core);
         core.Initialize();

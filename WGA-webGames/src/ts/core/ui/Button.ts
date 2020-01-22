@@ -6,8 +6,9 @@ import { TextParams } from "../models/drawModels/TextParams";
 import { KeyCodes } from "../models/KeyCodes";
 import { Geometry } from '../services/Geometry';
 import { Draw } from '../services/Draw';
-import { Input } from '../services/Input';
 import { BaseUIComponent } from './BaseUIComponent';
+import { Events } from '../services/Events';
+import { MouseInput } from '../services/MouseInput';
 
 export class Button extends BaseUIComponent {
     public name: string;
@@ -23,7 +24,7 @@ export class Button extends BaseUIComponent {
     }
 
     public Init(): void {
-        Input.I.OnInputEvent(() => {
+        Events.I.OnEvent(() => {
                 this.Click();
             },
             this.Name + '-OnClick',
@@ -32,7 +33,7 @@ export class Button extends BaseUIComponent {
     }
 
     public Dispose(): void {
-        Input.I.RemoveHandler(this.Name + '-OnClick', EventsTypes.MouseButtonPressed);
+        Events.I.RemoveHandler(this.Name + '-OnClick', EventsTypes.MouseButtonPressed);
     }
 
     public Update(timeDelta: number): void {
@@ -46,7 +47,7 @@ export class Button extends BaseUIComponent {
     }
     //-------------
     public Click(): void {
-        if (Geometry.IsPointInRect(Input.I.GetMousePosition(), Geometry.RectFromVectors(this.position.SUB(this.size.DIV(2)), this.size))) {
+        if (Geometry.IsPointInRect(MouseInput.GetMousePosition(), Geometry.RectFromVectors(this.position.SUB(this.size.DIV(2)), this.size))) {
             if (this.onClick != null) {
                 this.onClick();
             }
