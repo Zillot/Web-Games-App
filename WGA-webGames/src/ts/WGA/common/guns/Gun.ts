@@ -1,39 +1,39 @@
-import { Vector2 } from "../../core/engine/Vector2";
-import { Bullet } from "./Bullet";
-import { TransitionValue } from "../../core/engine/Value";
-import { Data } from "../../app/Data";
-import { FillCircleParams } from "../../core/models/drawModels/FillCircleParams";
-import { Color4 } from "../../core/engine/Color4";
-import { FillRectParams } from "../../core/models/drawModels/FillRectParams";
-import { MouseState } from "../../core/models/MouseState";
+import { Vector2 } from "../../../core/engine/Vector2";
+import { Bullet } from "./../Bullet";
+import { TransitionValue } from "../../../core/engine/TransitionValue";
+import { FillCircleParams } from "../../../core/models/drawModels/FillCircleParams";
+import { Color4 } from "../../../core/engine/Color4";
+import { FillRectParams } from "../../../core/models/drawModels/FillRectParams";
+import { MouseState } from "../../../core/models/MouseState";
 import { Utils } from 'src/ts/core/services/Utils';
 import { Draw } from 'src/ts/core/services/Draw';
-import { Input } from 'src/ts/core/services/Input';
+import { MouseInput } from 'src/ts/core/services/MouseInput';
 
 export class Gun {
-    static RELOADINGPAUSE: number = 0.3;
-    static DEMMAGEPOWER: number = 50;
-        
     public Position: Vector2;
     public Direction: Vector2;
     public Power: number;
+    public Damage: number;
     public AngleControll: TransitionValue;
 
-    public Reload: number;
+    public ShootPauseControll: TransitionValue;
+    public ShootPauseBase: number;
     public Angle: number;
     public Health: number;
 
     public Bullets: Bullet[];
 
     constructor(position: Vector2, rotationSpeed: number) {
-        this.Power = Gun.DEMMAGEPOWER;
+        this.Power = 50;
         this.Direction = new Vector2(-1, 0);
         this.Position = position;
+        this.Health = 100;
 
         this.Bullets = [];
 
-        this.Reload = 0;
-        this.Health = 100;
+        this.ShootPauseBase = 0.3;
+        this.ShootPauseControll = new TransitionValue(0, 1);
+        this.ShootPauseControll.GoToFrom(this.ShootPauseBase, 0);
 
         this.AngleControll = new TransitionValue(0, rotationSpeed);
     }
@@ -43,20 +43,15 @@ export class Gun {
         if (!this.IsDead()) {
             this.UpdateRotation(timeDelta);
         }
-        this.ReloadingProccess(timeDelta);
+
+        this.ShootPauseControll.Update(timeDelta);
         this.UpdateBullets(timeDelta, tryToHitEvent);
         this.ShootByGun();
         this.RemoveDeadBullets();
     }
 
-    public ReloadingProccess(timeDelta: number): void {
-        if (this.Reload > 0) {
-            this.Reload -= timeDelta;
-        }
-    }
-
     public UpdateRotation(timeDelta: number): void {
-        var toMouseDir = Input.I.GetMousePosition().SUB(this.Position).Normalize();
+        var toMouseDir = MouseInput.GetMousePosition().SUB(this.Position).Normalize();
         var delta = Vector2.AngleBetween(this.Direction, toMouseDir);
 
         this.AngleControll.GoToDelta(delta);
@@ -143,19 +138,17 @@ export class Gun {
     }
 
     public ShootByGun(): void {
-        if (Input.I.GetMouseState() == MouseState.Down && !this.IsDead()) {
-            this.Shoot(Input.I.GetMousePosition());
+        if (MouseInput.GetMouseState() == MouseState.Down && !this.IsDead()) {
+            this.Shoot(MouseInput.GetMousePosition());
         }
     }
 
     public Shoot(point: Vector2): void {
-        if (this.Reload <= 0) {
-            this.Reload = Gun.RELOADINGPAUSE;
-            var pos = this.Position;
-            var power = Gun.DEMMAGEPOWER;
+        if (this.ShootPauseControll.IsStill()) {
+            this.ShootPauseControll.GoToFrom(this.ShootPauseBase, 0);
             var speed = 1000 + Utils.RandF(-1, 1);
 
-            this.Bullets.push(new Bullet(pos.ADD(this.Direction.MUL(40)), this.Direction, power, speed));
+            this.Bullets.push(new Bullet(this.Position.ADD(this.Direction.MUL(40)), this.Direction, this.Power, speed));
         }
     }
 }

@@ -3,13 +3,14 @@ import { Data } from "../../../../app/Data";
 import { Vector2 } from "../../../../core/engine/Vector2";
 import { Color4 } from "../../../../core/engine/Color4";
 import { Bullet } from "../../../common/Bullet";
-import { Gun } from "../../../common/Gun";
 import { ZombieShooterUI } from "./ZombieShooter.ui";
 import { Game } from "../../../../core/services/Game";
 import { CityWall } from "./CityWall";
 import { GamePage } from "../../../../core/abstracts/GamePage";
 import { Draw } from 'src/ts/core/services/Draw';
 import { ZombieService } from './zombies/ZombieService';
+import { Gun } from 'src/ts/WGA/common/guns/Gun';
+import { ReloadableGun } from 'src/ts/WGA/common/guns/ReloadableGun';
 
 export class ZombieShooter extends GamePage {
     private guns: Gun[];
@@ -31,6 +32,9 @@ export class ZombieShooter extends GamePage {
         ZombieShooterUI.BuyNextLevelBtn.SetOnClick(() => {
             this.game.BuyNextLevel();
             this.NextLevelBecomeAvailableChangedEvent(this.game.NextLevelAvailable);
+        });
+        ZombieShooterUI.ReloadGunBtn.SetOnClick(() => {
+            this.RealodAllGuns();
         });
 
         this.game = new Game(this._draw);
@@ -66,6 +70,20 @@ export class ZombieShooter extends GamePage {
         }
     }
 
+    public RealodAllGuns() {
+        for (var gunKey in this.guns) {
+            var gun = this.guns[gunKey];
+            var reloadableGun = gun as ReloadableGun;
+
+            if (reloadableGun) {
+                reloadableGun.Reload();
+            }
+        }
+
+        var pos = ZombieShooterUI.ReloadGunBtn.Position;
+        ZombieShooterUI.ReloadGunBtn.MoveTo(new Vector2(pos.X, Data.I.WindowSize.Y + 100), 300);
+    }
+
     public GameOverHandler() {
         super.ShowModal(ZombieShooterUI.GameOverModal);
 
@@ -84,6 +102,24 @@ export class ZombieShooter extends GamePage {
 
         this.UpdateGuns(timeDelta);
         this.zombieService.Update(timeDelta);
+        this.ReloadGunsButtonLogic();
+    }
+
+    public ReloadGunsButtonLogic(): void {
+        var showReloadButton = false;
+        for (var gunKey in this.guns) {
+            var gun = this.guns[gunKey];
+            var reloadableGun = gun as ReloadableGun;
+
+            if (reloadableGun) {
+                showReloadButton = showReloadButton || reloadableGun.NeedsToBeReload();
+            }
+        }
+
+        if (showReloadButton) {
+            var pos = ZombieShooterUI.ReloadGunBtn.Position;
+            ZombieShooterUI.ReloadGunBtn.MoveTo(new Vector2(pos.X, Data.I.WindowSize.Y - 100), 300);
+        }
     }
 
     public UpdateGuns(timeDelta: number): void {

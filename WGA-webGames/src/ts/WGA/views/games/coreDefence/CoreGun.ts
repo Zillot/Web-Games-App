@@ -1,11 +1,11 @@
 import { Vector2 } from "../../../../core/engine/Vector2";
-import { Gun } from "../../../common/Gun";
 import { Bullet } from "../../../common/Bullet";
 import { Color4 } from "../../../../core/engine/Color4";
 import { Data } from "../../../../app/Data";
 import { StrokeArcParams } from "../../../../core/models/drawModels/StrokeArcParams";
 import { LineParams } from "../../../../core/models/drawModels/LineParams";
 import { Draw } from 'src/ts/core/services/Draw';
+import { Gun } from 'src/ts/WGA/common/guns/Gun';
 
 export class CoreGun extends Gun {
     public Position: Vector2;
