@@ -10,36 +10,45 @@ import { LevelUpIco } from '../../common/Icons/LevelUpIco';
 
 export class MainPageUI {
     public static SetupUI(uiComponents: IUiComponent[]) {
-        uiComponents.push(MainPageUI.SelectGame1Btn);
-        uiComponents.push(MainPageUI.SelectGame2Btn);
-        uiComponents.push(MainPageUI.SelectGame3Btn);
-        uiComponents.push(MainPageUI.EsternEqq1Btn);
-        uiComponents.push(MainPageUI.CamTestBtn);
-        uiComponents.push(MainPageUI.CollisionTestBtn);
+        uiComponents.push(MainPageUI.PlayYotaBtn);
 
-        uiComponents.push(MainPageUI.GetB(100));
+        /*uiComponents.push(MainPageUI.PlayZombieShooterBtn);
+        uiComponents.push(MainPageUI.PlayCoreDefBtn);
+        uiComponents.push(MainPageUI.PlayCastleDefBtn);
+        uiComponents.push(MainPageUI.CamTestBtn);
+        uiComponents.push(MainPageUI.CollisionTestBtn);*/
+
+        /*uiComponents.push(MainPageUI.GetB(100));
         uiComponents.push(new MainIco(new Vector2(100, 100), 40, 3, 1));
         uiComponents.push(MainPageUI.GetB(150));
         uiComponents.push(new SpinnerIco(new Vector2(100, 150), 40, 10, 2));
         uiComponents.push(MainPageUI.GetB(200));
-        uiComponents.push(new LevelUpIco(new Vector2(100, 200), 40, 4));
+        uiComponents.push(new LevelUpIco(new Vector2(100, 200), 40, 4));*/
     }
 
-    public static GetB(x: number) {
-        return Button.GetButton({
-            name: "btn" + x,
-            text: "",
-            position: new Vector2(100, x),
-            size: new Vector2(40, 40),
-            backgroundcolor: Color4.White
-        });
+    public static playYotaBtn: Button;
+    public static get PlayYotaBtn() {
+        if (this.playYotaBtn == null) {
+            this.playYotaBtn = Button.GetButton({
+                name: "playYota",
+                text: "Play Yota",
+                onClick: function () {
+                    Pages.I.NavigateTo("YotaOnline");
+                },
+                position: new Vector2(Data.I.Center.X, 300),
+                size: new Vector2(200, 40),
+                backgroundcolor: Color4.White
+            });
+        }
+
+        return this.playYotaBtn;
     }
 
-    public static selectGame1Btn: Button;
-    public static get SelectGame1Btn() {
-        if (this.selectGame1Btn == null) {
-            this.selectGame1Btn = Button.GetButton({
-                name: "SelectGame1Btn",
+    public static playZombieShooterBtn: Button;
+    public static get PlayZombieShooterBtn() {
+        if (this.playZombieShooterBtn == null) {
+            this.playZombieShooterBtn = Button.GetButton({
+                name: "playZombieShooter",
                 text: "Play Zombie Shooter",
                 onClick: function () {
                     Pages.I.NavigateTo("ZombieShooter");
@@ -50,14 +59,14 @@ export class MainPageUI {
             });
         }
 
-        return this.selectGame1Btn;
+        return this.playZombieShooterBtn;
     }
 
-    public static selectGame2Btn: Button;
-    public static get SelectGame2Btn() {
-        if (this.selectGame2Btn == null) {
-            this.selectGame2Btn = Button.GetButton({
-                name: "SelectGame2Btn",
+    public static playCoreDefBtn: Button;
+    public static get PlayCoreDefBtn() {
+        if (this.playCoreDefBtn == null) {
+            this.playCoreDefBtn = Button.GetButton({
+                name: "playCoreDefence",
                 text: "Play Core Defence",
                 onClick: function () {
                     Pages.I.NavigateTo("CoreDefence");
@@ -68,14 +77,14 @@ export class MainPageUI {
             });
         }
 
-        return this.selectGame2Btn;
+        return this.playCoreDefBtn;
     }
 
-    public static selectGame3Btn: Button;
-    public static get SelectGame3Btn() {
-        if (this.selectGame3Btn == null) {
-            this.selectGame3Btn = Button.GetButton({
-                name: "SelectGame3Btn",
+    public static playCastleDefBtn: Button;
+    public static get PlayCastleDefBtn() {
+        if (this.playCastleDefBtn == null) {
+            this.playCastleDefBtn = Button.GetButton({
+                name: "playCastleDefence",
                 text: "Play Castle Defence",
                 onClick: function () {
                     Pages.I.NavigateTo("CastleDeffence");
@@ -86,23 +95,7 @@ export class MainPageUI {
             });
         }
 
-        return this.selectGame3Btn;
-    }
-
-    public static esternEqq1Btn: Button;
-    public static get EsternEqq1Btn() {
-        if (this.esternEqq1Btn == null) {
-            this.esternEqq1Btn = Button.GetButton({
-                name: "EsternEqq1Btn",
-                text: "Blow up a nuclear bomb",
-                onClick: function () { },
-                position: new Vector2(Data.I.Center.X, 450),
-                size: new Vector2(200, 40),
-                backgroundcolor: Color4.White
-            });
-        }
-
-        return this.esternEqq1Btn;
+        return this.playCastleDefBtn;
     }
 
     public static camTestBtn: Button;

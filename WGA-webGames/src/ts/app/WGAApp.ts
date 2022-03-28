@@ -7,6 +7,7 @@ import { CollisionTest } from "../WGA/views/pages/CollisionTest";
 import { ZombieShooter } from "../WGA/views/games/zombieShoter/ZombieShooter";
 import { CoreDefence } from "../WGA/views/games/coreDefence/CoreDefence";
 import { CastleDefence } from "../WGA/views/games/castleDefence/CastleDefence";
+import { YotaOnline } from "../WGA/views/games/yotaOnline/YotaOnline";
 import { Pages } from '../core/services/Pages';
 import { Draw } from '../core/services/Draw';
 
@@ -28,11 +29,12 @@ export class WGAApp implements IUpdateable, IDrawable {
         Pages.I.CreatePage("CameraTest", new CameraTest());
         Pages.I.CreatePage("CollisionTest", new CollisionTest());
 
+        Pages.I.CreatePage("YotaOnline", new YotaOnline());
         Pages.I.CreatePage("ZombieShooter", new ZombieShooter());
         Pages.I.CreatePage("CoreDefence", new CoreDefence());
         Pages.I.CreatePage("CastleDeffence", new CastleDefence());
 
-        Pages.I.InstantNavigateTo("Main");
+        Pages.I.InstantNavigateTo("YotaOnline");
     }
 
     public Update(timeDelta: number): void {

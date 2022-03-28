@@ -1,4 +1,5 @@
 import { CallbackFunction } from "../CallbackFunction";
+import { Easing } from "./Easing";
 
 export class Value {
     private value: number;
@@ -11,7 +12,8 @@ export class Value {
     private multypliCallbacks: boolean;
 
     constructor(value: number, speed: number) {
-        this.callbacks = [];
+        this.ClearCallback();
+
         this.value = value;
         this.valueGoal = value;
         this.speed = speed;
@@ -27,6 +29,10 @@ export class Value {
 
     public ClearCallback(): void {
         this.callbacks = [];
+    }
+
+    public SetCallback(callback: CallbackFunction) {
+        this.callbacks.push(callback);
     }
 
     public Stop(cancelCallback: CallbackFunction): void {
@@ -59,22 +65,22 @@ export class Value {
         this.pause = 0;
     }
 
-    public GoToDeltaWithGoal(delta: number, speed?: number, callback?: CallbackFunction): number {
+    public GoToDeltaWithGoal(delta: number, speed?: number, callback?: CallbackFunction, easing?: Easing): number {
         this.GoTo(this.valueGoal + delta, speed, callback);
 
         return this.valueGoal;
     }
 
-    public GoToDelta(delta: number, speed?: number, callback?: CallbackFunction): number {
-        this.GoTo(this.value + delta, speed, callback);
+    public GoToDelta(delta: number, speed?: number, callback?: CallbackFunction, easing?: Easing): number {
+        this.GoTo(this.value + delta, speed, callback, easing);
 
         return this.valueGoal;
     }
 
-    public GoTo(value: number, speed?: number, callback?: CallbackFunction): void {
+    public GoTo(value: number, speed?: number, callback?: CallbackFunction, easing?: Easing): void {
         this.pause = 1;
 
-        if (callback != null) {
+        if (this.callbacks) {
             this.callbacks.push(callback);
         }
 
@@ -95,6 +101,10 @@ export class Value {
         }
     }
 
+    public isStable() {
+        return this.dir == 0;
+    }
+
     public Update(timeDelta: number): void {
         this.value += this.speed * this.dir * timeDelta * this.pause;
 
@@ -105,8 +115,10 @@ export class Value {
             var callbacksToCall = this.callbacks;
             this.ClearCallback();
 
-            for (var callbackKey in callbacksToCall) {
-                callbacksToCall[callbackKey]();
+            for (var i = 0; i < callbacksToCall.length; i++) {
+                if (callbacksToCall[i]) {
+                    callbacksToCall[i]();
+                }
             }
         }
     }

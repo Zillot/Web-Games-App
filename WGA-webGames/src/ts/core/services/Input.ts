@@ -20,9 +20,12 @@ export class Input {
     private eventsHandlers: WGAEventContainer[];
     private enableEvent: boolean;
 
+    private activeKeys: any[];
+
     public Initialize() {
         this.mousePos = new Vector2();
         this.eventsHandlers = [];
+        this.activeKeys = [];
 
         this.mouseDown = 0;
 
@@ -31,9 +34,20 @@ export class Input {
         document.body.onmouseup = () => this.MouseUpFun(this);
         canvas.addEventListener('mousemove', evt => this.MouseMoveFun(this, canvas, evt), false);
 
-        $(document).keydown((e: any) => {
+        canvas.addEventListener('touchstart', evt => this.MouseDownFun(this));
+        canvas.addEventListener('touchmove', evt => this.TouchMoveFun(this, canvas, evt), false);
+        canvas.addEventListener('touchend', evt => this.MouseUpFun(this));
+
+        $(document).keydown(e => {
             this.EventThrow(EventsTypes.KeyboardKeyPressed, e.key, e.char);
         });
+        $(document).keyup(e => {
+            this.EventEnd(EventsTypes.KeyboardKeyPressed, e.keyCode);
+        });
+    }
+
+    public IsKeyActive(keyCode: number) {
+        return this.activeKeys[keyCode];
     }
 
     public GetKeyCodeOfChar(char: string) {
@@ -60,7 +74,7 @@ export class Input {
             those.mouseDown = 1;
         }
 
-        those.EventThrow(EventsTypes.MouseButtonPressed, KeyCodes.LeftMouseDown, null);
+        this.EventThrow(EventsTypes.MouseButtonPressed, KeyCodes.LeftMouseDown, null);
     }
     public MouseUpFun(those: Input): void {
         those.mouseDown--;
@@ -72,8 +86,13 @@ export class Input {
         this.EventThrow(EventsTypes.MouseButtonPressed, KeyCodes.LeftMouseClick, null);
     }
     public MouseMoveFun(those: Input, canvas: any, evt: any): void {
+
         var rect = canvas.getBoundingClientRect();
         those.mousePos = new Vector2(evt.clientX - rect.left, evt.clientY - rect.top);
+    }
+    public TouchMoveFun(those: Input, canvas: any, evt: any): void {
+        var rect = canvas.getBoundingClientRect();
+        those.mousePos = new Vector2(evt.changedTouches[0].clientX - rect.left, evt.changedTouches[0].clientY - rect.top);
     }
 
     public GetMouseState(): number {
@@ -109,6 +128,11 @@ export class Input {
             }
         }
     }
+    public EventEnd(typeId: number, keyCode: number): void {
+        if (typeId == 2) {
+            this.activeKeys[keyCode] = false;
+        }
+    }
     public GetMousePosition(): Vector2 {
         return this.mousePos.SUB(Data.I.FrameOffset).MUL(Data.I.BackFrameScale);
     }
@@ -136,7 +160,6 @@ export class Input {
             if (event.Name == name && event.Type == typeId) {
                 this.eventsHandlers.splice(i, 1);
                 status = true;
-                break;
             }
         }
 
