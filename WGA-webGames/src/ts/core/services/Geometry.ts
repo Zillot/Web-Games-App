@@ -1,7 +1,9 @@
+import { Injectable } from '@angular/core';
 import { Vector2 } from "../engine/Vector2";
 import { Rect } from "../engine/Rect";
 import { Circle } from '../engine/Circle';
 
+@Injectable()
 export class Geometry {
     public static IsPointInRect(point: Vector2, rect: Rect) {
         var onX = rect.Left < point.X && rect.Right > point.X;

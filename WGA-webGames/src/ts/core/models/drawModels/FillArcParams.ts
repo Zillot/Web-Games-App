@@ -1,5 +1,5 @@
 import { FillCircleParams } from "./FillCircleParams";
-import { Utils } from '../services/Utils';
+import { Utils } from '../../services/Utils';
 
 export class FillArcParams extends FillCircleParams {
     public radius: number;

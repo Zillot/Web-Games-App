@@ -1,13 +1,14 @@
+import { Injectable } from '@angular/core';
 import { Data } from "../../app/Data";
 import { Vector2 } from '../engine/Vector2';
-import { Draw } from './Draw';
 import { WGAApp } from 'src/ts/app/WGAApp';
 import { Timeout } from './Timeout';
 
+@Injectable()
 export class Core {
     public static I: Core;
     public static _initialize = (() => {
-        Core.I = new Core();
+        Core.I = new Core(null);
     })();
 
     private lastFrameTimeMs: number;
@@ -23,6 +24,10 @@ export class Core {
     private canvas: any;
     private canvasCtx: any;
 
+    public constructor(
+        private _wgaApp: WGAApp) {
+    }
+
     public Initialize(): void{
         this.lastFrameTimeMs = 0;
         this.maxFPS = 120;
@@ -34,7 +39,8 @@ export class Core {
         this.perFrameMsAwg = 0;
         this.speedLevel = 1000; //1000 - normal, more = slower
 
-        this.canvas = document.getElementById(Draw.I.MainCanvasName);
+        var t = Data.I.Camera.CanvasName;
+        this.canvas = document.getElementById(Data.I.Camera.CanvasName);
 
         this.WindowScalingProccess();
         window.onresize = (event) => {
@@ -48,7 +54,7 @@ export class Core {
             return;
         }
 
-        Draw.I.SetCtx(this.canvasCtx, Draw.I.MainCanvasName);
+        Data.I.Camera.SetCtx(this.canvasCtx, Data.I.Camera.CanvasName);
     }
 
     public WindowScalingProccess() {
@@ -136,16 +142,16 @@ export class Core {
     }
 
     public Update(timeDelta: number): void {
-        if (WGAApp.I != null) {
-            WGAApp.I.Update(timeDelta);
+        if (this._wgaApp != null) {
+            this._wgaApp.Update(timeDelta);
             Timeout.Update(timeDelta)
         }
     }
     public Draw(ctx: any): void {
         ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-        if (WGAApp.I != null) {
-            WGAApp.I.Draw();
+        if (this._wgaApp != null) {
+            this._wgaApp.Draw();
         }
     }
 }

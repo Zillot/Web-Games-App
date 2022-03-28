@@ -1,9 +1,11 @@
 import { Vector2 } from "../engine/Vector2";
 import { Data } from "../../app/Data";
-import { FillRectParams } from "../models/FillRectParams";
+import { FillRectParams } from "../models/drawModels/FillRectParams";
 import { Color4 } from "../engine/Color4";
 import { Draw } from '../services/Draw';
 import { BaseUIContainer } from './BaseUIContainer';
+import { MouseInput } from '../services/MouseInput';
+import { KeyboardInput } from '../services/KeyboardInput';
 
 export class Modal extends BaseUIContainer {
     private modalName: string;
@@ -25,11 +27,11 @@ export class Modal extends BaseUIContainer {
         this.opacity.SetValue(0);
     }
 
-    public Init() {
+    public Init(): void {
         //modal should not be initialized as all components
     }
 
-    public InitModal() {
+    public InitModal(): void {
         super.Init();
     }
 
@@ -54,9 +56,9 @@ export class Modal extends BaseUIContainer {
         }
     }
 
-    public Draw(): void {
-        Draw.I.RectFill(<FillRectParams>{ position: this.position, size: this.size, color: new Color4(229, 229, 229, this.opacity.GetVal()), origin: new Vector2(-1) });
+    public Draw(draw: Draw): void {
+        draw.RectFill(<FillRectParams>{ position: this.position, size: this.size, color: new Color4(229, 229, 229, this.opacity.GetVal()), origin: new Vector2(-1) });
 
-        super.Draw();
+        super.Draw(draw);
     }
 }

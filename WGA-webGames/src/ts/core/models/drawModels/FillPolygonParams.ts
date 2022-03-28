@@ -1,5 +1,5 @@
-﻿import { StandartParams } from "./StandartParams";
-import { Vector2 } from "../engine/Vector2";
+import { StandartParams } from "./StandartParams";
+import { Vector2 } from "../../engine/Vector2";
 
 export class FillPolygonParams extends StandartParams {
     public points: Vector2[];

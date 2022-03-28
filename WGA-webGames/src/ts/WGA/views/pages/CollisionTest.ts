@@ -2,18 +2,18 @@ import { Page } from "../../../core/abstracts/Page";
 import { Data } from "../../../app/Data";
 import { Color4 } from "../../../core/engine/Color4";
 import { Rect } from "../../../core/engine/Rect";
-import { StrokeRectParams } from "../../../core/models/StrokeRectParams";
+import { StrokeRectParams } from "../../../core/models/drawModels/StrokeRectParams";
 import { CollisionTestUI } from "./CollisionTest.ui";
 import { Utils } from 'src/ts/core/services/Utils';
 import { Geometry } from 'src/ts/core/services/Geometry';
 import { Draw } from 'src/ts/core/services/Draw';
-import { Input } from 'src/ts/core/services/Input';
+import { MouseInput } from 'src/ts/core/services/MouseInput';
 
 export class CollisionTest extends Page {
     public Rects: Rect[];
 
-    constructor() {
-        super();
+    constructor(_draw: Draw) {
+        super(_draw);
 
         CollisionTestUI.SetupUI(this.UiComponents);
     }
@@ -37,7 +37,7 @@ export class CollisionTest extends Page {
     public Update(timeDelta: number): void {
         super.Update(timeDelta);
 
-        this.Rects[0].SetPositionFromCenter(Input.I.GetMousePosition());
+        this.Rects[0].SetPositionFromCenter(MouseInput.GetMousePosition());
 
         this.checkRectsIntersections();
     }
@@ -77,7 +77,7 @@ export class CollisionTest extends Page {
                 var color = Color4.Red;
             }
 
-            Draw.I.RectStroke(<StrokeRectParams>{ position: rect.GetCenter(), size: rect.GetSize(), color: color, thickness: 1 });
+            this._draw.RectStroke(<StrokeRectParams>{ position: rect.GetCenter(), size: rect.GetSize(), color: color, thickness: 1 });
         }
     }
 }

@@ -1,16 +1,20 @@
-import { FillRectParams } from "../../core/models/FillRectParams";
+import { FillRectParams } from "../../core/models/drawModels/FillRectParams";
 import { Vector2 } from "../../core/engine/Vector2";
 import { Color4 } from "../../core/engine/Color4";
-import { ImageParams } from "../../core/models/ImageParams";
+import { ImageParams } from "../../core/models/drawModels/ImageParams";
 import { Draw } from 'src/ts/core/services/Draw';
 
 export class ExDraw {
-    private cache: any = [];
-
     public static I: ExDraw;
     public static _initialize = (() => {
-        ExDraw.I = new ExDraw();
+        ExDraw.I = new ExDraw(new Draw());
     })();
+
+    private cache: any = [];
+
+    public constructor(private _draw: Draw) {
+
+    }
 
     public DrawZombie(position: Vector2, angle: number, color1: Color4, color2: Color4, scale: Vector2 | number): void {
         var key: string = "zombie_" + color1.GetRgba() + "_" + color2.GetRgba();
@@ -33,25 +37,25 @@ export class ExDraw {
                 scale: 1
             };
 
-            Draw.I.StartToDrawImageResource(500, 650);
-            Draw.I.RectFill(params);
+            this._draw.StartToDrawImageResource(500, 650);
+            this._draw.RectFill(params);
 
             params.position = resPost.ADD((new Vector2(120, 0)));
             params.size = new Vector2(200, 200);
             params.color = color2;
-            Draw.I.RectFill(params);
+            this._draw.RectFill(params);
 
             params.size = new Vector2(150, 80);
 
             params.position = resPost.ADD((new Vector2(160, -250)));
-            Draw.I.RectFill(params);
+            this._draw.RectFill(params);
 
             params.position = resPost.ADD((new Vector2(160, 250)));
-            Draw.I.RectFill(params);
+            this._draw.RectFill(params);
 
             var img = new Image();
             img.src = Draw.I.MakeScreenShot();
-            Draw.I.EndToDrawImageResource();
+            this._draw.EndToDrawImageResource();
 
             this.cache[key] = img;
             fromCache = img;
@@ -66,7 +70,7 @@ export class ExDraw {
             scale: scale.MUL(0.1)
         };
 
-        Draw.I.DrawImage(fromCache, imgParams);
+        this._draw.DrawImage(fromCache, imgParams);
     }
 
     //TODO make this as zombie
@@ -90,7 +94,7 @@ export class ExDraw {
         var pikeHi = 0.1 * size.Y;
 
         //base tower
-        Draw.I.RectFill(<FillRectParams>{
+        this._draw.RectFill(<FillRectParams>{
             position: position,
             size: new Vector2(0.6 * size.X, baseHi + levelHi),
             origin: new Vector2(0, 1),
@@ -98,7 +102,7 @@ export class ExDraw {
         });
 
         //tower cap
-        Draw.I.RectFill(<FillRectParams>{
+        this._draw.RectFill(<FillRectParams>{
             position: position.SUB(new Vector2(0, baseHi + levelHi)),
             size: new Vector2(size.X, capHi),
             origin: new Vector2(0, 1),
@@ -108,7 +112,7 @@ export class ExDraw {
         //tower spikes
         var start = position.SUB(new Vector2(size.X * 0.5, baseHi + levelHi + capHi));
         for (var i = 0; i < 3; i++) {
-            Draw.I.RectFill(<FillRectParams>{
+            this._draw.RectFill(<FillRectParams>{
                 position: start.ADD(new Vector2(size.X * 0.4 * i, 0)),
                 size: new Vector2(size.X * 0.2, pikeHi),
                 origin: new Vector2(-1, 1),

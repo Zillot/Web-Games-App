@@ -9,13 +9,14 @@ import { CoreDefence } from "../WGA/views/games/coreDefence/CoreDefence";
 import { CastleDefence } from "../WGA/views/games/castleDefence/CastleDefence";
 import { YotaOnline } from "../WGA/views/games/yotaOnline/YotaOnline";
 import { Pages } from '../core/services/Pages';
+import { Data } from './Data';
 import { Draw } from '../core/services/Draw';
 
 export class WGAApp implements IUpdateable, IDrawable {
-    public static I: WGAApp;
-    public static _initialize = (() => {
-        WGAApp.I = new WGAApp();
-    })();
+    public constructor(
+        private _draw: Draw,
+        private _pages: Pages) {
+    }
 
     private pause: boolean;
     private currentGame: WGAGameContainer;
@@ -23,23 +24,23 @@ export class WGAApp implements IUpdateable, IDrawable {
     public Initialize(): void {
         this.pause = true;
 
-        Pages.I.Reset();
+        this._pages.Reset();
 
-        Pages.I.CreatePage("Main", new MainPage());
-        Pages.I.CreatePage("CameraTest", new CameraTest());
-        Pages.I.CreatePage("CollisionTest", new CollisionTest());
+        this._pages.CreatePage("Main", new MainPage(this._draw));
+        this._pages.CreatePage("CameraTest", new CameraTest(this._draw));
+        this._pages.CreatePage("CollisionTest", new CollisionTest(this._draw));
 
-        Pages.I.CreatePage("YotaOnline", new YotaOnline());
-        Pages.I.CreatePage("ZombieShooter", new ZombieShooter());
-        Pages.I.CreatePage("CoreDefence", new CoreDefence());
-        Pages.I.CreatePage("CastleDeffence", new CastleDefence());
+        this._pages.CreatePage("YotaOnline", new YotaOnline(this._draw));
+        this._pages.CreatePage("ZombieShooter", new ZombieShooter(this._draw));
+        this._pages.CreatePage("CoreDefence", new CoreDefence(this._draw));
+        this._pages.CreatePage("CastleDeffence", new CastleDefence(this._draw));
 
-        Pages.I.InstantNavigateTo("YotaOnline");
+        this._pages.InstantNavigateTo("YotaOnline");
     }
 
     public Update(timeDelta: number): void {
         if (this.pause == true) {
-            Pages.I.Update(timeDelta);
+            this._pages.Update(timeDelta);
         }
 
         if (this.currentGame != null && this.pause == false) {
@@ -49,9 +50,9 @@ export class WGAApp implements IUpdateable, IDrawable {
 
     public Draw(): void {
         if (this.pause == true) {
-            Draw.I.adjustMenuViewToCamera();
-            Pages.I.Draw();
-            Draw.I.removeCameraInfuence();
+            Data.I.Camera.AdjustMenuViewToCamera();
+            this._pages.Draw(this._draw);
+            Data.I.Camera.RemoveCameraInfuence();
         }
 
         if (this.currentGame != null && this.pause == false) {

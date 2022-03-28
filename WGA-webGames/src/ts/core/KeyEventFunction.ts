@@ -1,1 +1,1 @@
-﻿export type KeyEventFunction = (code: number, char: string) => void;
+export type KeyEventFunction = (eventId: string) => void;

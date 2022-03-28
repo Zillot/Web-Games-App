@@ -2,7 +2,7 @@ import { Unit } from "../../../common/Unit";
 import { Color4 } from "../../../../core/engine/Color4";
 import { Vector2 } from "../../../../core/engine/Vector2";
 import { Data } from "../../../../app/Data";
-import { StrokePolygonParams } from "../../../../core/models/StrokePolygonParams";
+import { StrokePolygonParams } from "../../../../core/models/drawModels/StrokePolygonParams";
 import { Draw } from 'src/ts/core/services/Draw';
 
 export class CityWall extends Unit {
@@ -33,8 +33,8 @@ export class CityWall extends Unit {
         }
     }
 
-    public Draw(): void {
-        Draw.I.PolygonStroke(<StrokePolygonParams> {
+    public Draw(draw: Draw): void {
+        draw.PolygonStroke(<StrokePolygonParams> {
             position: this.Position,
             origin: new Vector2(0, 0),
             color: this.Color,

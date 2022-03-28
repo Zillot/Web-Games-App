@@ -1,7 +1,11 @@
 import { IUiComponent } from './Interfaces/IUiComponent';
 import { Vector2Value } from '../engine/Vector2Value';
 import { Vector2 } from '../engine/Vector2';
-import { Value } from '../engine/Value';
+import { TransitionValue } from '../engine/TransitionValue';
+import { Draw } from '../services/Draw';
+import { MouseInput } from '../services/MouseInput';
+import { KeyboardInput } from '../services/KeyboardInput';
+import { Data } from 'src/ts/app/Data';
 
 export abstract class BaseUIComponent implements IUiComponent {
     public Name: string;
@@ -10,7 +14,10 @@ export abstract class BaseUIComponent implements IUiComponent {
 
     protected offset: Vector2;
     protected position: Vector2;
-    protected opacity: Value;
+    protected opacity: TransitionValue;
+
+    protected _mouseInput: MouseInput;
+    protected _keyboardInput: KeyboardInput;
 
     public get Position(): Vector2 {
         return this.position;
@@ -18,11 +25,15 @@ export abstract class BaseUIComponent implements IUiComponent {
 
     constructor(position: Vector2) {
         this.position = position;
-        this.opacity = new Value(1, 1);
+        this.opacity = new TransitionValue(1, 1);
         this.offset = new Vector2(0);
+
+        this._mouseInput = Data.I.MouseInput;
+        this._keyboardInput = Data.I.KeyboardInput;
     }
 
-    public abstract Init(): void;
+    public Init() {
+    }
 
     public abstract Dispose(): void;
 
@@ -49,5 +60,5 @@ export abstract class BaseUIComponent implements IUiComponent {
         this.opacity.Update(timeDelta);
     }
 
-    public abstract Draw(): void;
+    public abstract Draw(draw: Draw): void;
 }

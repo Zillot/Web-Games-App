@@ -1,11 +1,11 @@
 import { Vector2 } from "../../../../core/engine/Vector2";
-import { Gun } from "../../../common/Gun";
 import { Bullet } from "../../../common/Bullet";
 import { Color4 } from "../../../../core/engine/Color4";
 import { Data } from "../../../../app/Data";
-import { StrokeArcParams } from "../../../../core/models/StrokeArcParams";
-import { LineParams } from "../../../../core/models/LineParams";
+import { StrokeArcParams } from "../../../../core/models/drawModels/StrokeArcParams";
+import { LineParams } from "../../../../core/models/drawModels/LineParams";
 import { Draw } from 'src/ts/core/services/Draw';
+import { Gun } from 'src/ts/WGA/common/guns/Gun';
 
 export class CoreGun extends Gun {
     public Position: Vector2;
@@ -26,7 +26,7 @@ export class CoreGun extends Gun {
         this.Color = Color4.ColorFromHex('#7777FF');
     }
 
-    protected drawGun(): void {
+    protected drawGun(draw: Draw): void {
         var value = this.AngleControll.GetVal() + Math.PI;
 
         var forward = Vector2.Left.RotateTo(value - Math.PI);
@@ -34,12 +34,12 @@ export class CoreGun extends Gun {
         var point = this.Position.ADD(forward.MUL(54));
 
         //shild part
-        Draw.I.ArcStroke(<StrokeArcParams>{ position: this.Position, radius: 50, startAngle: value + 0.09, endAngle: value + this.Width / 2, color: this.Color });
-        Draw.I.ArcStroke(<StrokeArcParams>{ position: this.Position, radius: 50, startAngle: value - 0.09, endAngle: value - this.Width / 2, color: this.Color });
+        draw.ArcStroke(<StrokeArcParams>{ position: this.Position, radius: 50, startAngle: value + 0.09, endAngle: value + this.Width / 2, color: this.Color });
+        draw.ArcStroke(<StrokeArcParams>{ position: this.Position, radius: 50, startAngle: value - 0.09, endAngle: value - this.Width / 2, color: this.Color });
 
         //arrow in the center
-        Draw.I.Line(<LineParams>{ pointFrom: point, pointTo: point.ADD(side.MUL(4)).ADD(forward.MUL(-4)), thickness: 1, color: this.Color });
-        Draw.I.Line(<LineParams>{ pointFrom: point, pointTo: point.ADD(side.MUL(-4)).ADD(forward.MUL(-4)), thickness: 1, color: this.Color });
+        draw.Line(<LineParams>{ pointFrom: point, pointTo: point.ADD(side.MUL(4)).ADD(forward.MUL(-4)), thickness: 1, color: this.Color });
+        draw.Line(<LineParams>{ pointFrom: point, pointTo: point.ADD(side.MUL(-4)).ADD(forward.MUL(-4)), thickness: 1, color: this.Color });
     }
 
     //-------

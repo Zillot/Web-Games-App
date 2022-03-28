@@ -1,22 +1,41 @@
 import { Data } from "./Data";
-import { Draw } from "../core/services/Draw";
 import { Core } from "../core/services/Core";
-import { Input } from "../core/services/Input";
 import { WGAApp } from "./WGAApp";
 import { Vector2 } from '../core/engine/Vector2';
+import { Camera } from '../core/models/Camera';
+import { InjectorHelper } from './InjectorHelper';
+import { Events } from '../core/services/Events';
+import { MouseInput } from '../core/services/MouseInput';
+import { KeyboardInput } from '../core/services/KeyboardInput';
 
 export class Initializer {
     public Initialize(): void {
         Data.I.WindowSize = new Vector2(800, 600);
         Data.I.CameraScale = 1;
 
-        Draw.I.SetMainCanvas("DrawField");
+        var camera = new Camera();
+        camera.SetCanvas("DrawField");
+        camera.Reset();
 
-        Draw.I.ResetCamera();
-        Input.I.Initialize();
-        Core.I.Initialize();
-        WGAApp.I.Initialize();
+        Data.I.Camera = camera;
+        
+        var events = InjectorHelper.Injector.get(Events);
+        events.Initialize();
 
-        Core.I.Run();
+        var mouseInput = InjectorHelper.Injector.get(MouseInput);
+        mouseInput.Initialize();
+        Data.I.MouseInput = mouseInput;
+
+        var keyboardInput = InjectorHelper.Injector.get(KeyboardInput);
+        keyboardInput.Initialize();
+        Data.I.KeyboardInput = keyboardInput;
+
+        var core = InjectorHelper.Injector.get(Core);
+        core.Initialize();
+
+        var wgaApp = InjectorHelper.Injector.get(WGAApp);
+        wgaApp.Initialize();
+
+        core.Run();
     }
 }

@@ -1,7 +1,6 @@
 import { CallbackFunction } from "../CallbackFunction";
-import { Easing } from "./Easing";
 
-export class Value {
+export class TransitionValue {
     private value: number;
     private valueGoal: number;
     private speed: number;
@@ -35,6 +34,10 @@ export class Value {
         this.callbacks.push(callback);
     }
 
+    public IsStill(): boolean {
+        return this.valueGoal == this.value;
+    }
+
     public Stop(cancelCallback: CallbackFunction): void {
         this.value = this.valueGoal;
 
@@ -65,19 +68,24 @@ export class Value {
         this.pause = 0;
     }
 
-    public GoToDeltaWithGoal(delta: number, speed?: number, callback?: CallbackFunction, easing?: Easing): number {
+    public GoToDeltaWithGoal(delta: number, speed?: number, callback?: CallbackFunction): number {
         this.GoTo(this.valueGoal + delta, speed, callback);
 
         return this.valueGoal;
     }
 
-    public GoToDelta(delta: number, speed?: number, callback?: CallbackFunction, easing?: Easing): number {
-        this.GoTo(this.value + delta, speed, callback, easing);
+    public GoToDelta(delta: number, speed?: number, callback?: CallbackFunction): number {
+        this.GoTo(this.value + delta, speed, callback);
 
         return this.valueGoal;
     }
 
-    public GoTo(value: number, speed?: number, callback?: CallbackFunction, easing?: Easing): void {
+    public GoToFrom(from: number, to: number, speed?: number, callback?: CallbackFunction): void {
+        this.SetValue(from);
+        this.GoTo(to, speed, callback);
+    }
+
+    public GoTo(value: number, speed?: number, callback?: CallbackFunction): void {
         this.pause = 1;
 
         if (this.callbacks) {

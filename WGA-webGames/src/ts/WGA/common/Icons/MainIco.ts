@@ -1,5 +1,5 @@
 import { Vector2 } from "../../../core/engine/Vector2";
-import { FillPolygonParams } from "../../../core/models/FillPolygonParams";
+import { FillPolygonParams } from "../../../core/models/drawModels/FillPolygonParams";
 import { Color4 } from "../../../core/engine/Color4";
 import { Draw } from 'src/ts/core/services/Draw';
 import { BaseIco } from 'src/ts/core/ui/BaseIco';
@@ -23,14 +23,6 @@ export class MainIco extends BaseIco {
         }
 
         this.SetCubeData(size, cubes);
-    }
-
-    public Init(): void {
-
-    }
-
-    public Dispose(): void {
-
     }
 
     public SetCubeData(size: number, cubes: number) {
@@ -59,7 +51,7 @@ export class MainIco extends BaseIco {
         ];
     }
 
-    public Draw(): void {
+    public Draw(draw: Draw): void {
         var stepOffset = this.proccess.GetVal() * this.moveDistance;
         var oneCubeSize = this.size / this.cubes;
 
@@ -73,7 +65,7 @@ export class MainIco extends BaseIco {
                 var cubePosition = position
                     .ADD(ooffsseett);
 
-                this.drawCube(cubePosition, 0.8);
+                this.drawCube(draw, cubePosition, 0.8);
             }
 
             //moving by Y
@@ -92,9 +84,9 @@ export class MainIco extends BaseIco {
         return position;
     }
 
-    private drawCube(cubePosition: Vector2, scale: number) {
-        Draw.I.PolygonFill(<FillPolygonParams>{ color: new Color4(102, 153, 255, 1), position: cubePosition.ADD(this.offset), points: this.pointsTop, scale: scale });
-        Draw.I.PolygonFill(<FillPolygonParams>{ color: new Color4(51, 119, 255, 1), position: cubePosition.ADD(this.offset), points: this.pointsLeft, scale: scale });
-        Draw.I.PolygonFill(<FillPolygonParams>{ color: new Color4(255, 133, 102, 1), position: cubePosition.ADD(this.offset), points: this.pointsRight, scale: scale });
+    private drawCube(draw: Draw, cubePosition: Vector2, scale: number) {
+        draw.PolygonFill(<FillPolygonParams>{ color: new Color4(102, 153, 255, 1), position: cubePosition.ADD(this.offset), points: this.pointsTop, scale: scale });
+        draw.PolygonFill(<FillPolygonParams>{ color: new Color4(51, 119, 255, 1), position: cubePosition.ADD(this.offset), points: this.pointsLeft, scale: scale });
+        draw.PolygonFill(<FillPolygonParams>{ color: new Color4(255, 133, 102, 1), position: cubePosition.ADD(this.offset), points: this.pointsRight, scale: scale });
     }
 }

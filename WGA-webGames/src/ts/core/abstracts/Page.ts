@@ -2,10 +2,10 @@ import { IDrawable } from "../interfaces/IDrawable";
 import { IUpdateable } from "../interfaces/IUpdateable";
 import { Modal } from "../ui/Modal";
 import { BaseUIContainer } from '../ui/BaseUIContainer';
+import { Draw } from '../services/Draw';
 
 export class Page extends BaseUIContainer implements IUpdateable, IDrawable {
-
-    public constructor() {
+    public constructor(protected _draw: Draw) {
         super();
     }
 
@@ -22,7 +22,7 @@ export class Page extends BaseUIContainer implements IUpdateable, IDrawable {
     }
 
     public Draw(): void {
-        super.Draw();
+        super.Draw(this._draw);
     }
 
     public ShowModal(modal: Modal) {

@@ -1,5 +1,5 @@
 import { Vector2 } from "../../../core/engine/Vector2";
-import { FillCircleParams } from "../../../core/models/FillCircleParams";
+import { FillCircleParams } from "../../../core/models/drawModels/FillCircleParams";
 import { Color4 } from "../../../core/engine/Color4";
 import { Draw } from 'src/ts/core/services/Draw';
 import { BaseIco } from 'src/ts/core/ui/BaseIco';
@@ -23,15 +23,7 @@ export class SpinnerIco extends BaseIco {
         this.circles = circles;
     }
 
-    public Init(): void {
-
-    }
-
-    public Dispose(): void {
-
-    }
-
-    public Draw(): void {
+    public Draw(draw: Draw): void {
         var count = Math.floor(this.circles / 3);
         var min = 0.75 / count;
         var step = min;
@@ -56,7 +48,7 @@ export class SpinnerIco extends BaseIco {
             }
 
             scale = scale < 0.3 ? 0.3 : scale;
-            Draw.I.CircleFill(<FillCircleParams>{ color: Color4.Blue, radius: this.radius / (this.circles / 3), scale: scale, position: cubePosition.ADD(this.offset) });
+            draw.CircleFill(<FillCircleParams>{ color: Color4.Blue, radius: this.radius / (this.circles / 3), scale: scale, position: cubePosition.ADD(this.offset) });
             direction = direction.RotateTo(rotateStep);
         }
     }

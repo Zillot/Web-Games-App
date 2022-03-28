@@ -1,5 +1,5 @@
-import { Color4 } from "../engine/Color4";
-import { Vector2 } from "../engine/Vector2";
+import { Color4 } from "../../engine/Color4";
+import { Vector2 } from "../../engine/Vector2";
 
 export class LineParams {
     public pointFrom: Vector2;

@@ -1,6 +1,6 @@
 import { Deleteable } from "../../core/abstracts/Deleteable";
 import { Vector2 } from "../../core/engine/Vector2";
-import { FillRectParams } from "../../core/models/FillRectParams";
+import { FillRectParams } from "../../core/models/drawModels/FillRectParams";
 import { Color4 } from "../../core/engine/Color4";
 import { Draw } from 'src/ts/core/services/Draw';
 
@@ -25,8 +25,8 @@ export class Bullet extends Deleteable {
     public Update(timeDelta: number): void {
         this.Position = this.Position.ADD(this.Direction.MUL(this.Speed * timeDelta));
     }
-    public Draw(): void {
-        Draw.I.RectFill(<FillRectParams>{ position: this.Position, size: new Vector2(5, 5), color: Color4.Black });
+    public Draw(draw: Draw): void {
+        draw.RectFill(<FillRectParams>{ position: this.Position, size: new Vector2(5, 5), color: Color4.Black });
     }
 
     public NotOnTheGameField() {

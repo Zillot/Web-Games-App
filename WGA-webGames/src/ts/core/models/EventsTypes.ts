@@ -1,5 +1,5 @@
 export enum EventsTypes {
-    MouseButtonPressed = 1,
-    KeyboardKeyPressed = 2
+    MouseButtons = "MouseButtons",
+    KeyboardKeys = "KeyboardKeys"
     //to do: joustick? virtual device? network??
 }

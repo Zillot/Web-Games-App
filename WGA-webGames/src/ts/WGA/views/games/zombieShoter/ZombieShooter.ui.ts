@@ -5,9 +5,8 @@ import { Vector2 } from 'src/ts/core/engine/Vector2';
 import { Data } from 'src/ts/app/Data';
 import { Color4 } from 'src/ts/core/engine/Color4';
 import { ButtonWithIco } from 'src/ts/core/ui/ButtonWithIco';
-import { MainIco } from 'src/ts/WGA/common/Icons/MainIco';
-import { SpinnerIco } from 'src/ts/WGA/common/Icons/SpinnerIco';
 import { LevelUpIco } from 'src/ts/WGA/common/Icons/LevelUpIco';
+import { Button } from 'src/ts/core/ui/Button';
 
 export class ZombieShooterUI {
     public static SetupUI(uiComponents: IUiComponent[]) {
@@ -17,6 +16,7 @@ export class ZombieShooterUI {
 
         uiComponents.push(ZombieShooterUI.BuyNextLevelBtn);
         uiComponents.push(ZombieShooterUI.GameOverModal);
+        uiComponents.push(ZombieShooterUI.ReloadGunBtn);
     }
 
     private static gameOverModal: Modal;
@@ -45,5 +45,20 @@ export class ZombieShooterUI {
         }
 
         return this.buyNextLevelBtn;
+    }
+
+    private static reloadGunBtn: Button;
+    public static get ReloadGunBtn() {
+        if (this.reloadGunBtn == null) {
+            this.reloadGunBtn = Button.GetButton({
+                name: "ReloadGunBtn",
+                text: "Reload gun",
+                position: new Vector2(Data.I.Center.X, Data.I.WindowSize.Y + 100),
+                size: new Vector2(100, 40),
+                backgroundcolor: Color4.Red,
+            });
+        }
+
+        return this.reloadGunBtn;
     }
 }

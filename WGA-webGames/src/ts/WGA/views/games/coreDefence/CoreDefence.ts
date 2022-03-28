@@ -1,7 +1,7 @@
 import { Data } from "../../../../app/Data";
-import { StrokeCircleParams } from "../../../../core/models/StrokeCircleParams";
+import { StrokeCircleParams } from "../../../../core/models/drawModels/StrokeCircleParams";
 import { Color4 } from "../../../../core/engine/Color4";
-import { FillCircleParams } from "../../../../core/models/FillCircleParams";
+import { FillCircleParams } from "../../../../core/models/drawModels/FillCircleParams";
 import { GamePage } from "../../../../core/abstracts/GamePage";
 import { Enemy } from "./Enemy";
 import { CoreGun } from "./CoreGun";
@@ -21,15 +21,15 @@ export class CoreDefence extends GamePage {
 
     private game: Game;
 
-    constructor() {
-        super();
+    constructor(_draw: Draw) {
+        super(_draw);
     }
 
     public Init(): void {
         CoreDefenceUI.CreateGameOverModal(() => this.RestartGame());
         CoreDefenceUI.SetupUI(this.UiComponents);
 
-        this.game = new Game();
+        this.game = new Game(this._draw);
         this.game.NextLevelEvent = this.NextLevelHandler;
         this.game.GameOverEvent = this.GameOverHandler;
 
@@ -166,24 +166,24 @@ export class CoreDefence extends GamePage {
 
     public DrawCore() {
         //core area
-        Draw.I.CircleStroke(<StrokeCircleParams>{ position: Data.I.Center, radius: this.coreSafeRadius, color: Color4.Gray.GetTransparent(0.1) });
+        this._draw.CircleStroke(<StrokeCircleParams>{ position: Data.I.Center, radius: this.coreSafeRadius, color: Color4.Gray.GetTransparent(0.1) });
 
         //gloving area or shield
         var color1 = Color4.ColorFromHex('#7777FF');
-        Draw.I.CircleFill(<FillCircleParams>{ position: Data.I.Center, radius: 30, color: color1.GetTransparent(0.2) });
-        Draw.I.CircleFill(<FillCircleParams>{ position: Data.I.Center, radius: 10, color: color1.GetTransparent(0.5) });
-        Draw.I.CircleFill(<FillCircleParams>{ position: Data.I.Center, radius: 6, color: color1.GetTransparent(0.5) });
+        this._draw.CircleFill(<FillCircleParams>{ position: Data.I.Center, radius: 30, color: color1.GetTransparent(0.2) });
+        this._draw.CircleFill(<FillCircleParams>{ position: Data.I.Center, radius: 10, color: color1.GetTransparent(0.5) });
+        this._draw.CircleFill(<FillCircleParams>{ position: Data.I.Center, radius: 6, color: color1.GetTransparent(0.5) });
     }
 
     public DrawEnemy(): void {
         for (var enemyKey in this.enemies) {
-            this.enemies[enemyKey].Draw();
+            this.enemies[enemyKey].Draw(this._draw);
         }
     }
 
     public DrawGuns(): void {
         for (var gunsKey in this.guns) {
-            this.guns[gunsKey].Draw();
+            this.guns[gunsKey].Draw(this._draw);
         }
     }
 }
