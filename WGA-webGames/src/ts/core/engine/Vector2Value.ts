@@ -1,10 +1,10 @@
-import { Value } from './Value';
+import { TransitionValue } from './TransitionValue';
 import { Vector2 } from './Vector2';
 import { CallbackFunction } from '../CallbackFunction';
 
 export class Vector2Value extends Vector2 {
-    private xVal: Value;
-    private yVal: Value;
+    private xVal: TransitionValue;
+    private yVal: TransitionValue;
 
     constructor(x?: Vector2 | number, y?: number) {
         super(x, y)

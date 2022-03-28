@@ -1,4 +1,4 @@
-import { Value } from '../engine/Value';
+import { TransitionValue } from '../engine/TransitionValue';
 
 export class Timeout {
     private static queue: any[];
@@ -8,7 +8,7 @@ export class Timeout {
             Timeout.queue = [];
         }
 
-        var val = new Value(0, 1000 / ms);
+        var val = new TransitionValue(0, 1000 / ms);
         val.GoTo(1);
 
         Timeout.queue.push({

@@ -3,9 +3,9 @@ import { CardShapeType } from './CardShapeType';
 import { Vector2 } from '../../../../../core/engine/Vector2';
 import { Draw } from '../../../../../core/services/Draw';
 import { Color4 } from '../../../../../core/engine/Color4';
-import { FillRectParams } from '../../../../../core/models/FillRectParams';
-import { FillCircleParams } from '../../../../../core/models/FillCircleParams';
-import { FillTriangleParams } from '../../../../../core/models/FillTriangleParams';
+import { FillRectParams } from '../../../../../core/models/drawModels/FillRectParams';
+import { FillTriangleParams } from '../../../../../core/models/drawModels/FillTriangleParams';
+import { FillCircleParams } from '../../../../../core/models/drawModels/FillCircleParams';
 
 export class CardService {
     constructor() {

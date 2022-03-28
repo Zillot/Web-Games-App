@@ -2,13 +2,12 @@ import { Page } from "../../../core/abstracts/Page";
 import { Color4 } from "../../../core/engine/Color4";
 import { Vector2 } from "../../../core/engine/Vector2";
 import { KeyCodes } from "../../../core/models/KeyCodes";
-import { Input } from "../../../core/services/Input";
 import { Data } from "../../../app/Data";
-import { FillCircleParams } from "../../../core/models/FillCircleParams";
-import { FillRectParams } from "../../../core/models/FillRectParams";
-import { TextParams } from "../../../core/models/TextParams";
 import { Draw } from "../../../core/services/Draw";
 import { PlaygroundUI } from "./Playground.ui";
+import { FillRectParams } from '../../../core/models/drawModels/FillRectParams';
+import { FillCircleParams } from '../../../core/models/drawModels/FillCircleParams';
+import { TextParams } from '../../../core/models/drawModels/TextParams';
 
 export class Playground extends Page {
     public circleSpeed: number;
@@ -25,7 +24,7 @@ export class Playground extends Page {
     public col4: boolean;
 
     constructor() {
-        super();
+        super(null);
     }
 
     public Init(): void {
@@ -61,6 +60,7 @@ export class Playground extends Page {
             this.Restart();
         }
 
+        /*
         if (Input.I.IsKeyActive(KeyCodes.UpArrow)) {
             if (this.platform2Position.Y > this.platformWi / 2) {
                 this.platform2Position = this.platform2Position.ADD(new Vector2(0, -1).MUL(timeDelta * 400));
@@ -81,7 +81,7 @@ export class Playground extends Page {
             if (this.platform1Position.Y < Data.I.WindowSize.X - this.platformWi / 2) {
                 this.platform1Position = this.platform1Position.ADD(new Vector2(0, 1).MUL(timeDelta * 400));
             }
-        }
+        }*/
     }
 
     public dirUpdate(pos: Vector2, colMarker: boolean, platformSize: Vector2, xRefllect: boolean): boolean {

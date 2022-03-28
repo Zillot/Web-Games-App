@@ -62,7 +62,7 @@ export class ReloadableGun extends Gun {
     }
 
     public Reload(): void {
-        this.ReloadingControll.GoToFrom(this.ReloadingTimeBase, 0, () => {
+        this.ReloadingControll.GoToFrom(this.ReloadingTimeBase, 0, 100, () => {
             this.ClipCapacityLeft = this.ClipCapacityBase;
         });
     }

@@ -7,8 +7,6 @@ import { Timeout } from '../../../../core/services/Timeout';
 import { Vector2 } from '../../../../core/engine/Vector2';
 import { Color4 } from '../../../../core/engine/Color4';
 import { Draw } from '../../../../core/services/Draw';
-import { timeout } from 'q';
-import { FillRectParams } from '../../../../core/models/FillRectParams';
 
 export class YotaOnline extends GamePage {
     pile: Pile;
@@ -17,8 +15,8 @@ export class YotaOnline extends GamePage {
     me: Player;
     activePlayer: number;
 
-    constructor() {
-        super();
+    constructor(_draw: Draw) {
+        super(_draw);
     }
 
     public Init(): void {

@@ -3,18 +3,18 @@ import { CardShapeType } from './CardShapeType';
 import { Vector2 } from '../../../../../core/engine/Vector2';
 import { Draw } from '../../../../../core/services/Draw';
 import { Color4 } from '../../../../../core/engine/Color4';
-import { FillRectParams } from '../../../../../core/models/FillRectParams';
 import { CardService } from './CardService';
 import { Card } from './Card';
 import { ValueEasing } from '../../../../../core/engine/ValueEasing';
-import { Value } from '../../../../../core/engine/Value';
 import { Utils } from '../../../../../core/services/Utils';
-import { TextParams } from '../../../../../core/models/TextParams';
 import { EasingMode } from '../../../../../core/engine/EasingMode';
+import { TransitionValue } from '../../../../../core/engine/TransitionValue';
+import { FillRectParams } from '../../../../../core/models/drawModels/FillRectParams';
+import { TextParams } from '../../../../../core/models/drawModels/TextParams';
 
 export class JockerCard extends Card {
     curColor: Color4;
-    timeout: Value;
+    timeout: TransitionValue;
     scales: ValueEasing[];
 
     posibleColors: CardColorType[];
@@ -30,7 +30,7 @@ export class JockerCard extends Card {
     constructor() {
         super(4, CardShapeType.any, CardColorType.any);
 
-        this.timeout = new Value(0, 1);
+        this.timeout = new TransitionValue(0, 1);
         this.timeout.GoTo(JockerCard.SWITCH_PAUSE_SEC);
 
         this.colorIndex = Utils.RandI(0, 3);

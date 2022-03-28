@@ -1,16 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27703.2000
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32228.430
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Bats", "Bats", "{9457B49F-CE9D-48EB-AE95-1CE4AD3E09D0}"
-	ProjectSection(SolutionItems) = preProject
-		bats\dist-projectSite.bat = bats\dist-projectSite.bat
-		bats\dist-webGames.bat = bats\dist-webGames.bat
-		bats\star-projectSite.bat = bats\star-projectSite.bat
-		bats\star-webGames.bat = bats\star-webGames.bat
-	EndProjectSection
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WGA-webGames", "WGA-webGames\WGA-webGames.csproj", "{AF89193C-2945-4D4B-887E-7DB493FF34D2}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WGA_projectSite", "WGA_projectSite\WGA_projectSite.csproj", "{B328EF09-FE2F-4E59-AE52-4C9D5C90B02F}"

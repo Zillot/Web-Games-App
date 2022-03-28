@@ -2,14 +2,13 @@ import { Card } from './card/Card';
 import { Vector2 } from '../../../../core/engine/Vector2';
 import { Pile } from './Pile';
 import { Timeout } from '../../../../core/services/Timeout';
-import { Vector2Easing } from '../../../../core/engine/Vector2Easing';
 import { debug } from 'util';
 import { EasingMode } from '../../../../core/engine/EasingMode';
 import { Draw } from '../../../../core/services/Draw';
-import { FillRectParams } from '../../../../core/models/FillRectParams';
 import { ValueEasing } from '../../../../core/engine/ValueEasing';
 import { Color4 } from '../../../../core/engine/Color4';
-import { TextParams } from '../../../../core/models/TextParams';
+import { FillRectParams } from '../../../../core/models/drawModels/FillRectParams';
+import { TextParams } from '../../../../core/models/drawModels/TextParams';
 
 export class Player {
     cardList: Card[];

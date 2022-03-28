@@ -1,14 +1,14 @@
 import { CallbackFunction } from "../CallbackFunction";
 import { EasingMode } from "./EasingMode";
 import { Easing } from "./Easing";
-import { Value } from "./Value";
+import { TransitionValue } from "./TransitionValue";
 
 export class ValueEasing {
-    private valueObj: Value;
+    private valueObj: TransitionValue;
     private easing: Easing;
 
     constructor(ms: number, easingMode: EasingMode) {
-        this.valueObj = new Value(0, 1000 / ms);
+        this.valueObj = new TransitionValue(0, 1000 / ms);
         this.valueObj.GoTo(1);
         this.valueObj.SetMultypliCallbacksState(true);
         this.easing = new Easing(easingMode);

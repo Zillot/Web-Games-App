@@ -3,12 +3,11 @@ import { CardShapeType } from './CardShapeType';
 import { Vector2 } from '../../../../../core/engine/Vector2';
 import { Draw } from '../../../../../core/services/Draw';
 import { Color4 } from '../../../../../core/engine/Color4';
-import { FillRectParams } from '../../../../../core/models/FillRectParams';
 import { CardService } from './CardService';
-import { TextParams } from '../../../../../core/models/TextParams';
-import { debug } from 'util';
 import { Vector2Easing } from '../../../../../core/engine/Vector2Easing';
-import { Value } from '../../../../../core/engine/Value';
+import { FillRectParams } from '../../../../../core/models/drawModels/FillRectParams';
+import { TextParams } from '../../../../../core/models/drawModels/TextParams';
+import { TransitionValue } from '../../../../../core/engine/TransitionValue';
 
 export class Card {
     public Position: Vector2Easing;
@@ -19,14 +18,14 @@ export class Card {
     id: number;
     key: String;
     visability: boolean;
-    public scaleX: Value;
+    public scaleX: TransitionValue;
 
     constructor(num: number, shape: CardShapeType, color: CardColorType) {
         this.color = color;
         this.shape = shape;
         this.num = num;
         this.visability = false;
-        this.scaleX = new Value(1, 1);
+        this.scaleX = new TransitionValue(1, 1);
         this.key = `${num}-${shape}-${color}`
 
         this.curColor = CardService.getColor(this.color);
