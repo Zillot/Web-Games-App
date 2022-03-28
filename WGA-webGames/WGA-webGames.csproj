@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
-    <TypeScriptToolsVersion>2.8</TypeScriptToolsVersion>
+    <TypeScriptToolsVersion>3.1</TypeScriptToolsVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -30,6 +30,10 @@
     <TypeScriptSourceMap>True</TypeScriptSourceMap>
     <TypeScriptMapRoot />
     <TypeScriptSourceRoot />
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <NoWarn>1701;1702</NoWarn>
   </PropertyGroup>
 
 </Project>

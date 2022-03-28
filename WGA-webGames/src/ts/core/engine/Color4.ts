@@ -1,0 +1,164 @@
+import { ValueEasingValue } from './ValueEasingValue';
+import { Easing } from './Easing';
+import { EasingMode } from './EasingMode';
+
+export class Color4 {
+    public R: ValueEasingValue;
+    public G: ValueEasingValue;
+    public B: ValueEasingValue;
+    public A: ValueEasingValue;
+
+    constructor(R: number, G: number, B: number, A: number, speed: number = 800) {
+        this.R = new ValueEasingValue(R, speed, EasingMode.easeOutCubic);
+        this.G = new ValueEasingValue(G, speed, EasingMode.easeOutCubic);
+        this.B = new ValueEasingValue(B, speed, EasingMode.easeOutCubic);
+        this.A = new ValueEasingValue(A, speed, EasingMode.easeOutCubic);
+    }
+
+    public Update(timeDelta: number): void {
+        this.R.Update(timeDelta);
+        this.G.Update(timeDelta);
+        this.B.Update(timeDelta);
+        this.A.Update(timeDelta);
+    }
+
+    public goTo(color: Color4, ms: number) {
+        this.R.GoTo(color.R.GetVal(), ms);
+        this.G.GoTo(color.G.GetVal(), ms);
+        this.B.GoTo(color.B.GetVal(), ms);
+        this.A.GoTo(color.A.GetVal(), ms);
+    }
+
+    public GetInvertColor(): Color4 {
+        return new Color4(255 - this.R.GetVal(), 255 - this.G.GetVal(), 255 - this.B.GetVal(), this.A.GetVal());
+    }
+
+    public GetRgba(): string {
+        return 'rgba(' + this.R.GetVal() + ', ' + this.G.GetVal() + ', ' + this.B.GetVal() + ', ' + this.A.GetVal() + ')';
+    }
+
+    public GetTransparent(opacity: number): Color4 {
+        return new Color4(this.R.GetVal(), this.G.GetVal(), this.B.GetVal(), opacity);
+    }
+
+    public static ColorFromHex(hex: string): Color4 {
+        var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+        return new Color4(
+            parseInt(result[1], 16),
+            parseInt(result[2], 16),
+            parseInt(result[3], 16),
+            1);
+    }
+
+    private static white: Color4;
+    public static get White(): Color4 {
+        if (!Color4.white) {
+            Color4.white = new Color4(255, 255, 255, 1);
+        }
+        return Color4.white;
+    }
+
+    private static black: Color4;
+    public static get Black(): Color4 {
+        if (!Color4.black) {
+            Color4.black = new Color4(0, 0, 0, 1);
+        }
+        return Color4.black;
+    }
+
+    private static gray: Color4;
+    public static get Gray(): Color4 {
+        if (!Color4.gray) {
+            Color4.gray = new Color4(100, 100, 100, 1);
+        }
+        return Color4.gray;
+    }
+
+    private static red: Color4;
+    public static get Red(): Color4 {
+        if (!Color4.red) {
+            Color4.red = new Color4(255, 64, 0, 1);
+        }
+        return Color4.red;
+    }
+
+    private static darkRed: Color4;
+    public static get DarkRed(): Color4 {
+        if (!Color4.darkRed) {
+            Color4.darkRed = new Color4(255, 128, 64, 1);
+        }
+        return Color4.darkRed;
+    }
+
+    private static orange: Color4;
+    public static get Orange(): Color4 {
+        if (Color4.orange == null) {
+            Color4.orange = new Color4(255, 128, 1, 1);
+        }
+        return Color4.orange;
+    }
+
+    private static yellow: Color4;
+    public static get Yellow(): Color4 {
+        if (Color4.yellow == null) {
+            Color4.yellow = new Color4(255, 255, 0, 1);
+        }
+        return Color4.yellow;
+    }
+
+    private static green: Color4;
+    public static get Green(): Color4 {
+        if (Color4.green == null) {
+            Color4.green = new Color4(64, 255, 0, 1);
+        }
+        return Color4.green;
+    }
+
+    private static darkGreen: Color4;
+    public static get DarkGreen(): Color4 {
+        if (Color4.darkGreen == null) {
+            Color4.darkGreen = new Color4(128, 255, 64, 1);
+        }
+        return Color4.darkGreen;
+    }
+
+    private static cyan: Color4;
+    public static get Cyan(): Color4 {
+        if (Color4.cyan == null) {
+            Color4.cyan = new Color4(0, 255, 255, 1);
+        }
+        return Color4.cyan;
+    }
+
+    private static blue: Color4;
+    public static get Blue() {
+        if (Color4.blue == null) {
+            Color4.blue = new Color4(0, 0, 255, 1);
+        }
+        return Color4.blue;
+    }
+
+    private static violet: Color4;
+    public static get Violet(): Color4 {
+        if (Color4.violet == null) {
+            Color4.violet = new Color4(191, 0, 255, 1);
+        }
+        return Color4.violet;
+    }
+
+    private static purple: Color4;
+    public static get Purple(): Color4 {
+        if (Color4.purple == null) {
+            Color4.purple = new Color4(255, 0, 191, 1);
+        }
+        return Color4.purple;
+    }
+
+    private static tomato: Color4;
+    public static get Tomato(): Color4 {
+        if (Color4.tomato == null) {
+            Color4.tomato = new Color4(230, 46, 0, 1);
+        }
+        return Color4.tomato;
+    }
+}
