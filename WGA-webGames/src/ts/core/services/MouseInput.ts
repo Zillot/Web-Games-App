@@ -38,6 +38,14 @@ export class MouseInput {
             this.MouseUp(this._events, e);
         });
         canvas.addEventListener('mousemove', evt => this.MouseMove(canvas, evt), false);
+
+        canvas.addEventListener('touchstart', evt => this.moveMouseDownValue(1));
+        canvas.addEventListener('touchmove', evt => this.TouchMoveFun(canvas, evt), false);
+        canvas.addEventListener('touchend', evt => this.moveMouseDownValue(-1));
+    }
+    public TouchMoveFun(canvas: any, evt: any): void {
+        var rect = canvas.getBoundingClientRect();
+        MouseInput.mousePos = new Vector2(evt.changedTouches[0].clientX - rect.left, evt.changedTouches[0].clientY - rect.top);
     }
     public PreventNextEvent() {
         this._events.PreventNextEvent();

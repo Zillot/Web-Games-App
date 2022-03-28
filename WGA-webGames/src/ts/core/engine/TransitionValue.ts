@@ -11,7 +11,8 @@ export class TransitionValue {
     private multypliCallbacks: boolean;
 
     constructor(value: number, speed: number) {
-        this.callbacks = [];
+        this.ClearCallback();
+
         this.value = value;
         this.valueGoal = value;
         this.speed = speed;
@@ -27,6 +28,10 @@ export class TransitionValue {
 
     public ClearCallback(): void {
         this.callbacks = [];
+    }
+
+    public SetCallback(callback: CallbackFunction) {
+        this.callbacks.push(callback);
     }
 
     public IsStill(): boolean {
@@ -75,15 +80,15 @@ export class TransitionValue {
         return this.valueGoal;
     }
 
-    public GoToFrom(value: number, startingValue: number, callback?: CallbackFunction): void {
-        this.SetValue(startingValue);
-        this.GoTo(value, this.speed, callback);
+    public GoToFrom(from: number, to: number, speed?: number, callback?: CallbackFunction): void {
+        this.SetValue(from);
+        this.GoTo(to, speed, callback);
     }
 
     public GoTo(value: number, speed?: number, callback?: CallbackFunction): void {
         this.pause = 1;
 
-        if (callback != null) {
+        if (this.callbacks) {
             this.callbacks.push(callback);
         }
 
@@ -104,6 +109,10 @@ export class TransitionValue {
         }
     }
 
+    public isStable() {
+        return this.dir == 0;
+    }
+
     public Update(timeDelta: number): void {
         this.value += this.speed * this.dir * timeDelta * this.pause;
 
@@ -114,8 +123,10 @@ export class TransitionValue {
             var callbacksToCall = this.callbacks;
             this.ClearCallback();
 
-            for (var callbackKey in callbacksToCall) {
-                callbacksToCall[callbackKey]();
+            for (var i = 0; i < callbacksToCall.length; i++) {
+                if (callbacksToCall[i]) {
+                    callbacksToCall[i]();
+                }
             }
         }
     }

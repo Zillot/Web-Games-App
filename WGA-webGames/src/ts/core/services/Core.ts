@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Data } from "../../app/Data";
 import { Vector2 } from '../engine/Vector2';
 import { WGAApp } from 'src/ts/app/WGAApp';
+import { Timeout } from './Timeout';
 
 @Injectable()
 export class Core {
@@ -29,9 +30,9 @@ export class Core {
 
     public Initialize(): void{
         this.lastFrameTimeMs = 0;
-        this.maxFPS = 60;
+        this.maxFPS = 120;
         this.delta = 0;
-        this.timestep = 1000 / 60;
+        this.timestep = 1000 / 120;
         this.fps = 0;
         this.frame = 0;
         this.timeTemp = 0;
@@ -143,6 +144,7 @@ export class Core {
     public Update(timeDelta: number): void {
         if (this._wgaApp != null) {
             this._wgaApp.Update(timeDelta);
+            Timeout.Update(timeDelta)
         }
     }
     public Draw(ctx: any): void {

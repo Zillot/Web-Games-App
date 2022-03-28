@@ -1,4 +1,5 @@
 import { IUiComponent } from './Interfaces/IUiComponent';
+import { Vector2Value } from '../engine/Vector2Value';
 import { Vector2 } from '../engine/Vector2';
 import { TransitionValue } from '../engine/TransitionValue';
 import { Draw } from '../services/Draw';
@@ -37,7 +38,8 @@ export abstract class BaseUIComponent implements IUiComponent {
     public abstract Dispose(): void;
 
     public MoveTo(newPosition: Vector2, speed: number): void {
-        this.position.GoTo(newPosition, speed);
+        this.position = Vector2Value.fromVector2(this.position);
+        (<Vector2Value>this.position).GoTo(newPosition, speed);
     }
 
     //TODO more events

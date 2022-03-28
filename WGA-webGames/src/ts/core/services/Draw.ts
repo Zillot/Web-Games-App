@@ -15,6 +15,7 @@ import { StrokeCircleParams } from "../models/drawModels/StrokeCircleParams";
 import { FillTriangleParams } from "../models/drawModels/FillTriangleParams";
 import { FillPolygonParams } from "../models/drawModels/FillPolygonParams";
 import { Data } from 'src/ts/app/Data';
+import { Color4 } from '../engine/Color4';
 
 declare var $: any;
 
@@ -32,6 +33,10 @@ export class Draw {
     }
 
     //base figures
+
+    public FillScreen(color: Color4): void {
+        this.RectFill(<FillRectParams>{ position: Vector2.Zero, size: new Vector2(5000, 5000), color: color });
+    }
     public Line(params: LineParams): void {
         this.line(params);
     }

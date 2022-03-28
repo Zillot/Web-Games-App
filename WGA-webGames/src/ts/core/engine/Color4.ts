@@ -1,26 +1,44 @@
-export class Color4 {
-    public R: number;
-    public G: number;
-    public B: number;
-    public A: number;
+import { ValueEasingValue } from './ValueEasingValue';
+import { Easing } from './Easing';
+import { EasingMode } from './EasingMode';
 
-    constructor(R: number, G: number, B: number, A: number) {
-        this.R = R;
-        this.G = G;
-        this.B = B;
-        this.A = A;
+export class Color4 {
+    public R: ValueEasingValue;
+    public G: ValueEasingValue;
+    public B: ValueEasingValue;
+    public A: ValueEasingValue;
+
+    constructor(R: number, G: number, B: number, A: number, speed: number = 800) {
+        this.R = new ValueEasingValue(R, speed, EasingMode.easeOutCubic);
+        this.G = new ValueEasingValue(G, speed, EasingMode.easeOutCubic);
+        this.B = new ValueEasingValue(B, speed, EasingMode.easeOutCubic);
+        this.A = new ValueEasingValue(A, speed, EasingMode.easeOutCubic);
+    }
+
+    public Update(timeDelta: number): void {
+        this.R.Update(timeDelta);
+        this.G.Update(timeDelta);
+        this.B.Update(timeDelta);
+        this.A.Update(timeDelta);
+    }
+
+    public goTo(color: Color4, ms: number) {
+        this.R.GoTo(color.R.GetVal(), ms);
+        this.G.GoTo(color.G.GetVal(), ms);
+        this.B.GoTo(color.B.GetVal(), ms);
+        this.A.GoTo(color.A.GetVal(), ms);
     }
 
     public GetInvertColor(): Color4 {
-        return new Color4(255 - this.R, 255 - this.G, 255 - this.B, this.A);
+        return new Color4(255 - this.R.GetVal(), 255 - this.G.GetVal(), 255 - this.B.GetVal(), this.A.GetVal());
     }
 
     public GetRgba(): string {
-        return 'rgba(' + this.R + ', ' + this.G + ', ' + this.B + ', ' + this.A + ')';
+        return 'rgba(' + this.R.GetVal() + ', ' + this.G.GetVal() + ', ' + this.B.GetVal() + ', ' + this.A.GetVal() + ')';
     }
 
     public GetTransparent(opacity: number): Color4 {
-        return new Color4(this.R, this.G, this.B, opacity);
+        return new Color4(this.R.GetVal(), this.G.GetVal(), this.B.GetVal(), opacity);
     }
 
     public static ColorFromHex(hex: string): Color4 {
